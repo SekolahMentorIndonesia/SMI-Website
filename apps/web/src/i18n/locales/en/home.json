@@ -1,0 +1,186 @@
+{
+  "hero": {
+    "badge": "No. 1 Content Creator Media Platform in Indonesia",
+    "title_part1": "Build a Career as a",
+    "title_part2": "Content Creator",
+    "title_part3": "Professional",
+    "subtitle": "Learn directly from practitioner mentors. Measured curriculum, supportive community, and access to various collaboration opportunities.",
+    "cta_start": "Start Learning Now",
+    "cta_dashboard": "Go to Dashboard",
+    "cta_packages": "View Mentoring Packages",
+    "social_proof": "Creators have joined",
+    "curriculum_title": "2026 Curriculum",
+    "curriculum_subtitle": "Updated every month",
+    "curriculum_items": {
+      "branding": "Personal Branding Mastery",
+      "editing": "Video Editing for Creators",
+      "monetization": "Monetization Strategy",
+      "community": "Building Community"
+    }
+  },
+  "pricing": {
+    "title": "Mentoring Packages",
+    "popular_badge": "Most Popular",
+    "cta_select": "Select Package",
+    "info": {
+      "secure_payment": "Secure & Verified Payment",
+      "one_time_payment": "One-time Payment (No Subscription)"
+    },
+    "checkout": {
+      "title": "Order Confirmation",
+      "package_label": "Selected Package",
+      "total_label": "Total Price",
+      "payment_method_label": "Payment Method",
+      "payment_method_value": "Manual Transfer (WhatsApp Verified)",
+      "disclaimer": "By clicking confirm, the system will record your order as Pending and you will be redirected to WhatsApp for manual payment verification by our team.",
+      "cta_confirm": "Confirm & Proceed to WhatsApp"
+    },
+    "packages": {
+      "silver": {
+        "name": "COMMUNITY (SILVER)",
+        "price": "Rp50.000",
+        "tagline": "For beginners who want to enter the world of content creators and learn together with the community.",
+        "features": [
+          "SMI creator community access (premium)",
+          "Scheduled online / offline events",
+          "Zoom meet sharing & discussion",
+          "Exclusive basic content",
+          "Networking between creators"
+        ],
+        "cta": "Join Community",
+        "whatsapp": "Hello SMI! I want to join the Community Package (Silver) Rp50.000."
+      },
+      "premium": {
+        "name": "MENTORING (PREMIUM)",
+        "price": "Rp100.000",
+        "unit": "/ hour",
+        "tagline": "1-on-1 face-to-face mentoring sessions with professional mentors or the founder of Sekolah Mentor Indonesia.",
+        "features": [
+          "1-on-1 direct consultation",
+          "Account & content review",
+          "Niche determination & growth strategy",
+          "Flexible schedule (by appointment)"
+        ],
+        "cta": "Book Mentoring Session",
+        "whatsapp": "Hello SMI! I want to book a Mentoring session (Premium) Rp100.000/hour."
+      },
+      "coaching": {
+        "name": "PRIVATE EXCLUSIVE (COACHING)",
+        "price_inner": "Rp5.000.000",
+        "price_outer": "Rp6.000.000",
+        "unit": "/ hour",
+        "tagline": "Intensive coaching for companies, large communities, or institutions that want to invite Sekolah Mentor Indonesia mentors.",
+        "features": [
+          "Group / corporate coaching",
+          "Custom materials according to needs",
+          "Professional SMI mentors",
+          "Workshops, events, or internal training",
+          "Official contract & cooperation"
+        ],
+        "cta": "Contact SMI Team",
+        "whatsapp": "Hello SMI! I want to inquire about the Private Exclusive Package (Coaching) for agencies/companies."
+      }
+    }
+  },
+  "library": {
+    "title": "Learning Library",
+    "subtitle": "Free and curated materials to start your journey as a content creator.",
+    "filters": ["All", "Article", "Video", "E-Book", "Visual"],
+    "empty_state": {
+      "title": "Content Coming Soon",
+      "description": "Our mentor team is curating the best materials so you can learn with the right direction. All content will be added gradually through the admin dashboard.",
+      "curating": "Currently Curated",
+      "gradual_update": "Gradual Update"
+    },
+    "cta_progress": "Check Library Progress"
+  },
+  "community": {
+    "badge": "Premium Community Access",
+    "title": "SMI Creator Community",
+    "subtitle": "A meeting place for creators to share, collaborate, and grow together in a supportive ecosystem.",
+    "benefits": [
+      {
+        "title": "Exclusive Networking",
+        "description": "Connect with hundreds of creators from various niches to unlock collaboration opportunities."
+      },
+      {
+        "title": "Sharing & Discussion",
+        "description": "Experience sharing sessions and practical tips you won't find in public tutorials."
+      },
+      {
+        "title": "Regular Events",
+        "description": "Access to member-only online and offline meetups to strengthen community bonds."
+      },
+      {
+        "title": "Support System",
+        "description": "A positive environment that supports your creative career journey from scratch."
+      }
+    ],
+    "stats": {
+      "members": "500+",
+      "members_label": "Active Members",
+      "cities": "20+",
+      "cities_label": "Cities in Indonesia"
+    },
+    "cta": "Join Community"
+  },
+  "stories": {
+    "badge": "Success Stories",
+    "title": "Grow with SMI",
+    "followers_suffix": "Followers",
+    "items": [
+      {
+        "name": "Andi Wijaya",
+        "niche": "Tech Review",
+        "followers": "15k+",
+        "story": "I used to be confused about how to start, after joining mentoring at SMI, now I can collaborate with gadget brands."
+      },
+      {
+        "name": "Siska Putri",
+        "niche": "Cooking",
+        "followers": "50k+",
+        "story": "The community is very supportive. The video editing material is very practical for beginners like me."
+      },
+      {
+        "name": "Budi Santoso",
+        "niche": "Education",
+        "followers": "5k+",
+        "story": "The mentoring package is very worth it. My mindset about content changed completely after learning here."
+      },
+      {
+        "name": "Lia Amalia",
+        "niche": "Beauty",
+        "followers": "120k+",
+        "story": "From zero to having my own creative team. Thank you SMI for the guidance!"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Learning doesn't have to be expensive to start",
+    "subtitle": "Start from free content, continue with structured mentoring with experienced mentors.",
+    "cta_register": "Register Account",
+    "cta_packages": "See Learning Packages"
+  },
+  "footer": {
+    "description": "The leading business training institution for producing competent entrepreneurs.",
+    "categories": {
+      "company": "Company",
+      "contact": "Contact"
+    },
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "program": "Program",
+      "features": "Advantages",
+      "library": "Library",
+      "packages": "Learning Packages",
+      "contact": "Contact"
+    },
+    "legal": {
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy"
+    },
+    "copyright": "© {{year}} Sekolah Mentor Indonesia.",
+    "powered_by": "Powered By - PT Multiusaha Prioritas Bersama"
+  }
+}

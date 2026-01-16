@@ -1,0 +1,189 @@
+{
+  "hero": {
+    "badge": "Platform Media Content Creator No 1 di Indonesia",
+    "title_part1": "Bangun Karir Sebagai",
+    "title_part2": "Content Creator",
+    "title_part3": "Profesional",
+    "subtitle": "Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses ke berbagai peluang kolaborasi.",
+    "cta_start": "Mulai Belajar Sekarang",
+    "cta_dashboard": "Masuk ke Dashboard",
+    "cta_packages": "Lihat Paket Mentoring",
+    "social_proof": "Kreator telah bergabung",
+    "curriculum_title": "Kurikulum 2026",
+    "curriculum_subtitle": "Pembaruan setiap bulan",
+    "curriculum_items": {
+      "branding": "Penguasaan Personal Branding",
+      "editing": "Editing Video untuk Kreator",
+      "monetization": "Strategi Monetisasi",
+      "community": "Membangun Komunitas"
+    }
+  },
+  "pricing": {
+    "title": "Paket Mentoring",
+    "subtitle": "Pilih paket yang sesuai dengan kebutuhan dan tujuanmu dalam menjadi content creator profesional.",
+    "popular_badge": "Terpopuler",
+    "one_time_payment_badge": "Sekali Bayar",
+    "cta_select": "Pilih Paket",
+    "info": {
+      "secure_payment": "Pembayaran Aman & Terverifikasi",
+      "one_time_payment": "Sekali Bayar (Tanpa Langganan)"
+    },
+    "checkout": {
+      "title": "Konfirmasi Pesanan",
+      "subtitle": "Pastikan semua informasi pesanan Anda sudah benar sebelum mengkonfirmasi.",
+      "package_label": "Paket Dipilih",
+      "total_label": "Total Harga",
+      "payment_method_label": "Metode Pembayaran",
+      "payment_method_value": "Manual Transfer (WhatsApp Verified)",
+      "disclaimer": "Dengan mengklik konfirmasi, sistem akan mencatat pesanan Anda sebagai Pending dan Anda akan diarahkan ke WhatsApp untuk verifikasi pembayaran manual oleh tim kami.",
+      "cta_confirm": "Konfirmasi & Lanjut ke WhatsApp"
+    },
+    "packages": {
+      "silver": {
+        "name": "KOMUNITAS (SILVER)",
+        "price": "Rp50.000",
+        "tagline": "Untuk pemula yang ingin masuk dunia content creator dan belajar bersama komunitas.",
+        "features": [
+          "Akses komunitas kreator SMI (premium)",
+          "Event online / offline terjadwal",
+          "Zoom meet sharing & diskusi",
+          "Konten dasar eksklusif",
+          "Networking antar kreator"
+        ],
+        "cta": "Gabung Komunitas",
+        "whatsapp": "Halo SMI! Saya ingin bergabung dengan Paket Komunitas (Silver) Rp50.000."
+      },
+      "premium": {
+        "name": "MENTORING (PREMIUM)",
+        "price": "Rp100.000",
+        "unit": "/ jam",
+        "tagline": "Sesi mentoring 1-on-1 secara tatap muka dengan mentor profesional atau founder Sekolah Mentor Indonesia.",
+        "features": [
+          "Konsultasi langsung 1-on-1",
+          "Review akun & konten",
+          "Penentuan niche & strategi growth",
+          "Jadwal fleksibel (by appointment)"
+        ],
+        "cta": "Pesan Sesi Mentoring",
+        "whatsapp": "Halo SMI! Saya ingin memesan sesi Mentoring (Premium) Rp100.000/jam."
+      },
+      "coaching": {
+        "name": "PRIVATE EXCLUSIVE (COACHING)",
+        "price_inner": "Rp5.000.000",
+        "price_outer": "Rp6.000.000",
+        "unit": "/ jam",
+        "tagline": "Coaching intensif untuk perusahaan, komunitas besar, atau institusi yang ingin mengundang mentor Sekolah Mentor Indonesia.",
+        "features": [
+          "Coaching kelompok / perusahaan",
+          "Materi custom sesuai kebutuhan",
+          "Mentor profesional SMI",
+          "Workshop, event, atau internal training",
+          "Kontrak & kerja sama resmi"
+        ],
+        "cta": "Hubungi Tim SMI",
+        "whatsapp": "Halo SMI! Saya ingin bertanya mengenai Paket Private Exclusive (Coaching) untuk instansi/perusahaan."
+      }
+    }
+  },
+  "library": {
+    "title": "Perpustakaan Pembelajaran",
+    "subtitle": "Materi gratis dan terkurasi untuk memulai perjalanan sebagai konten kreator.",
+    "filters": ["Semua", "Artikel", "Video", "Buku Elektronik", "Visual"],
+    "empty_state": {
+      "title": "Konten Segera Hadir",
+      "description": "Tim mentor kami sedang mengkurasi materi terbaik agar Anda bisa belajar dengan arah yang benar. Semua konten akan ditambahkan secara bertahap melalui dashboard admin.",
+      "curating": "Sedang Dikurasi",
+      "gradual_update": "Update Bertahap"
+    },
+    "cta_progress": "Cek Progress Library"
+  },
+  "community": {
+    "badge": "Akses Komunitas Premium",
+    "title": "Komunitas Kreator SMI",
+    "subtitle": "Tempat bertemunya para kreator untuk saling berbagi, berkolaborasi, dan tumbuh bersama dalam ekosistem yang suportif.",
+    "benefits": [
+      {
+        "title": "Networking Eksklusif",
+        "description": "Terhubung dengan ratusan kreator dari berbagai niche untuk membuka peluang kolaborasi."
+      },
+      {
+        "title": "Sharing & Diskusi",
+        "description": "Sesi berbagi pengalaman dan tips praktis yang tidak akan Anda temukan di tutorial publik."
+      },
+      {
+        "title": "Event Rutin",
+        "description": "Akses ke meetup online dan offline khusus anggota untuk mempererat tali persaudaraan."
+      },
+      {
+        "title": "Support System",
+        "description": "Lingkungan positif yang saling mendukung perjalanan karir kreatif Anda dari nol."
+      }
+    ],
+    "stats": {
+      "members": "500+",
+      "members_label": "Anggota Aktif",
+      "cities": "20+",
+      "cities_label": "Kota di Indonesia"
+    },
+    "cta": "Gabung Komunitas"
+  },
+  "stories": {
+    "badge": "Kisah Sukses",
+    "title": "Tumbuh Bersama SMI",
+    "followers_suffix": "Followers",
+    "items": [
+      {
+        "name": "Andi Wijaya",
+        "niche": "Review Teknologi",
+        "followers": "15rb+",
+        "story": "Dulu bingung cara mulai, setelah ikut mentoring di SMI, sekarang sudah bisa kerjasama dengan brand gadget."
+      },
+      {
+        "name": "Siska Putri",
+        "niche": "Memasak",
+        "followers": "50rb+",
+        "story": "Komunitasnya sangat suportif. Materi editing videonya praktis banget buat pemula kayak saya."
+      },
+      {
+        "name": "Budi Santoso",
+        "niche": "Edukasi",
+        "followers": "5rb+",
+        "story": "Paket mentoringnya worth it banget. Mindset saya tentang konten berubah total setelah belajar di sini."
+      },
+      {
+        "name": "Lia Amalia",
+        "niche": "Kecantikan",
+        "followers": "120rb+",
+        "story": "Dari nol sampai bisa punya tim kreatif sendiri. Terima kasih SMI buat pendampingannya!"
+      }
+    ]
+  },
+  "cta": {
+    "title": "Belajar tidak harus mahal untuk memulai",
+    "subtitle": "Mulai dari konten gratis, lanjutkan dengan pendampingan terstruktur bersama mentor berpengalaman.",
+    "cta_register": "Daftar Akun",
+    "cta_packages": "Lihat Paket Belajar"
+  },
+  "footer": {
+    "description": "Lembaga pelatihan bisnis terdepan untuk mencetak wirausahawan kompeten.",
+    "categories": {
+      "company": "Perusahaan",
+      "contact": "Kontak"
+    },
+    "nav": {
+      "home": "Beranda",
+      "about": "Tentang Kami",
+      "program": "Program",
+      "features": "Keunggulan",
+      "library": "Perpustakaan",
+      "packages": "Paket Belajar",
+      "contact": "Kontak"
+    },
+    "legal": {
+      "terms": "Syarat & Ketentuan",
+      "privacy": "Kebijakan Privasi"
+    },
+    "copyright": "© {{year}} Sekolah Mentor Indonesia.",
+    "powered_by": "Powered By - PT Multiusaha Prioritas Bersama"
+  }
+}
