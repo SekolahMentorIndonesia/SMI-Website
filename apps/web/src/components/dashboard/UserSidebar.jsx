@@ -50,7 +50,7 @@ export default function UserSidebar({ status }) {
   return (
     <div className="w-64 bg-white border-r border-neutral-100 min-h-screen flex flex-col sticky top-0">
       <div className="p-8 flex items-center gap-3">
-        <img src="/logo.jpeg" alt="SMI Logo" className="h-8 w-auto" />
+        <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="h-8 w-auto" />
         <span className="font-bold text-neutral-900">SMI Dashboard</span>
       </div>
 

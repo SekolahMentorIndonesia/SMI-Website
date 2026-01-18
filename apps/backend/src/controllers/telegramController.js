@@ -1,9 +1,11 @@
-const { Payment, Enrollment, User, MentorPackage } = require('../models');
+const { Payment, Enrollment, User, MentorPackage, AdminLog } = require('../models');
 const telegramService = require('../services/telegram.service');
 
 // Handle Telegram webhook updates
 const handleTelegramWebhook = async (req, res) => {
   try {
+    console.log('🔍 [DEBUG] Webhook received:', JSON.stringify(req.body, null, 2));
+    
     const { message } = req.body;
     
     // Validate message and message.text exists
@@ -20,6 +22,8 @@ const handleTelegramWebhook = async (req, res) => {
 
     const chatId = message.chat.id;
     const text = message.text.trim();
+    
+    console.log('🔍 [DEBUG] Processing command:', text, 'from chat:', chatId);
     
     // If text is empty after trim, ignore the message
     if (!text) {
@@ -44,10 +48,12 @@ const handleTelegramWebhook = async (req, res) => {
       await handleHelpCommand(chatId);
     }
     
-    res.status(200).send('OK');
+    console.log('✅ [DEBUG] Webhook processed successfully');
+    return res.status(200).send('OK');
   } catch (error) {
-    console.error('Error handling Telegram webhook:', error);
-    res.status(500).send('Internal Server Error');
+    console.error('❌ [DEBUG] Error handling Telegram webhook:', error);
+    console.error('❌ [DEBUG] Error stack:', error.stack);
+    return res.status(500).send('Internal Server Error');
   }
 };
 
@@ -76,7 +82,13 @@ const handleStatusCommand = async (text, chatId) => {
     const payment = await Payment.findByPk(paymentId, {
       include: [{
         model: Enrollment,
-        include: [MentorPackage, User]
+        include: [{
+          model: User,
+          attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+        }, {
+          model: MentorPackage,
+          attributes: ['id', 'name', 'product_type', 'price']
+        }]
       }]
     });
     
@@ -147,7 +159,13 @@ const handleUpdateStatusCommand = async (text, chatId) => {
     const payment = await Payment.findByPk(paymentId, {
       include: [{
         model: Enrollment,
-        include: [MentorPackage, User]
+        include: [{
+          model: User,
+          attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+        }, {
+          model: MentorPackage,
+          attributes: ['id', 'name', 'product_type', 'price']
+        }]
       }]
     });
     
@@ -212,7 +230,13 @@ const handleVerifyCommand = async (text, chatId) => {
     const payment = await Payment.findByPk(paymentId, {
       include: [{
         model: Enrollment,
-        include: [MentorPackage, User]
+        include: [{
+          model: User,
+          attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+        }, {
+          model: MentorPackage,
+          attributes: ['id', 'name', 'product_type', 'price']
+        }]
       }]
     });
     
@@ -258,7 +282,13 @@ const handleCancelCommand = async (text, chatId) => {
     const payment = await Payment.findByPk(paymentId, {
       include: [{
         model: Enrollment,
-        include: [MentorPackage, User]
+        include: [{
+          model: User,
+          attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+        }, {
+          model: MentorPackage,
+          attributes: ['id', 'name', 'product_type', 'price']
+        }]
       }]
     });
     
@@ -315,67 +345,126 @@ const handleAcceptCommand = async (text, chatId) => {
   try {
     console.log('Received /terima command:', text);
     
-    // Extract payment ID from command - handle both formats: /terima 4 and /terima4
-    let paymentId;
+    let requestId;
+    let shortId;
+    
     if (text.includes(' ')) {
-      // Format: /terima 4
+      // Format: /terima INV-XXXX
       const parts = text.split(' ');
-      paymentId = parseInt(parts[1], 10);
+      requestId = parts[1];
     } else {
-      // Format: /terima4
-      paymentId = parseInt(text.replace('/terima', ''), 10);
+      // Format: /terimaXXXX (4 digit terakhir)
+      shortId = text.replace('/terima', '');
+      if (shortId.length === 4 && /^\d+$/.test(shortId)) {
+        // Cari invoice dengan 4 digit terakhir
+        const enrollment = await Enrollment.findOne({
+          where: {
+            request_id: {
+              [require('sequelize').Op.like]: `%${shortId}`
+            }
+          },
+          include: [{
+            model: User,
+            attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+          }, {
+            model: MentorPackage,
+            attributes: ['id', 'name', 'product_type', 'price']
+          }, {
+            model: Payment
+          }]
+        });
+        
+        if (!enrollment) {
+          await telegramService.sendMessage(`Invoice tidak ditemukan.`);
+          return;
+        }
+        
+        requestId = enrollment.request_id;
+      } else {
+        await telegramService.sendMessage('Format salah. Gunakan: /terimaXXXX (4 digit terakhir) atau /terima INV-XXXX');
+        return;
+      }
     }
     
-    console.log('Extracted paymentId:', paymentId);
+    console.log('Extracted requestId:', requestId);
     
-    if (isNaN(paymentId)) {
-      await telegramService.sendMessage('Format salah. Gunakan: /terima [ID_PEMBAYARAN] atau /terima[ID_PEMBAYARAN]');
+    if (!requestId || !requestId.startsWith('INV-')) {
+      await telegramService.sendMessage('Format salah. Gunakan: /terimaXXXX (4 digit terakhir) atau /terima INV-XXXX');
       return;
     }
 
-    // Find payment with full relations
-    const payment = await Payment.findByPk(paymentId, {
+    // Find enrollment by request_id
+    const enrollment = await Enrollment.findOne({
+      where: { request_id: requestId },
       include: [{
-        model: Enrollment,
-        include: [MentorPackage, User]
+        model: User,
+        attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+      }, {
+        model: MentorPackage,
+        attributes: ['id', 'name', 'product_type', 'price']
+      }, {
+        model: Payment
       }]
     });
 
-    if (!payment) {
-      console.log(`Payment not found: ${paymentId}`);
-      await telegramService.sendMessage(`Pembayaran dengan ID ${paymentId} tidak ditemukan.`);
+    if (!enrollment) {
+      console.log(`Enrollment not found: ${requestId}`);
+      await telegramService.sendMessage(`Request ${requestId} tidak ditemukan.`);
       return;
     }
 
-    const enrollment = payment.Enrollment;
+    // Check if already processed
+    if (enrollment.status !== 'pending') {
+      await telegramService.sendMessage(`Invoice ini sudah diproses sebelumnya.`);
+      return;
+    }
+
     const user = enrollment.User;
     const pkg = enrollment.MentorPackage;
     
-    console.log(`Found payment: ${payment.id}, User: ${user.id} (${user.email}), Package: ${pkg.name} (${pkg.product_type})`);
+    console.log(`Found enrollment: ${enrollment.id}, User: ${user.id} (${user.email}), Package: ${pkg.name} (${pkg.product_type})`);
     console.log('Current user status:', user.status);
 
-    // Update payment status to VERIFIED
-    payment.status = 'VERIFIED';
-    await payment.save();
-    console.log('Updated payment status to VERIFIED');
+    // Update enrollment status
+    await enrollment.update({
+      status: 'approved',
+      approved_by: 'Telegram Admin',
+      approved_at: new Date(),
+      action_source: 'telegram'
+    });
 
-    // Update enrollment status to APPROVED
-    enrollment.status = 'APPROVED';
-    await enrollment.save();
-    console.log('Updated enrollment status to APPROVED');
+    // Update payment status if exists
+    if (enrollment.Payment) {
+      await enrollment.Payment.update({ status: 'VERIFIED' });
+      console.log(`[DEBUG] Payment ${enrollment.Payment.id} status updated to VERIFIED`);
+    }
 
     // Update user status based on product type
     if (pkg.product_type === 'komunitas') {
-      user.status = 'menunggu_masuk_komunitas';
-      await user.save();
-      console.log('Updated user status to menunggu_masuk_komunitas');
-      await telegramService.sendCommunityPaymentApproved(payment, user, pkg);
+      await user.update({ status: 'menunggu_masuk_komunitas' });
     } else if (pkg.product_type === 'mentoring') {
-      user.status = 'mentoring_approved';
-      await user.save();
-      console.log('Updated user status to mentoring_approved');
-      await telegramService.sendMentoringPaymentApproved(payment, user, pkg);
+      await user.update({ status: 'mentoring_approved' });
     }
+
+    // Log admin action
+    await AdminLog.create({
+      admin_id: 1, // Telegram bot admin ID
+      admin_email: 'telegram@smi.bot',
+      action: 'approve',
+      request_id: requestId,
+      action_source: 'telegram'
+    });
+
+    // Send notification
+    if (pkg.product_type === 'komunitas') {
+      await telegramService.sendCommunityPaymentApproved(enrollment.Payment, user, pkg);
+    } else if (pkg.product_type === 'mentoring') {
+      await telegramService.sendMentoringPaymentApproved(enrollment.Payment, user, pkg);
+    }
+
+    // Send sync notification to dashboard
+    const lastFourDigits = requestId.split('-').pop(); // Get 4 digit terakhir
+    await telegramService.sendMessage(`✅ Invoice ${lastFourDigits} berhasil diterima`);
 
     console.log('Command /terima processed successfully');
   } catch (error) {
@@ -388,60 +477,136 @@ const handleAcceptCommand = async (text, chatId) => {
 // Handle /tolak command
 const handleRejectCommand = async (text, chatId) => {
   try {
-    // Extract payment ID and reason from command - handle both formats: /tolak 4 [ALASAN] and /tolak4 [ALASAN]
-    let paymentId;
+    // Extract request ID and reason from command - handle both formats: /tolak INV-XXXX [ALASAN] and /tolakXXXX [ALASAN]
+    let requestId;
     let reason = 'Tidak ada alasan yang diberikan';
     
     if (text.includes(' ')) {
-      // Format: /tolak 4 [ALASAN]
+      // Format: /tolak INV-XXXX [ALASAN] atau /tolakXXXX [ALASAN]
       const parts = text.split(' ');
-      paymentId = parseInt(parts[1], 10);
-      reason = parts.slice(2).join(' ') || reason;
+      const firstPart = parts[0];
+      
+      if (firstPart === '/tolak') {
+        // Format: /tolak INV-XXXX [ALASAN]
+        requestId = parts[1];
+        reason = parts.slice(2).join(' ') || reason;
+      } else if (firstPart.startsWith('/tolak') && firstPart.length > 6) {
+        // Format: /tolakXXXX [ALASAN]
+        const shortId = firstPart.replace('/tolak', '');
+        if (shortId.length === 4 && /^\d+$/.test(shortId)) {
+          // Cari invoice dengan 4 digit terakhir
+          const enrollment = await Enrollment.findOne({
+            where: {
+              request_id: {
+                [require('sequelize').Op.like]: `%${shortId}`
+              }
+            },
+            include: [{
+              model: User,
+              attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+            }, {
+              model: MentorPackage,
+              attributes: ['id', 'name', 'product_type', 'price']
+            }, {
+              model: Payment
+            }]
+          });
+          
+          if (!enrollment) {
+            await telegramService.sendMessage(`Invoice tidak ditemukan.`);
+            return;
+          }
+          
+          requestId = enrollment.request_id;
+          reason = parts.slice(1).join(' ') || reason;
+        } else {
+          await telegramService.sendMessage('Format salah. Gunakan: /tolakXXXX [alasan] (4 digit terakhir) atau /tolak INV-XXXX [alasan]');
+          return;
+        }
+      }
     } else {
-      // Format: /tolak4
-      paymentId = parseInt(text.replace('/tolak', ''), 10);
+      // Format: /tolakXXXX tanpa alasan
+      const shortId = text.replace('/tolak', '');
+      if (shortId.length === 4 && /^\d+$/.test(shortId)) {
+        await telegramService.sendMessage('Gunakan format: /tolakXXXX alasan');
+        return;
+      } else {
+        await telegramService.sendMessage('Format salah. Gunakan: /tolakXXXX [alasan] (4 digit terakhir) atau /tolak INV-XXXX [alasan]');
+        return;
+      }
     }
     
-    if (isNaN(paymentId)) {
-      await telegramService.sendMessage('Format salah. Gunakan: /tolak [ID_PEMBAYARAN] [ALASAN] atau /tolak[ID_PEMBAYARAN] [ALASAN]');
+    if (!requestId || !requestId.startsWith('INV-')) {
+      await telegramService.sendMessage('Format salah. Gunakan: /tolakXXXX [alasan] (4 digit terakhir) atau /tolak INV-XXXX [alasan]');
       return;
     }
 
-    // Find payment with full relations
-    const payment = await Payment.findByPk(paymentId, {
+    // Find enrollment by request_id
+    const enrollment = await Enrollment.findOne({
+      where: { request_id: requestId },
       include: [{
-        model: Enrollment,
-        include: [MentorPackage, User]
+        model: User,
+        attributes: ['id', 'name', 'email', 'phone_number', 'telegram_user', 'status']
+      }, {
+        model: MentorPackage,
+        attributes: ['id', 'name', 'product_type', 'price']
+      }, {
+        model: Payment
       }]
     });
 
-    if (!payment) {
-      await telegramService.sendMessage(`Pembayaran dengan ID ${paymentId} tidak ditemukan.`);
+    if (!enrollment) {
+      await telegramService.sendMessage(`Invoice tidak ditemukan.`);
       return;
     }
 
-    const enrollment = payment.Enrollment;
+    // Check if already processed
+    if (enrollment.status !== 'pending') {
+      await telegramService.sendMessage(`Invoice ini sudah diproses sebelumnya.`);
+      return;
+    }
+
     const user = enrollment.User;
     const pkg = enrollment.MentorPackage;
 
-    // Update payment status to REJECTED
-    payment.status = 'REJECTED';
-    await payment.save();
+    // Update enrollment status
+    await enrollment.update({
+      status: 'rejected',
+      approved_by: 'Telegram Admin',
+      approved_at: new Date(),
+      rejected_reason: reason,
+      action_source: 'telegram'
+    });
 
-    // Update enrollment status to REJECTED
-    enrollment.status = 'REJECTED';
-    await enrollment.save();
+    // Update payment status if exists
+    if (enrollment.Payment) {
+      await enrollment.Payment.update({ status: 'REJECTED' });
+      console.log(`[DEBUG] Payment ${enrollment.Payment.id} status updated to REJECTED`);
+    }
 
     // Update user status to rejected for both types
-    user.status = 'rejected';
-    await user.save();
+    await user.update({ status: 'rejected' });
 
-    // Send different notifications based on product type
+    // Log admin action
+    await AdminLog.create({
+      admin_id: 1, // Telegram bot admin ID
+      admin_email: 'telegram@smi.bot',
+      action: 'reject',
+      request_id: requestId,
+      action_source: 'telegram',
+      rejected_reason: reason
+    });
+
+    // Send notification
     if (pkg.product_type === 'komunitas') {
-      await telegramService.sendCommunityPaymentRejected(payment, user, pkg, reason);
+      await telegramService.sendCommunityPaymentRejected(enrollment.Payment, user, pkg, reason);
     } else {
-      await telegramService.sendMentoringPaymentRejected(payment, user, pkg, reason);
+      await telegramService.sendMentoringPaymentRejected(enrollment.Payment, user, pkg, reason);
     }
+
+    // Send sync notification to dashboard
+    const lastFourDigits = requestId.split('-').pop(); // Get 4 digit terakhir
+    await telegramService.sendMessage(`❌ Invoice ${lastFourDigits} ditolak`);
   } catch (error) {
     console.error('Error handling /tolak command:', error);
     await telegramService.sendMessage('Terjadi kesalahan saat memproses permintaan.');

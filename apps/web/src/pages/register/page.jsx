@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuthStore } from '../../store/useAuthStore';
-import { User, Mail, Lock, Loader2, ArrowRight, ShieldCheck, Eye, EyeOff } from 'lucide-react';
+import { User, Mail, Lock, Phone, Loader2, ArrowRight, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 import { authService } from '../../services/authService';
 
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone_number, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -20,10 +21,15 @@ export default function RegisterPage() {
     setError('');
 
     try {
-      const { user, token } = await authService.register(name, email, password);
+      const { user, token } = await authService.register(name, email, password, phone_number);
       login(user, token);
       
-      navigate('/profile');
+      // Redirect based on verification status
+      if (user.account_status === 'ACTIVE') {
+        navigate('/dashboard');
+      } else {
+        navigate('/verification');
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Gagal mendaftarkan akun. Silakan coba lagi.');
     } finally {
@@ -89,6 +95,28 @@ export default function RegisterPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-11 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all"
                   placeholder="name@email.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-neutral-700 mb-2">
+                Nomor HP
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-400">
+                  <Phone className="w-4.5 h-4.5" />
+                </div>
+                <input
+                  type="tel"
+                  required
+                  value={phone_number}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="block w-full pl-11 pr-4 py-3 bg-neutral-50 border border-neutral-200 rounded-xl text-neutral-900 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all"
+                  placeholder="08123456789"
+                  pattern="[0-9]{10,15}"
+                  minLength={10}
+                  maxLength={15}
                 />
               </div>
             </div>

@@ -151,7 +151,7 @@ export default function SMITestimonials() {
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
                     <img 
                       src={testi.image} 
-                      alt={testi.name} 
+                      alt={`${testi.name} - ${testi.role} - Testimoni Sekolah Mentor Indonesia`} 
                       className="w-full h-full object-cover"
                     />
                   </div>

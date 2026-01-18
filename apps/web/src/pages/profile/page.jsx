@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
-import { User, Mail, Shield, Calendar, Edit2, LogOut, Loader2, Phone, MessageCircle, Camera, X } from "lucide-react";
+import { User, Mail, Shield, Calendar, Edit2, LogOut, Loader2, Phone, MessageCircle, Camera, X, CheckCircle, AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import UserGuard from "../../components/dashboard/UserGuard";
 import { userService } from "../../services/userService";
@@ -71,8 +71,12 @@ export default function ProfilePage() {
       const payload = { 
         name: name.trim(),
         telegram_user: telegramUsername.trim()
-        // phone_number is intentionally not included as it should be read-only
       };
+      
+      // Include email if changed
+      if (email !== user?.email) {
+        payload.email = email.trim();
+      }
       
       const result = await userService.updateProfile(payload);
 
@@ -82,6 +86,8 @@ export default function ProfilePage() {
         updateUser({ 
           ...user,
           name: name.trim(),
+          email: email.trim(),
+          email_verified: email !== user?.email ? false : user?.email_verified,
           telegram_user: telegramUsername.trim()
         });
       }
@@ -219,12 +225,36 @@ export default function ProfilePage() {
                       </div>
                     </div>
 
-                    {/* Email Field (Readonly) */}
+                    {/* Email Field (Editable) */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-neutral-600">Email</label>
+                      <div className="flex items-center justify-between">
+                        <label className="text-sm font-medium text-neutral-600">Email</label>
+                        <div className="flex items-center gap-2">
+                          {user?.email_verified ? (
+                            <div className="flex items-center gap-1 text-green-600">
+                              <CheckCircle className="w-4 h-4" />
+                              <span className="text-xs font-medium">Terverifikasi</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-1 text-yellow-600">
+                              <AlertCircle className="w-4 h-4" />
+                              <span className="text-xs font-medium">Belum Diverifikasi</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                       <div className="mt-1">
-                        <p className="text-base text-neutral-700">{user?.email}</p>
-                        <p className="text-xs text-neutral-500 mt-1">Email tidak dapat diubah</p>
+                        {isEditing ? (
+                          <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
+                            placeholder="email@example.com"
+                          />
+                        ) : (
+                          <p className="text-base text-neutral-700">{user?.email}</p>
+                        )}
                       </div>
                     </div>
 
@@ -232,7 +262,20 @@ export default function ProfilePage() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
                         <label className="text-sm font-medium text-neutral-600">Nomor Telepon</label>
-                        <span className="text-xs text-neutral-500">Tidak dapat diubah</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-neutral-500">Tidak dapat diubah</span>
+                          {user?.phone_verified ? (
+                            <div className="flex items-center gap-1 text-green-600">
+                              <CheckCircle className="w-4 h-4" />
+                              <span className="text-xs font-medium">Terverifikasi</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-1 text-yellow-600">
+                              <AlertCircle className="w-4 h-4" />
+                              <span className="text-xs font-medium">Belum Diverifikasi</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="mt-1">
                         <div className="w-full px-4 py-2 bg-neutral-50 rounded-lg border border-neutral-200 text-neutral-700">

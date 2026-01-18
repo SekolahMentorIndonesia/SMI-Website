@@ -9,6 +9,13 @@ export default function UserGuard({ children, requireApproved = false }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if auth state is loaded from localStorage
+    const authStorage = localStorage.getItem('auth-storage');
+    if (!authStorage) {
+      navigate('/login');
+      return;
+    }
+
     if (!isAuthenticated || !token) {
       navigate('/login');
       return;

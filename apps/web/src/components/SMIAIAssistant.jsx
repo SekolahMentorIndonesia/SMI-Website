@@ -4,14 +4,31 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function SMIAIAssistant() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { role: 'bot', content: t('ai.opening_message'), showWhatsapp: false }
-  ]);
+  const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Reset opening message ketika bahasa berubah, tapi pertahankan chat history
+  useEffect(() => {
+    setMessages(prev => {
+      // Jika hanya ada opening message, update dengan bahasa baru
+      if (prev.length === 1 && prev[0].role === 'bot' && !prev[0].showWhatsapp) {
+        return [
+          { role: 'bot', content: t('ai.opening_message'), showWhatsapp: false }
+        ];
+      }
+      // Jika sudah ada chat, update opening message pertama
+      if (prev.length > 0 && prev[0].role === 'bot') {
+        const updatedMessages = [...prev];
+        updatedMessages[0] = { role: 'bot', content: t('ai.opening_message'), showWhatsapp: false };
+        return updatedMessages;
+      }
+      return prev;
+    });
+  }, [i18n.language, t]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -30,13 +47,16 @@ export default function SMIAIAssistant() {
     setIsLoading(true);
 
     try {
-      // Kirim request ke backend
+      // Kirim request ke backend dengan language parameter
       const response = await fetch('/api/ai/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ 
+          message: input,
+          language: i18n.language // Kirim language ke backend
+        }),
       });
 
       if (!response.ok) {
@@ -54,7 +74,7 @@ export default function SMIAIAssistant() {
       console.error('Error sending message:', error);
       const errorMessage = { 
         role: 'bot', 
-        content: 'Maaf, terjadi kesalahan. Silakan hubungi admin Sekolah Mentor Indonesia untuk bantuan lebih lanjut.',
+        content: t('ai.mock_responses.fallback'),
         showWhatsapp: true
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -98,13 +118,13 @@ export default function SMIAIAssistant() {
               <div className="bg-brand-600 p-4 sm:p-6 text-white flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg sm:rounded-xl flex items-center justify-center overflow-hidden">
-                    <img src="/logo.jpeg" alt="SMI Logo" className="w-full h-full object-cover" />
+                    <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 className="font-bold text-xs sm:text-sm">{t('ai.name')}</h4>
                     <div className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                      <span className="text-[10px] text-brand-100 font-medium">Online</span>
+                      <span className="text-[10px] text-brand-100 font-medium">{t('ai.status')}</span>
                     </div>
                   </div>
                 </div>
@@ -128,7 +148,7 @@ export default function SMIAIAssistant() {
                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'bot' ? '' : 'flex-row-reverse'}`}>
                       <div className={`w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden ${msg.role === 'bot' ? 'bg-white border border-neutral-100' : 'bg-brand-600'}`}>
                         {msg.role === 'bot' ? (
-                          <img src="/logo.jpeg" alt="SMI" className="w-5 h-5 object-contain" />
+                          <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="w-5 h-5 object-contain" />
                         ) : (
                           <User className="w-4 h-4 text-white" />
                         )}
@@ -150,12 +170,12 @@ export default function SMIAIAssistant() {
                           className="flex items-center gap-2 bg-green-500 text-white text-xs px-3 py-1.5 rounded-full hover:bg-green-600 transition-colors shadow-sm"
                         >
                           <PhoneCall className="w-3.5 h-3.5" />
-                          <span>Hubungi Admin via WhatsApp</span>
+                          <span>{i18n.language === 'en' ? 'Contact Admin via WhatsApp' : 'Hubungi Admin via WhatsApp'}</span>
                         </button>
                       </motion.div>
                     )}
                   </motion.div>
-                ))},
+                ))}
                 {isLoading && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -164,7 +184,7 @@ export default function SMIAIAssistant() {
                   >
                     <div className="flex gap-3 max-w-[85%]">
                       <div className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden bg-white border border-neutral-100">
-                        <img src="/logo.jpeg" alt="SMI" className="w-5 h-5 object-contain" />
+                        <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="w-5 h-5 object-contain" />
                       </div>
                       <div className="p-4 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-neutral-700 border border-neutral-100">
                         <div className="flex gap-1">
@@ -187,7 +207,7 @@ export default function SMIAIAssistant() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Tanyakan sesuatu..."
+                    placeholder={t('ai.input_placeholder')}
                     disabled={isLoading}
                     className="flex-1 bg-transparent border-none outline-none text-xs sm:text-sm text-neutral-900 px-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   />

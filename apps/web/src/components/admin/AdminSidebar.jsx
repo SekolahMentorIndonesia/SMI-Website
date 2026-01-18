@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, LogOut, ShieldCheck, Home, User, Settings, CreditCard, FileText } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, ShieldCheck, Home, User, Settings, CreditCard, FileText, BookOpen } from "lucide-react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigate, useLocation } from "react-router";
 

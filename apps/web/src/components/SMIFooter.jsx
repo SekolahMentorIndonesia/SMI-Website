@@ -30,7 +30,7 @@ export default function SMIFooter() {
             <a href="/app" className="flex items-center mb-6 group">
               <img 
                 src="/logo.jpeg" 
-                alt="SMI Logo" 
+                alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" 
                 className="h-14 sm:h-16 w-auto object-contain rounded-lg transition-transform group-hover:scale-105"
               />
             </a>
@@ -60,9 +60,9 @@ export default function SMIFooter() {
           <div className="sm:pl-8 lg:pl-0">
             <h4 className="text-white font-bold text-xs sm:text-sm mb-6 font-display uppercase tracking-widest">{t('footer.company')}</h4>
             <ul className="space-y-4 text-sm font-sans">
-              <li><a href="#tentang" className="hover:text-brand-400 transition-colors block py-1">{t('header.nav.about')}</a></li>
-              <li><a href="#program" className="hover:text-brand-400 transition-colors block py-1">{t('header.nav.program')}</a></li>
-              <li><a href="#keunggulan" className="hover:text-brand-400 transition-colors block py-1">{t('header.nav.advantages')}</a></li>
+              <li><a href="#about" className="hover:text-brand-400 transition-colors block py-1">{t('header.nav.about')}</a></li>
+              <li><a href="#products" className="hover:text-brand-400 transition-colors block py-1">{t('header.nav.products')}</a></li>
+              <li><a href="#benefits" className="hover:text-brand-400 transition-colors block py-1">{t('header.nav.benefits')}</a></li>
             </ul>
           </div>
 
@@ -77,7 +77,7 @@ export default function SMIFooter() {
                 </li>
                 <li className="flex gap-3 items-center">
                   <Phone className="text-brand-500 flex-shrink-0 w-[18px] h-[18px]" />
-                  <a href="https://wa.me/6287744556696" className="hover:text-brand-400 transition-colors">+62 877-4455-6696</a>
+                  <a href="https://wa.me/6281915020498" className="hover:text-brand-400 transition-colors">+62 819-1502-0498</a>
                 </li>
               </ul>
               <ul className="space-y-4 text-sm font-sans">

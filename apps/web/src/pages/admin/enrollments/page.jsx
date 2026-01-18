@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import AdminLayout from '../../../layouts/AdminLayout';
 import { adminService } from '../../../services/adminService';
-import { Search, Filter, Eye, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Filter, Eye, Loader2, ChevronLeft, ChevronRight, CheckCircle, XCircle, Clock } from 'lucide-react';
+import { useNotification } from '../../../contexts/NotificationContext';
 
 export default function AdminEnrollmentListPage() {
   const [enrollments, setEnrollments] = useState([]);
-  const [status, setStatus] = useState('WAITING_APPROVAL');
+  const [status, setStatus] = useState('pending');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [processingEnrollments, setProcessingEnrollments] = useState(new Set());
   const navigate = useNavigate();
+  const { success, error: showError } = useNotification();
 
   const fetchEnrollments = async () => {
     setIsLoading(true);
@@ -29,10 +32,35 @@ export default function AdminEnrollmentListPage() {
 
   const getStatusStyle = (s) => {
     switch (s) {
-      case 'WAITING_APPROVAL': return 'bg-amber-50 text-amber-600 border-amber-100';
-      case 'APPROVED': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
-      case 'REJECTED': return 'bg-red-50 text-red-600 border-red-100';
+      case 'pending': return 'bg-amber-50 text-amber-600 border-amber-100';
+      case 'approved': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
+      case 'rejected': return 'bg-red-50 text-red-600 border-red-100';
       default: return 'bg-neutral-50 text-neutral-600 border-neutral-100';
+    }
+  };
+
+  const handleQuickAction = async (enrollmentId, action) => {
+    if (processingEnrollments.has(enrollmentId)) return;
+    
+    setProcessingEnrollments(prev => new Set(prev).add(enrollmentId));
+    
+    try {
+      if (action === 'approve') {
+        await adminService.approveEnrollment(enrollmentId);
+        success(`Enrollment ${enrollmentId} approved successfully!`, 3000);
+      } else {
+        await adminService.rejectEnrollment(enrollmentId);
+        success(`Enrollment ${enrollmentId} rejected successfully!`, 3000);
+      }
+      await fetchEnrollments(); // Refresh data
+    } catch (error) {
+      showError(`Failed to ${action} enrollment: ${error.message}`, 5000);
+    } finally {
+      setProcessingEnrollments(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(enrollmentId);
+        return newSet;
+      });
     }
   };
 
@@ -54,9 +82,9 @@ export default function AdminEnrollmentListPage() {
               className="bg-neutral-50 border border-neutral-200 rounded-xl px-4 py-2 text-sm font-medium focus:ring-2 focus:ring-brand-500 outline-none"
             >
               <option value="">All Statuses</option>
-              <option value="WAITING_APPROVAL">Waiting Approval</option>
-              <option value="APPROVED">Approved</option>
-              <option value="REJECTED">Rejected</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
             </select>
           </div>
         </div>
@@ -70,7 +98,7 @@ export default function AdminEnrollmentListPage() {
                 <th className="px-6 py-4 text-xs font-bold text-neutral-500 uppercase tracking-wider">Package</th>
                 <th className="px-6 py-4 text-xs font-bold text-neutral-500 uppercase tracking-wider">Status</th>
                 <th className="px-6 py-4 text-xs font-bold text-neutral-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-4 text-xs font-bold text-neutral-500 uppercase tracking-wider">Action</th>
+                <th className="px-6 py-4 text-xs font-bold text-neutral-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100">
@@ -107,12 +135,34 @@ export default function AdminEnrollmentListPage() {
                       {new Date(item.created_at).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
-                      <button 
-                        onClick={() => navigate(`/admin/enrollments/${item.id}`)}
-                        className="p-2 hover:bg-brand-50 text-neutral-400 hover:text-brand-600 rounded-lg transition-all"
-                      >
-                        <Eye size={18} />
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {item.status === 'pending' && (
+                          <>
+                            <button 
+                              onClick={() => handleQuickAction(item.id, 'approve')}
+                              disabled={processingEnrollments.has(item.id)}
+                              className="flex items-center gap-1 px-3 py-1 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm disabled:opacity-50"
+                            >
+                              {processingEnrollments.has(item.id) ? <Loader2 className="animate-spin" size={14} /> : <CheckCircle size={14} />}
+                              Approve
+                            </button>
+                            <button 
+                              onClick={() => handleQuickAction(item.id, 'reject')}
+                              disabled={processingEnrollments.has(item.id)}
+                              className="flex items-center gap-1 px-3 py-1 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors text-sm disabled:opacity-50"
+                            >
+                              {processingEnrollments.has(item.id) ? <Loader2 className="animate-spin" size={14} /> : <XCircle size={14} />}
+                              Reject
+                            </button>
+                          </>
+                        )}
+                        <button 
+                          onClick={() => navigate(`/admin/enrollments/${item.id}`)}
+                          className="p-2 hover:bg-brand-50 text-neutral-400 hover:text-brand-600 rounded-lg transition-all"
+                        >
+                          <Eye size={18} />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

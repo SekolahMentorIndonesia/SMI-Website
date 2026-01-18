@@ -19,18 +19,6 @@ const FreeContent = sequelize.define('FreeContent', {
     type: DataTypes.ENUM('blog', 'video', 'ebook'),
     allowNull: false,
   },
-  file_path: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  file_name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  file_size: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   created_by: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -38,6 +26,16 @@ const FreeContent = sequelize.define('FreeContent', {
       model: 'users',
       key: 'id',
     },
+  },
+  content_status: {
+    type: DataTypes.ENUM('draft', 'published', 'archived'),
+    allowNull: false,
+    defaultValue: 'draft',
+  },
+  content_blocks: {
+    type: DataTypes.JSON,
+    allowNull: false,
+    defaultValue: [],
   },
 }, {
   tableName: 'free_contents',

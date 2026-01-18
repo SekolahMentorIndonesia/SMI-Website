@@ -1,8 +1,13 @@
 const { Enrollment, MentorPackage, Payment, User } = require('../models');
 const telegramService = require('../services/telegram.service');
+const { Op } = require('sequelize');
 
 const createEnrollment = async (req, res) => {
   try {
+    console.log('🔍 [DEBUG] createEnrollment called');
+    console.log('🔍 [DEBUG] Request body:', req.body);
+    console.log('🔍 [DEBUG] User:', req.user);
+    
     const {
       package_id,
       name,
@@ -17,6 +22,69 @@ const createEnrollment = async (req, res) => {
     
     const user_id = req.user.id;
     const proof_image = req.file ? req.file.path : null;
+
+    // WAJIB: Validasi nomor HP
+    if (!phone_number || phone_number.trim() === '') {
+      console.log('❌ [DEBUG] Phone number validation failed');
+      return res.status(400).json({ 
+        message: 'Nomor HP wajib diisi. Lengkapi profil Anda terlebih dahulu.' 
+      });
+    }
+
+    // WAJIB: Cek nomor HP user
+    if (!req.user.phone_number || req.user.phone_number.trim() === '') {
+      console.log('❌ [DEBUG] User has no phone number');
+      return res.status(400).json({ 
+        message: 'Akun Anda belum memiliki nomor HP. Silakan lengkapi profil terlebih dahulu.' 
+      });
+    }
+
+    console.log('✅ [DEBUG] Phone number validated:', req.user.phone_number);
+
+    // Check if user is verified and active
+    if (!req.user.email_verified || !req.user.phone_verified) {
+      return res.status(403).json({ 
+        message: 'Akun Anda belum diverifikasi. Silakan verifikasi email dan nomor HP terlebih dahulu.' 
+      });
+    }
+
+    if (req.user.account_status !== 'ACTIVE') {
+      return res.status(403).json({ 
+        message: 'Akun Anda tidak aktif. Hubungi admin.' 
+      });
+    }
+
+    // Check if user has active enrollment
+    const activeEnrollment = await Enrollment.findOne({
+      where: {
+        user_id,
+        status: ['pending', 'approved']
+      }
+    });
+
+    if (activeEnrollment) {
+      return res.status(400).json({ 
+        message: 'Anda masih memiliki proses yang sedang berjalan. Mohon tunggu hingga proses sebelumnya selesai.' 
+      });
+    }
+
+    // Check for existing enrollments today to prevent duplicates
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayEnrollment = await Enrollment.findOne({
+      where: {
+        user_id,
+        created_at: {
+          [Op.gte]: today
+        }
+      }
+    });
+
+    if (todayEnrollment) {
+      return res.status(400).json({ 
+        message: 'Anda sudah melakukan pendaftaran hari ini. Mohon tunggu hingga proses selesai.' 
+      });
+    }
 
     // Check if package exists
     const pkg = await MentorPackage.findByPk(package_id);
@@ -43,7 +111,7 @@ const createEnrollment = async (req, res) => {
           }
         }
         if (telegram_user && telegram_user.trim()) updateData.telegram_user = telegram_user;
-        if (phone_number && phone_number.trim()) updateData.phone_number = phone_number;
+        // ❌ PHONE_NUMBER TIDAK BOLEH DIUBAH - READONLY
         
         // Only update if there's something to update
         if (Object.keys(updateData).length > 0) {
@@ -56,18 +124,21 @@ const createEnrollment = async (req, res) => {
     }
 
     // Create enrollment
+    console.log('🔍 [DEBUG] Creating enrollment...');
     const enrollment = await Enrollment.create({
       user_id,
       package_id,
-      status: 'WAITING_APPROVAL',
-      motivation: motivation || ''
+      status: 'pending',
+      motivation: motivation || '',
+      product_type: pkg.product_type,
+      request_id: `INV-${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`
     });
+    console.log('✅ [DEBUG] Enrollment created:', enrollment.request_id);
 
     // Parse amount to remove currency symbols and handle Indonesian thousand separators
     const parseAmount = (amountStr) => {
       if (!amountStr) return pkg.price;
       // Remove currency symbols, then replace thousand separators (dots) with empty string
-      // Fix: Use proper string replacement for "Rp" prefix
       const cleanAmount = amountStr
         .replace(/Rp/g, '')       // Remove currency symbol
         .replace(/\s/g, '')       // Remove spaces
@@ -77,42 +148,32 @@ const createEnrollment = async (req, res) => {
     };
 
     // Create payment record with only existing columns
+    console.log('🔍 [DEBUG] Creating payment...');
     const payment = await Payment.create({
       enrollment_id: enrollment.id,
       amount: parseAmount(payment_amount) || pkg.price,
       proof_image,
       status: 'PENDING'
     });
+    console.log('✅ [DEBUG] Payment created:', payment.id);
 
-    // Prepare Telegram notification
-    const caption = `🔔 NEW PAYMENT PENDING 🔔\n\n` +
-      `📋 ID Pembelian: #${payment.id}\n` +
-      `👤 User: ${user.name} (${user.email})\n` +
-      `📱 Telegram: ${user.telegram_user || 'Belum ditambahkan'}\n` +
-      `📞 Telepon: ${user.phone_number || 'Belum ditambahkan'}\n` +
-      `📦 Paket: ${pkg.name}\n` +
-      `💰 Harga Paket: ${pkg.price}\n` +
-      `💵 Jumlah Bayar: ${payment.amount}\n` +
-      `💳 Metode Bayar: ${payment_method === 'rekening' ? 'Transfer Bank' : 'QRIS'}\n\n` +
-      `💬 Deskripsi: ${proof_description || '-'}\n` +
-      `📝 Motivasi: ${motivation || '-'}\n\n` +
-      `Status: PENDING - Menunggu Verifikasi\n\n` +
-      `Untuk verifikasi:\n` +
-      `/terima ${payment.id} atau /tolak ${payment.id} [ALASAN]`;
+    // ❌ DECOUPLED: Jangan kirim Telegram langsung dari request
+    // Telegram akan dikirim oleh worker terpisah
+    console.log('📤 [DEBUG] Telegram will be sent by worker (decoupled)');
 
-    // Send notification to Telegram admin with photo
+    // Trigger internal API untuk worker (STRATEGI 2 - LOOPBACK)
     try {
-      if (payment.proof_image) {
-        await telegramService.sendPhoto(payment.proof_image, caption);
-      } else {
-        await telegramService.sendMessage(caption);
-      }
-    } catch (telegramError) {
-      console.error('Telegram notification error:', telegramError.message);
-      // Continue with enrollment process even if Telegram fails
-      // This ensures reliability for users
+      const axios = require('axios');
+      await axios.post(`${process.env.BASE_URL || 'http://localhost:5000'}/api/internal/send-telegram`, {}, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      console.log('✅ [DEBUG] Internal Telegram trigger sent');
+    } catch (triggerError) {
+      console.error('⚠️ [DEBUG] Internal trigger failed, worker will handle in next cycle:', triggerError.message);
+      // Continue - worker akan handle di next cycle
     }
 
+    console.log('🎉 [DEBUG] Enrollment process completed successfully');
     res.status(201).json({
       message: 'Enrollment created successfully. Waiting for admin approval.',
       enrollment,
@@ -120,7 +181,23 @@ const createEnrollment = async (req, res) => {
     });
   } catch (error) {
     console.error('Enrollment error:', error);
-    res.status(500).json({ message: error.message });
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack,
+      errors: error.errors
+    });
+    
+    // Send more detailed error response
+    const statusCode = error.name === 'SequelizeValidationError' ? 400 : 500;
+    const message = error.name === 'SequelizeValidationError' 
+      ? 'Data tidak lengkap atau tidak valid. Silakan periksa kembali.'
+      : error.message;
+    
+    res.status(statusCode).json({ 
+      message,
+      details: error.errors || null
+    });
   }
 };
 

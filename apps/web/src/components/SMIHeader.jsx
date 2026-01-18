@@ -51,7 +51,7 @@ export default function SMIHeader() {
             >
               <img 
                 src="/logo.jpeg" 
-                alt="SMI Logo" 
+                alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator"
                 className="h-full w-auto object-contain"
               />
             </motion.div>

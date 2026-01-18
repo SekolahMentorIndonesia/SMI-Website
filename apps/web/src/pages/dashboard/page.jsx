@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useAuthStore } from "../../store/useAuthStore";
-import UserLayout from "../../layouts/UserLayout";
-import { paymentService } from "../../services/paymentService";
-import PendingScreen from "../../components/dashboard/PendingScreen";
-import RejectedScreen from "../../components/dashboard/RejectedScreen";
-import SelectPackageScreen from "../../components/dashboard/SelectPackageScreen";
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { useAuthStore } from '../../store/useAuthStore';
+import { paymentService } from '../../services/paymentService';
+import PendingScreen from '../../components/dashboard/PendingScreen';
+import RejectedScreen from '../../components/dashboard/RejectedScreen';
+import SelectPackageScreen from '../../components/dashboard/SelectPackageScreen';
+import UserLayout from '../../layouts/UserLayout';
 import { 
   CheckCircle2, 
   ArrowRight, 
@@ -16,9 +17,11 @@ import {
   FileText,
   Loader2
 } from "lucide-react";
+import { useNotification } from '../../contexts/NotificationContext';
 
 export default function UserDashboardPage() {
   const { user, token, updateUser } = useAuthStore();
+  const { success, error: showError } = useNotification();
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -57,7 +60,7 @@ export default function UserDashboardPage() {
         enrollment_status: 'WAITING_APPROVAL'
       });
       
-      alert("Bukti pembayaran berhasil diunggah. Mohon tunggu verifikasi admin.");
+      success("Bukti pembayaran berhasil diunggah. Mohon tunggu verifikasi admin.", 4000);
     } catch (err) {
       setUploadError(err.response?.data?.message || "Gagal mengunggah bukti pembayaran");
     } finally {

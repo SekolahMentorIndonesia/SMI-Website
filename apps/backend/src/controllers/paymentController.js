@@ -1,5 +1,6 @@
 const { Payment, Enrollment, User, MentorPackage } = require('../models');
 const telegramService = require('../services/telegram.service');
+const { Op } = require('sequelize');
 
 // Mengupload bukti pembayaran untuk pendaftaran tertentu
 const uploadPaymentProof = async (req, res) => {
@@ -18,6 +19,44 @@ const uploadPaymentProof = async (req, res) => {
 
     if (!enrollment) {
       return res.status(404).json({ message: 'Enrollment not found or access denied' });
+    }
+
+    // Check if user already has active payment
+    const existingPayment = await Payment.findOne({
+      include: [{
+        model: Enrollment,
+        where: { user_id: req.user.id }
+      }],
+      where: {
+        status: ['PENDING', 'VERIFIED']
+      }
+    });
+
+    if (existingPayment) {
+      return res.status(400).json({ 
+        message: 'Anda masih memiliki proses pembayaran yang sedang berjalan. Mohon tunggu hingga proses sebelumnya selesai.' 
+      });
+    }
+
+    // Check for payment attempts today
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayPayment = await Payment.findOne({
+      include: [{
+        model: Enrollment,
+        where: { user_id: req.user.id }
+      }],
+      where: {
+        created_at: {
+          [Op.gte]: today
+        }
+      }
+    });
+
+    if (todayPayment) {
+      return res.status(400).json({ 
+        message: 'Anda sudah melakukan pembayaran hari ini. Mohon tunggu hingga proses selesai.' 
+      });
     }
 
     // Parse amount to remove currency symbols and handle Indonesian thousand separators
@@ -40,8 +79,10 @@ const uploadPaymentProof = async (req, res) => {
     });
 
     // Update enrollment status
-    enrollment.status = 'WAITING_APPROVAL';
+    enrollment.status = 'pending';
     await enrollment.save();
+    
+    console.log(`[DEBUG] Enrollment ${enrollment.id} with request_id ${enrollment.request_id} created and status set to pending`);
 
     // Get user and package details for Telegram notification
     const user = await User.findByPk(enrollment.user_id);
@@ -49,11 +90,13 @@ const uploadPaymentProof = async (req, res) => {
 
     // Send notification to Telegram admin based on product type
     try {
+      console.log(`[DEBUG] Sending Telegram notification for payment ${payment.id} with request_id ${enrollment.request_id}`);
       if (pkg.product_type === 'komunitas') {
         await telegramService.sendCommunityPaymentNotification(payment, user, pkg);
       } else {
         await telegramService.sendMentoringPaymentNotification(payment, user, pkg);
       }
+      console.log(`[DEBUG] Telegram notification sent successfully for payment ${payment.id}`);
     } catch (telegramError) {
       console.error('Telegram notification error:', telegramError.message);
       // Continue with payment process even if Telegram fails

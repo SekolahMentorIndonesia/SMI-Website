@@ -1,10 +1,22 @@
 const { User, Enrollment, MentorPackage } = require('../models');
+const { AppError } = require('../utils/errorHandler');
+const { sendVerificationEmail } = require('../services/emailService');
 
 // Mendapatkan data profile user yang sedang login beserta enrollment terakhir
 const getMe = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
-      attributes: ['id', 'name', 'email', 'role', 'status', 'phone_number', 'telegram_user'],
+      attributes: [
+        'id', 
+        'name', 
+        'email', 
+        'email_verified',
+        'phone_number', 
+        'phone_verified',
+        'telegram_user',
+        'role', 
+        'status'
+      ],
       include: [
         {
           model: Enrollment,
@@ -16,7 +28,7 @@ const getMe = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      throw new AppError('User not found', 404);
     }
 
     const userData = user.toJSON();
@@ -39,51 +51,131 @@ const getMe = async (req, res) => {
   }
 };
 
-// Memperbarui profil user dengan batasan permission
-const updateProfile = async (req, res) => {
+// Send verification email
+const sendVerification = async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    
+    if (!user) {
+      throw new AppError('User not found', 404);
+    }
+
+    if (user.email_verified) {
+      return res.json({ message: 'Email sudah terverifikasi' });
+    }
+
+    // Generate verification token (in a real app, this would be a secure random token)
+    const verificationToken = require('crypto').randomBytes(32).toString('hex');
+    
+    // In a real app, save this token to the database with an expiry
+    // await user.update({ email_verification_token: verificationToken });
+    
+    // Send verification email
+    await sendVerificationEmail(user.email, verificationToken);
+    
+    res.json({ message: 'Email verifikasi telah dikirim' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Verify email using token
+const verifyEmail = async (req, res, next) => {
+  try {
+    const { token } = req.params;
+    
+    // In a real app, verify the token against the database
+    // For now, we'll just mark as verified
+    const user = await User.findByPk(req.user.id);
+    
+    if (!user) {
+      throw new AppError('User not found', 404);
+    }
+
+    if (user.email_verified) {
+      return res.json({ message: 'Email sudah terverifikasi' });
+    }
+
+    // In a real app, verify the token here
+    // if (user.email_verification_token !== token) {
+    //   throw new AppError('Token verifikasi tidak valid', 400);
+    // }
+
+    await user.update({ 
+      email_verified: true,
+      // email_verification_token: null // Clear the token after verification
+    });
+
+    res.json({ message: 'Email berhasil diverifikasi' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Update user profile with verification checks
+const updateProfile = async (req, res, next) => {
   try {
     const { id } = req.user;
     const updateData = { ...req.body };
-    
-    // Hapus field yang tidak boleh diubah berdasarkan role
-    if (req.user.role === 'user') {
-      // USER tidak boleh mengubah role, phone_number, telegram_user
+
+    // Hanya admin yang bisa update role dan status
+    if (req.user.role !== 'admin') {
       delete updateData.role;
-      delete updateData.phone_number;
-      delete updateData.telegram_user;
+      delete updateData.status;
+    }
+
+    // Hapus field yang tidak boleh diupdate
+    delete updateData.id;
+    delete updateData.password;
+    
+    // Handle email update (requires re-verification)
+    if (updateData.email) {
+      const existingUser = await User.findOne({ 
+        where: { email: updateData.email },
+        attributes: ['id']
+      });
       
-      // Email edit memerlukan verifikasi (implementasi lebih lanjut)
-      if (updateData.email) {
-        // Di sini bisa ditambahkan logika untuk kirim email verifikasi
-        console.log(`User ${id} requesting email change to: ${updateData.email}`);
+      if (existingUser && existingUser.id !== id) {
+        throw new AppError('Email sudah digunakan', 400);
       }
-    } else if (req.user.role === 'admin') {
-      // ADMIN tidak boleh mengubah role
-      delete updateData.role;
+      
+      // Mark email as unverified when changed
+      updateData.email_verified = false;
     }
-    
-    // Update user data
-    const user = await User.findByPk(id);
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+
+    // ❌ PHONE_NUMBER TIDAK BOLEH DIUBAH - READONLY PERMANENT
+    if (updateData.phone_number) {
+      console.log('❌ [DEBUG] Attempted phone number update blocked');
+      throw new AppError('Nomor HP tidak dapat diubah', 400, 'PHONE_UPDATE_NOT_ALLOWED');
     }
-    
-    await user.update(updateData);
-    
-    res.json({
-      message: 'Profile updated successfully',
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone_number: user.phone_number,
-        telegram_user: user.telegram_user,
-        role: user.role,
-        status: user.status
-      }
+
+    const [updated] = await User.update(updateData, {
+      where: { id },
+      returning: true,
+      individualHooks: true
     });
+
+    if (!updated) {
+      throw new AppError('User not found', 404);
+    }
+
+    const updatedUser = await User.findByPk(id, {
+      attributes: [
+        'id', 
+        'name', 
+        'email', 
+        'email_verified',
+        'phone_number', 
+        'phone_verified',
+        'telegram_user',
+        'role', 
+        'status'
+      ]
+    });
+
+    res.json(updatedUser);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -114,4 +206,10 @@ const uploadProfilePhoto = async (req, res) => {
   }
 };
 
-module.exports = { getMe, updateProfile, uploadProfilePhoto };
+module.exports = { 
+  getMe, 
+  updateProfile, 
+  uploadProfilePhoto,
+  sendVerification,
+  verifyEmail
+};

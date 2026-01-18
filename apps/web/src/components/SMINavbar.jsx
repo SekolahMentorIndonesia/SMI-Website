@@ -34,7 +34,11 @@ export default function SMINavbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-18 md:h-20 flex items-center justify-between">
         <a href="/app" className="flex items-center gap-2 group">
-          <img src="/logo.jpeg" alt="SMI Logo" className="h-16 sm:h-[4.5rem] md:h-20 w-auto object-contain transition-transform group-hover:scale-105" />
+          <img 
+            src="/logo.jpeg" 
+            alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" 
+            className="h-16 sm:h-[4.5rem] md:h-20 w-auto object-contain transition-transform group-hover:scale-105" 
+          />
         </a>
 
         {/* Desktop Menu */}

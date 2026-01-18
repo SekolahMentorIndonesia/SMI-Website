@@ -15,18 +15,55 @@ const User = sequelize.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    unique: {
+      msg: 'Email sudah terdaftar',
+      name: 'email'
+    },
     validate: {
-      isEmail: true
+      isEmail: {
+        msg: 'Format email tidak valid'
+      },
+      notEmpty: {
+        msg: 'Email tidak boleh kosong'
+      }
     }
+  },
+  email_verified: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: {
+        msg: 'Password tidak boleh kosong'
+      },
+      len: {
+        args: [6, 100],
+        msg: 'Password minimal 6 karakter'
+      }
+    }
   },
   phone_number: {
-    type: DataTypes.STRING,
-    allowNull: true
+    type: DataTypes.STRING(20),
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: {
+        msg: 'Nomor HP tidak boleh kosong'
+      },
+      is: {
+        args: /^[0-9]{10,15}$/,
+        msg: 'Format nomor HP tidak valid (10-15 digit angka)'
+      }
+    }
+  },
+  phone_verified: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
   telegram_user: {
     type: DataTypes.STRING,
@@ -35,6 +72,10 @@ const User = sequelize.define('User', {
   role: {
     type: DataTypes.ENUM('user', 'admin', 'superadmin'),
     defaultValue: 'user'
+  },
+  account_status: {
+    type: DataTypes.ENUM('PENDING_VERIFICATION', 'ACTIVE', 'SUSPENDED'),
+    defaultValue: 'PENDING_VERIFICATION'
   },
   status: {
     type: DataTypes.ENUM('guest', 'belum_gabung', 'pending', 'approved', 'rejected', 'menunggu_masuk_komunitas', 'sudah_bergabung'),

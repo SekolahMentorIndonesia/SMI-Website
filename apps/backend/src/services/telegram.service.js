@@ -18,8 +18,7 @@ class TelegramService {
         try {
             const response = await axios.post(`${this.baseUrl}/sendMessage`, {
                 chat_id: this.chatId,
-                text: text,
-                parse_mode: 'HTML'
+                text: text
             });
 
             // Only consider success if Telegram API returns HTTP 200
@@ -58,7 +57,7 @@ class TelegramService {
             form.append('chat_id', this.chatId);
             form.append('photo', fs.createReadStream(photoPath));
             form.append('caption', caption);
-            form.append('parse_mode', 'HTML');
+            form.append('parse_mode', 'MarkdownV2');
 
             const response = await axios.post(`${this.baseUrl}/sendPhoto`, form, {
                 headers: form.getHeaders()
@@ -83,7 +82,9 @@ class TelegramService {
     async sendCommunityPaymentNotification(payment, user, pkg) {
         const caption = `🔔 NEW COMMUNITY PAYMENT PENDING 🔔\n\n` +
             `📋 ID Pembelian: #${payment.id}\n` +
-            `👤 User: ${user.name} (${user.email})\n` +
+            `👤 User: ${user.name}\n` +
+            `📧 Email: ${user.email}\n` +
+            `📱 Nomor HP: ${user.phone_number}\n` +
             `📦 Paket: ${pkg.name}\n` +
             `💰 Harga: Rp${pkg.price}\n` +
             `💵 Jumlah Bayar: Rp${payment.amount}\n\n` +
@@ -96,7 +97,9 @@ class TelegramService {
     async sendCommunityPaymentApproved(payment, user, pkg) {
         const message = `✅ COMMUNITY PAYMENT APPROVED ✅\n\n` +
             `📋 ID Pembelian: #${payment.id}\n` +
-            `👤 User: ${user.name} (${user.email})\n` +
+            `👤 User: ${user.name}\n` +
+            `📧 Email: ${user.email}\n` +
+            `📱 Nomor HP: ${user.phone_number}\n` +
             `📦 Paket: ${pkg.name}\n` +
             `Status: VERIFIED\n\n` +
             `User akan menerima notifikasi untuk bergabung ke komunitas.`;
@@ -107,7 +110,9 @@ class TelegramService {
     async sendCommunityPaymentRejected(payment, user, pkg, reason) {
         const message = `❌ COMMUNITY PAYMENT REJECTED ❌\n\n` +
             `📋 ID Pembelian: #${payment.id}\n` +
-            `👤 User: ${user.name} (${user.email})\n` +
+            `👤 User: ${user.name}\n` +
+            `📧 Email: ${user.email}\n` +
+            `📱 Nomor HP: ${user.phone_number}\n` +
             `📦 Paket: ${pkg.name}\n` +
             `Alasan: ${reason}\n` +
             `Status: REJECTED\n\n` +
@@ -120,7 +125,9 @@ class TelegramService {
     async sendMentoringPaymentNotification(payment, user, pkg) {
         const caption = `🔔 NEW MENTORING PAYMENT PENDING 🔔\n\n` +
             `📋 ID Pembelian: #${payment.id}\n` +
-            `👤 User: ${user.name} (${user.email})\n` +
+            `👤 User: ${user.name}\n` +
+            `📧 Email: ${user.email}\n` +
+            `📱 Nomor HP: ${user.phone_number}\n` +
             `📦 Paket: ${pkg.name}\n` +
             `💰 Harga: Rp${pkg.price}\n` +
             `💵 Jumlah Bayar: Rp${payment.amount}\n\n` +
@@ -133,7 +140,9 @@ class TelegramService {
     async sendMentoringPaymentApproved(payment, user, pkg) {
         const message = `✅ MENTORING PAYMENT APPROVED ✅\n\n` +
             `📋 ID Pembelian: #${payment.id}\n` +
-            `👤 User: ${user.name} (${user.email})\n` +
+            `👤 User: ${user.name}\n` +
+            `📧 Email: ${user.email}\n` +
+            `📱 Nomor HP: ${user.phone_number}\n` +
             `📦 Paket: ${pkg.name}\n` +
             `Status: VERIFIED\n\n` +
             `User akan menerima notifikasi untuk follow-up manual mentoring.`;
@@ -144,7 +153,9 @@ class TelegramService {
     async sendMentoringPaymentRejected(payment, user, pkg, reason) {
         const message = `❌ MENTORING PAYMENT REJECTED ❌\n\n` +
             `📋 ID Pembelian: #${payment.id}\n` +
-            `👤 User: ${user.name} (${user.email})\n` +
+            `👤 User: ${user.name}\n` +
+            `📧 Email: ${user.email}\n` +
+            `📱 Nomor HP: ${user.phone_number}\n` +
             `📦 Paket: ${pkg.name}\n` +
             `Alasan: ${reason}\n` +
             `Status: REJECTED\n\n` +

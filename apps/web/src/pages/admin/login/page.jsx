@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { adminService } from '../../../services/adminService';
@@ -11,7 +11,16 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login);
+  const { isAuthenticated, user, login } = useAuthStore();
+
+  useEffect(() => {
+    // Check if admin is already authenticated
+    if (isAuthenticated && user) {
+      if (user.role === 'admin' || user.role === 'superadmin' || user.role === 'owner') {
+        navigate('/admin/dashboard');
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -31,7 +31,7 @@ export default function SMILoadingScreen() {
             <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-white rounded-2xl sm:rounded-3xl shadow-2xl flex items-center justify-center p-3 sm:p-4">
               <img 
                 src="/logo.jpeg" 
-                alt="SMI Logo" 
+                alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" 
                 className="w-full h-full object-contain rounded-lg sm:rounded-xl"
               />
             </div>

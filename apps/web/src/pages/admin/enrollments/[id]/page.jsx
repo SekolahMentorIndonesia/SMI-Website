@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router';
 import AdminLayout from '../../../../layouts/AdminLayout';
 import { adminService } from '../../../../services/adminService';
 import { ArrowLeft, User, Package, CreditCard, Calendar, CheckCircle, XCircle, Loader2, ExternalLink } from 'lucide-react';
+import { useNotification } from '../../../../contexts/NotificationContext';
 
 export default function AdminEnrollmentDetailPage() {
   const { id } = useParams();
@@ -11,6 +12,7 @@ export default function AdminEnrollmentDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState('');
+  const { success, error: showError } = useNotification();
 
   const fetchDetail = async () => {
     setIsLoading(true);
@@ -35,12 +37,14 @@ export default function AdminEnrollmentDetailPage() {
     try {
       if (action === 'approve') {
         await adminService.approveEnrollment(id);
+        success(`Enrollment approved successfully! Request ${enrollment.request_id} has been processed.`, 3000);
       } else {
         await adminService.rejectEnrollment(id);
+        success(`Enrollment rejected successfully! Request ${enrollment.request_id} has been processed.`, 3000);
       }
-      navigate('/admin/enrollments');
+      setTimeout(() => navigate('/admin/enrollments'), 1500);
     } catch (err) {
-      alert(`Failed to ${action} enrollment`);
+      showError(`Failed to ${action} enrollment. Please try again.`, 5000);
     } finally {
       setIsProcessing(false);
     }
@@ -165,14 +169,14 @@ export default function AdminEnrollmentDetailPage() {
           <div className="bg-white rounded-3xl p-8 border border-neutral-100 shadow-sm shadow-neutral-200/50 sticky top-8">
             <h3 className="text-lg font-bold text-neutral-900 mb-4">Current Status</h3>
             <div className={`w-full py-3 text-center rounded-2xl font-bold border mb-8 ${
-              enrollment.status === 'WAITING_APPROVAL' ? 'bg-amber-50 text-amber-600 border-amber-100' :
-              enrollment.status === 'APPROVED' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+              enrollment.status === 'pending' ? 'bg-amber-50 text-amber-600 border-amber-100' :
+              enrollment.status === 'approved' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
               'bg-red-50 text-red-600 border-red-100'
             }`}>
               {enrollment.status.replace('_', ' ')}
             </div>
 
-            {enrollment.status === 'WAITING_APPROVAL' && (
+            {enrollment.status === 'pending' && (
               <div className="space-y-4">
                 <button
                   disabled={isProcessing}
@@ -193,7 +197,7 @@ export default function AdminEnrollmentDetailPage() {
               </div>
             )}
 
-            {enrollment.status !== 'WAITING_APPROVAL' && (
+            {enrollment.status !== 'pending' && (
               <p className="text-sm text-neutral-500 text-center italic">
                 This request has already been processed.
               </p>

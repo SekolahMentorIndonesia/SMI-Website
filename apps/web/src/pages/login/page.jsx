@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuthStore } from '../../store/useAuthStore';
 import { ShieldCheck, Lock, Mail, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
@@ -11,7 +11,18 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const login = useAuthStore((state) => state.login);
+  const { isAuthenticated, user, login } = useAuthStore();
+
+  useEffect(() => {
+    // Check if user is already authenticated
+    if (isAuthenticated && user) {
+      if (user.role === 'admin' || user.role === 'superadmin') {
+        navigate('/admin/dashboard');
+      } else if (user.role === 'user') {
+        navigate('/dashboard');
+      }
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

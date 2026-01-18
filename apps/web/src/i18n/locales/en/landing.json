@@ -92,12 +92,92 @@
   },
   "header": {
     "nav": {
+      "home": "Home",
+      "products": "Products",
+      "features": "Features",
+      "benefits": "Benefits",
       "about": "About",
-      "program": "Program",
-      "advantages": "Advantages",
-      "testimoni": "Testimonials"
+      "blog": "Blog",
+      "faq": "FAQ",
+      "contact": "Contact"
     },
+    "menu": "Menu",
+    "language": "Language",
     "cta": "Start Consultation"
+  },
+  "features": {
+    "badge": "Featured Features",
+    "title": "Complete Features for Best Experience",
+    "description": "Enjoy various premium features specifically designed to support your journey as a content creator.",
+    "list": {
+      "interactive": {
+        "title": "Interactive Classes",
+        "description": "High-quality learning videos with easy-to-understand materials"
+      },
+      "community": {
+        "title": "Active Community", 
+        "description": "Join thousands of other creators in a supportive community"
+      },
+      "certificate": {
+        "title": "Official Certificate",
+        "description": "Get certificates that can enhance your professional credibility"
+      }
+    }
+  },
+  "benefits": {
+    "badge": "Advantages",
+    "title": "Benefits of Joining SMI",
+    "description": "Get various exclusive benefits that you won't find on other platforms.",
+    "list": {
+      "mentor": {
+        "title": "Experienced Mentors",
+        "description": "Learn directly from experts who have been successful in their field"
+      },
+      "flexible": {
+        "title": "Flexible Time",
+        "description": "Access materials anytime and anywhere according to your schedule"
+      },
+      "portfolio": {
+        "title": "Portfolio Development",
+        "description": "Help build a strong portfolio for your career"
+      },
+      "network": {
+        "title": "Wide Networking",
+        "description": "Expand your network connections with the creative industry"
+      }
+    }
+  },
+  "products": {
+    "badge": "Featured Programs",
+    "title": "Featured Programs for Content Creators",
+    "description": "Choose the program that suits your needs and level to develop your career in content creation.",
+    "basic": {
+      "title": "Basic Course",
+      "description": "Basic content creation materials for beginners who want to start a career in the digital world.",
+      "features": [
+        "Fundamental Content Creation",
+        "Basic Editing Skills",
+        "Platform Strategy"
+      ]
+    },
+    "advanced": {
+      "title": "Advanced Program",
+      "description": "Intensive program for creators who want to improve their skills to a professional level.",
+      "features": [
+        "Advanced Analytics",
+        "Monetization Strategy",
+        "Personal Branding"
+      ]
+    },
+    "mentorship": {
+      "title": "Mentorship",
+      "description": "Personal guidance from experienced mentors to accelerate your career.",
+      "features": [
+        "1-on-1 Session",
+        "Portfolio Review",
+        "Career Guidance"
+      ]
+    }
   },
   "footer": {
     "description": "Leading business training institution to produce competent entrepreneurs.",

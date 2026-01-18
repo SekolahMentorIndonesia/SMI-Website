@@ -1,53 +1,33 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, ArrowRight, ArrowUp, Star, ShieldCheck, Zap, X, Loader2 } from "lucide-react";
-import { useState, useEffect } from "react";
-import axios from 'axios';
-import { useAuthStore } from "../store/useAuthStore";
-import { getApiUrl, API_ENDPOINTS } from "../config";
+import { Check, ArrowRight, Users, Star, Crown, Building, ShieldCheck, Zap, X, ArrowUp, Loader2, HeadphonesIcon, Target, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 import { enrollmentService } from "../services/enrollmentService";
+import axios from "axios";
+import { getApiUrl, API_ENDPOINTS } from "../config";
 
 export default function SMIHomePricing() {
   const { t } = useTranslation('home');
-  const { isAuthenticated, user } = useAuthStore();
-  const [selectedPackage, setSelectedPackage] = useState(null);
-  const [showCheckout, setShowCheckout] = useState(false);
-  const [currentStep, setCurrentStep] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState('rekening');
-  const [proofImage, setProofImage] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [locationType, setLocationType] = useState('dalam_kota');
-  const [submissionStatus, setSubmissionStatus] = useState('pending');
+  const { user, isAuthenticated } = useAuthStore();
   
-  // User data state
+  const [showCheckout, setShowCheckout] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState(null);
+  const [currentStep, setCurrentStep] = useState(1);
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [locationType, setLocationType] = useState('dalam_kota');
+  const [proofImage, setProofImage] = useState(null);
+  const [proofDescription, setProofDescription] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState('pending');
+  const [errors, setErrors] = useState({});
   const [userData, setUserData] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    telegramUser: user?.telegram_user || '',
+    telegramUser: '',
     phoneNumber: user?.phone_number || '',
     motivation: ''
   });
-
-  // Auto-fill user data when component mounts or user changes
-  useEffect(() => {
-    if (user) {
-      setUserData(prev => ({
-        ...prev,
-        name: user.name || '',
-        email: user.email || '',
-        telegramUser: user.telegram_user || '',
-        phoneNumber: user.phone_number || ''
-      }));
-    }
-  }, [user]);
-  
-  // Payment proof state
-  const [proofDescription, setProofDescription] = useState('');
-  
-  // Error state for form validation
-  const [errors, setErrors] = useState({});
-  
-  // Track touched fields
   const [touched, setTouched] = useState({
     name: false,
     email: false,
@@ -82,48 +62,82 @@ export default function SMIHomePricing() {
     {
       id: 1,
       name: t('pricing.packages.silver.name'),
-      price: t('pricing.packages.silver.price'),
-      rawPrice: 50000,
-      unit: t('pricing.packages.silver.unit'),
+      price: 'GRATIS',
+      rawPrice: 0,
+      unit: '',
       tagline: t('pricing.packages.silver.tagline'),
-      icon: <Zap className="w-5 h-5" />,
-      color: "bg-white",
-      textColor: "text-neutral-900",
-      buttonColor: "bg-[#0F172A] text-white",
-      features: t('pricing.packages.silver.features', { returnObjects: true }) || [],
+      icon: <Users className="w-5 h-5" />,
+      color: "from-gray-900 to-gray-800",
+      textColor: "text-white",
+      buttonColor: "bg-gray-700 hover:bg-gray-600 text-white",
+      features: t('pricing.packages.silver.features', { returnObjects: true }).map((feature, index) => ({
+        icon: index === 0 ? <Users className="w-4 h-4" /> : index === 1 ? <Zap className="w-4 h-4" /> : index === 2 ? <ShieldCheck className="w-4 h-4" /> : index === 3 ? <HeadphonesIcon className="w-4 h-4" /> : <Star className="w-4 h-4" />,
+        text: feature,
+        available: index < 3
+      })),
       cta: t('pricing.packages.silver.cta'),
       whatsappMsg: t('pricing.packages.silver.whatsapp'),
-      productType: 'komunitas'
+      productType: 'komunitas',
+      isExternal: true,
+      externalLink: 'https://t.me/sekolahmentorindonesia'
     },
     {
       id: 2,
       name: t('pricing.packages.premium.name'),
-      price: t('pricing.packages.premium.price'),
-      rawPrice: 2500000,
-      unit: t('pricing.packages.premium.unit'),
+      price: 'Rp 50.000',
+      rawPrice: 50000,
+      unit: '/bulan',
       tagline: t('pricing.packages.premium.tagline'),
       icon: <Star className="w-5 h-5" />,
-      color: "bg-brand-600",
+      color: "from-blue-600 to-blue-500",
       textColor: "text-white",
-      buttonColor: "bg-white text-brand-600",
+      buttonColor: "bg-white hover:bg-gray-50 text-blue-600 border-2 border-blue-400",
       popular: true,
-      features: t('pricing.packages.premium.features', { returnObjects: true }) || [],
+      features: t('pricing.packages.premium.features', { returnObjects: true }).map((feature, index) => ({
+        icon: index === 0 ? <Check className="w-4 h-4" /> : index === 1 ? <Users className="w-4 h-4" /> : index === 2 ? <Zap className="w-4 h-4" /> : index === 3 ? <HeadphonesIcon className="w-4 h-4" /> : <TrendingUp className="w-4 h-4" />,
+        text: feature,
+        available: true
+      })),
+      cta: t('pricing.packages.premium.cta'),
+      whatsappMsg: t('pricing.packages.premium.whatsapp'),
+      productType: 'komunitas'
+    },
+    {
+      id: 3,
+      name: t('pricing.packages.premium.name'),
+      price: 'Rp 100.000',
+      rawPrice: 100000,
+      unit: '/sesi',
+      tagline: t('pricing.packages.premium.tagline'),
+      icon: <Crown className="w-5 h-5" />,
+      color: "from-purple-600 to-purple-500",
+      textColor: "text-white",
+      buttonColor: "bg-white hover:bg-gray-50 text-purple-600 border-2 border-purple-400",
+      features: t('pricing.packages.premium.features', { returnObjects: true }).map((feature, index) => ({
+        icon: index === 0 ? <Check className="w-4 h-4" /> : index === 1 ? <Users className="w-4 h-4" /> : index === 2 ? <Target className="w-4 h-4" /> : index === 3 ? <HeadphonesIcon className="w-4 h-4" /> : <TrendingUp className="w-4 h-4" />,
+        text: feature,
+        available: true
+      })),
       cta: t('pricing.packages.premium.cta'),
       whatsappMsg: t('pricing.packages.premium.whatsapp'),
       productType: 'mentoring'
     },
     {
-      id: 3,
+      id: 4,
       name: t('pricing.packages.coaching.name'),
-      price: `${t('pricing.packages.coaching.price_inner')} - ${t('pricing.packages.coaching.price_outer')}`,
-      rawPrice: 10000000,
-      unit: t('pricing.packages.coaching.unit'),
+      price: 'Rp 5-6jt',
+      rawPrice: 5500000,
+      unit: '/jam',
       tagline: t('pricing.packages.coaching.tagline'),
-      icon: <ShieldCheck className="w-5 h-5" />,
-      color: "bg-white",
-      textColor: "text-neutral-900",
-      buttonColor: "bg-white text-neutral-900 border border-neutral-200",
-      features: t('pricing.packages.coaching.features', { returnObjects: true }) || [],
+      icon: <Building className="w-5 h-5" />,
+      color: "from-orange-600 to-red-600",
+      textColor: "text-white",
+      buttonColor: "bg-white hover:bg-gray-50 text-orange-600 border-2 border-orange-400",
+      features: t('pricing.packages.coaching.features', { returnObjects: true }).map((feature, index) => ({
+        icon: index === 0 ? <Check className="w-4 h-4" /> : index === 1 ? <Building className="w-4 h-4" /> : index === 2 ? <Target className="w-4 h-4" /> : index === 3 ? <Users className="w-4 h-4" /> : <HeadphonesIcon className="w-4 h-4" />,
+        text: feature,
+        available: true
+      })),
       cta: t('pricing.packages.coaching.cta'),
       whatsappMsg: t('pricing.packages.coaching.whatsapp'),
       productType: 'mentoring'
@@ -142,6 +156,12 @@ export default function SMIHomePricing() {
   };
 
   const handleCheckout = (pkg) => {
+    // Handle FREE tier with external link
+    if (pkg.isExternal) {
+      window.open(pkg.externalLink, '_blank');
+      return;
+    }
+
     if (!isAuthenticated) {
       window.location.href = '/login';
       return;
@@ -175,9 +195,9 @@ export default function SMIHomePricing() {
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userData.email)) {
         newErrors.email = 'Format email tidak valid';
       }
-      if (!userData.telegramUser.trim()) {
+      if (userData.telegramUser && !userData.telegramUser.trim()) {
         newErrors.telegramUser = 'User Telegram harus diisi';
-      } else if (!userData.telegramUser.startsWith('@')) {
+      } else if (userData.telegramUser && !userData.telegramUser.startsWith('@')) {
         newErrors.telegramUser = 'User Telegram harus diawali dengan @';
       }
       if (!userData.phoneNumber.trim()) {
@@ -243,26 +263,41 @@ export default function SMIHomePricing() {
     }
   };
   
-  const submitPayment = async (formData) => {
-    console.log('Submitting payment with data:', formData);
+  const submitPayment = async () => {
+    console.log('🔘 SUBMIT PAYMENT STARTED');
+    console.log('📊 Current state:', {
+      selectedPackage,
+      currentStep,
+      paymentMethod,
+      proofImage,
+      isSubmitting,
+      submissionStatus
+    });
+    
     const isMentoring = selectedPackage?.productType === 'mentoring';
     const finalStep = isMentoring ? 5 : 4;
     
+    console.log('🎯 Final step should be:', finalStep);
+    
     // Get auth token
     const token = useAuthStore.getState().token;
+    console.log('🔑 Token exists:', !!token);
+    
     if (!token) {
-      console.error('No authentication token found');
-      setError('Anda harus login terlebih dahulu');
+      console.error('❌ No authentication token found');
+      setErrors({ general: 'Anda harus login terlebih dahulu' });
       return;
     }
 
-    if (!validateForm(finalStep)) return;
+    console.log('✅ Validation result:', validateForm(finalStep));
+    if (!validateForm(finalStep)) {
+      console.log('❌ Form validation failed');
+      return;
+    }
 
     try {
+      console.log('🚀 Starting submission...');
       setIsSubmitting(true);
-      
-      // Get token from auth store
-      const token = useAuthStore.getState().token;
       
       // Prepare user data with location info for mentoring
       const submissionData = { ...userData };
@@ -271,7 +306,24 @@ export default function SMIHomePricing() {
         submissionData.motivation = `[Lokasi: ${locationStr}] ${userData.motivation}`;
       }
 
-      // Step 1: Create enrollment with user data and upload proof
+      console.log('Creating enrollment with data:', {
+        packageId: selectedPackage.id,
+        submissionData,
+        paymentMethod,
+        hasProofImage: !!proofImage,
+        proofDescription,
+        finalPrice: getFinalPrice()
+      });
+
+      console.log('📋 Form data preview:');
+      console.log('Package ID:', selectedPackage.id);
+      console.log('User Data:', submissionData);
+      console.log('Payment Method:', paymentMethod);
+      console.log('Proof Image:', proofImage ? proofImage.name : 'None');
+      console.log('Final Price:', getFinalPrice());
+      console.log('Token:', token ? `${token.substring(0, 20)}...` : 'None');
+
+      // Create enrollment with user data and upload proof
       const data = await enrollmentService.createEnrollment(
         selectedPackage.id,
         submissionData,
@@ -282,15 +334,24 @@ export default function SMIHomePricing() {
         getFinalPrice()
       );
       
+      console.log('Enrollment created successfully:', data);
       setSubmissionStatus('submitted');
       
-      // Update local status and user data
+      // Update local status and user data (only update enrollment-related fields)
+      console.log('🔄 Updating user state...');
+      const currentUser = useAuthStore.getState();
+      console.log('Current user state before update:', currentUser);
+      
       useAuthStore.getState().updateUser({ 
         status: 'pending',
         package: selectedPackage.name,
-        enrollment_id: data.enrollment.id,
-        ...userData
+        enrollment_id: data.enrollment?.id || data.id
       });
+      
+      const updatedUser = useAuthStore.getState();
+      console.log('User state after update:', updatedUser);
+      console.log('Is still authenticated:', updatedUser.isAuthenticated);
+      console.log('Token still exists:', !!updatedUser.token);
       
       // Redirect to profile after delay
       setTimeout(() => {
@@ -299,37 +360,28 @@ export default function SMIHomePricing() {
       }, 2000);
       
     } catch (error) {
-      console.log('Attempting to send payment data to server...');
-      const response = await axios.post(
-        getApiUrl(API_ENDPOINTS.USER.ENROLLMENT),
-        formData,
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'multipart/form-data'
-          },
-          timeout: 30000 // 30 second timeout for file uploads
-        }
-      );
-      console.log('Server response:', response.data);
+      console.error('❌ Payment submission error:', error);
+      console.error('❌ Error message:', error.message);
+      console.error('❌ Error response:', error.response?.data);
+      console.error('❌ Error status:', error.response?.status);
+      console.error('❌ Error code:', error.code);
       
-      // If we get here, the payment was successful
-      setSubmissionStatus('submitted');
+      // Show specific error message
+      let errorMessage = 'Gagal mengirim pembayaran. Silakan coba lagi.';
       
-      // Reset form
-      setCurrentStep(1);
-      setUserData({
-        name: user?.name || '',
-        email: user?.email || '',
-        phoneNumber: user?.phone_number || '',
-        motivation: ''
-      });
-      setPaymentMethod('');
-      setProofImage(null);
-      setProofDescription('');
-      console.error('Error status:', error.response?.status);
-      console.error('Error headers:', error.response?.headers);
+      if (error.code === 'ECONNREFUSED') {
+        errorMessage = 'Tidak dapat terhubung ke server. Pastikan backend berjalan di localhost:5000';
+      } else if (error.response?.status === 401) {
+        errorMessage = 'Sesi login telah expired. Silakan login kembali.';
+      } else if (error.response?.status === 400) {
+        errorMessage = 'Data tidak lengkap atau tidak valid. Silakan periksa kembali.';
+      } else if (error.response?.data?.message) {
+        errorMessage = error.response.data.message;
+      }
+      
+      setErrors({ general: errorMessage });
       setSubmissionStatus('error');
+      
     } finally {
       setIsSubmitting(false);
     }
@@ -339,7 +391,7 @@ export default function SMIHomePricing() {
   const steps = isCommunityFlow ? [1, 2, 3, 4] : [1, 2, 3, 4, 5];
 
   return (
-    <section id="paket" className="py-20 lg:py-24 px-4 sm:px-6 bg-white overflow-hidden">
+    <section id="paket" className="py-20 lg:py-24 px-4 sm:px-6 bg-gradient-to-br from-gray-50 via-white to-blue-50 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 lg:mb-16">
           <motion.h2 
@@ -361,84 +413,105 @@ export default function SMIHomePricing() {
           </motion.p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           {packages.map((pkg, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
-              className={`relative flex flex-col p-6 sm:p-8 lg:p-10 rounded-[2rem] sm:rounded-[3rem] border transition-all duration-300 ${
-                pkg.popular 
-                  ? 'border-brand-600 shadow-2xl shadow-blue-100 z-10' 
-                  : 'border-neutral-100 shadow-sm'
-              } ${pkg.color} ${idx === 2 ? 'sm:col-span-2 lg:col-span-1' : ''}`}
+              className={`relative flex flex-col ${pkg.popular ? 'scale-105' : ''}`}
             >
+              {/* Popular Badge */}
               {pkg.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-600 text-white px-6 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] whitespace-nowrap">
-                  {t('pricing.popular_badge')}
-                </div>
-              )}
-              {pkg.id === 1 && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-500 text-white px-6 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] whitespace-nowrap">
-                  {t('pricing.one_time_payment_badge')}
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+                    {t('pricing.popular_badge')}
+                  </span>
                 </div>
               )}
 
-              <div className={`mb-8 sm:mb-10 ${pkg.textColor}`}>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="opacity-80">{pkg.icon}</div>
-                  <span className="font-bold uppercase tracking-[0.15em] text-[10px] sm:text-xs opacity-70">{pkg.name}</span>
-                </div>
-                <div className="flex items-baseline flex-wrap gap-2 mb-3">
-                  <span className={`font-bold tracking-tight ${pkg.id === 3 ? 'text-2xl sm:text-3xl' : 'text-4xl sm:text-5xl'}`}>{pkg.price}</span>
-                  {pkg.unit && pkg.id !== 1 && (
-                    <span className="text-sm sm:text-lg opacity-60 font-medium">{pkg.unit}</span>
-                  )}
-                </div>
-                <p className="text-xs sm:text-sm opacity-80 font-medium tracking-wide">{pkg.tagline}</p>
-              </div>
-
-              <div className="flex-1 space-y-4 sm:space-y-5 mb-8 sm:mb-12">
-                {pkg.features.map((feature, fIdx) => (
-                  <div key={fIdx} className="flex items-start gap-3 sm:gap-4">
-                    <div className={`mt-1 flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center ${
-                      pkg.popular ? 'bg-white/20 text-white' : 'bg-blue-50 text-blue-500'
-                    }`}>
-                      <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" strokeWidth={3} />
+              <div className={`flex flex-col h-full bg-gradient-to-br ${pkg.color} rounded-2xl shadow-xl border-2 border-white/20 hover:shadow-2xl transition-all duration-300 overflow-hidden`}>
+                {/* Card Header */}
+                <div className={`p-6 text-center ${pkg.textColor}`}>
+                  <div className="flex justify-center mb-4">
+                    <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm">
+                      {pkg.icon}
                     </div>
-                    <span className={`text-sm sm:text-[15px] font-medium leading-tight ${pkg.textColor} opacity-90`}>
-                      {feature}
-                    </span>
                   </div>
-                ))}
-              </div>
+                  <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
+                  <div className="flex items-baseline justify-center">
+                    <span className="text-3xl font-bold">{pkg.price}</span>
+                    <span className="text-lg ml-1 opacity-80">{pkg.unit}</span>
+                  </div>
+                  <p className="text-sm mt-2 opacity-80">{pkg.tagline}</p>
+                </div>
 
-              <motion.button
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleCheckout(pkg)}
-                  className={`w-full py-4 rounded-xl sm:rounded-2xl font-bold text-sm shadow-lg transition-all flex items-center justify-center gap-2 ${pkg.buttonColor}`}
-                >
-                  {pkg.cta}
-                  <ArrowRight className="w-4 h-4" />
-                </motion.button>
+                {/* Features */}
+                <div className={`flex-1 bg-white/10 backdrop-blur-sm p-6`}>
+                  <ul className="space-y-3">
+                    {pkg.features.map((feature, fIdx) => (
+                      <li 
+                        key={fIdx}
+                        className={`flex items-center gap-3 ${feature.available ? pkg.textColor : 'text-white/60'}`}
+                      >
+                        <div className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${
+                          feature.available ? 'bg-white/30' : 'bg-white/10'
+                        }`}>
+                          {feature.available ? (
+                            <Check className="w-3 h-3 text-white" strokeWidth={3} />
+                          ) : (
+                            <span className="text-white/60 text-xs">×</span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {feature.icon}
+                          <span className="text-sm font-medium">{feature.text}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* CTA Button - Always at bottom */}
+                <div className="p-6 pt-0">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleCheckout(pkg)}
+                    className={`w-full py-3 px-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 ${pkg.buttonColor}`}
+                  >
+                    {pkg.cta}
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.button>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Info Tambahan */}
-        <div className="mt-12 lg:mt-16 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 text-neutral-400">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4.5 h-4.5 text-brand-500" />
-            <span className="text-xs sm:text-sm font-medium">{t('pricing.info.secure_payment')}</span>
+        {/* Trust Indicators */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-16 text-center"
+        >
+          <div className="flex flex-wrap justify-center gap-8 text-gray-600">
+            <div className="flex items-center gap-2">
+              <Check className="w-5 h-5 text-green-500" />
+              <span>1.247+ Kreator Bergabung</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-5 h-5 text-green-500" />
+              <span>98% Tingkat Kepuasan</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Check className="w-5 h-5 text-green-500" />
+              <span>50+ Mentor Profesional</span>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Zap className="w-4.5 h-4.5 text-brand-500" />
-            <span className="text-xs sm:text-sm font-medium">{t('pricing.info.one_time_payment')}</span>
-          </div>
-        </div>
+        </motion.div>
       </div>
 
       <AnimatePresence>
@@ -492,18 +565,22 @@ export default function SMIHomePricing() {
                     <div className="w-20 h-20 mx-auto bg-red-100 rounded-full flex items-center justify-center mb-6">
                       <X className="w-10 h-10 text-red-500" />
                     </div>
-                    <h3 className="text-xl font-bold text-neutral-900 mb-3">Failed to send.</h3>
-                    <p className="text-sm text-neutral-600 mb-8">
-                      Try again.
+                    <h3 className="text-xl font-bold text-neutral-900 mb-3">Pembayaran Gagal</h3>
+                    <p className="text-sm text-red-600 mb-4">
+                      {errors.general || 'Terjadi kesalahan saat mengirim pembayaran. Silakan coba lagi.'}
+                    </p>
+                    <p className="text-xs text-neutral-500 mb-8">
+                      Pastikan semua data terisi dengan benar dan bukti transfer sudah diupload.
                     </p>
                     <button
                       onClick={() => {
                         setSubmissionStatus('pending');
                         setIsSubmitting(false);
+                        setErrors({});
                       }}
                       className="bg-brand-600 text-white py-3 px-6 rounded-lg font-medium text-sm hover:bg-brand-700 transition-all"
                     >
-                      Try Again
+                      Coba Lagi
                     </button>
                   </div>
                 </motion.div>
@@ -533,11 +610,11 @@ export default function SMIHomePricing() {
                           {step}
                         </div>
                         <div className={`mt-0.5 text-[10px] font-medium transition-colors duration-300 ${currentStep === step ? 'text-brand-600 font-semibold' : 'text-neutral-400'}`}>
-                          {step === 1 && (isCommunityFlow ? 'Data' : 'Data')}
-                          {!isCommunityFlow && step === 2 && 'Lokasi'}
-                          {((isCommunityFlow && step === 2) || (!isCommunityFlow && step === 3)) && 'Info'}
-                          {((isCommunityFlow && step === 3) || (!isCommunityFlow && step === 4)) && 'Bayar'}
-                          {((isCommunityFlow && step === 4) || (!isCommunityFlow && step === 5)) && 'Upload'}
+                          {step === 1 && 'Data'}
+                          {step === 2 && (!isCommunityFlow ? 'Lokasi' : 'Info')}
+                          {step === 3 && (!isCommunityFlow ? 'Info' : 'Bayar')}
+                          {step === 4 && (!isCommunityFlow ? 'Bayar' : 'Upload')}
+                          {step === 5 && 'Upload'}
                         </div>
                       </div>
                       {step < steps.length && (
@@ -658,7 +735,7 @@ export default function SMIHomePricing() {
                   </div>
                 )}
 
-                {!isCommunityFlow && currentStep === 2 && (
+                {currentStep === 2 && !isCommunityFlow && (
                   <div className="max-w-2xl mx-auto">
                     <h4 className="text-lg font-bold text-neutral-900 mb-6 text-center">Lokasi Sesi Mentoring</h4>
                     <div className="bg-neutral-50 rounded-lg p-5 mb-8">
@@ -757,7 +834,7 @@ export default function SMIHomePricing() {
                   </div>
                 )}
 
-                {currentStep === 3 && (
+                {((isCommunityFlow && currentStep === 3) || (!isCommunityFlow && currentStep === 4)) && (
                   <div className="max-w-2xl mx-auto">
                     <h4 className="text-lg font-bold text-neutral-900 mb-6 text-center">Metode Pembayaran</h4>
                     <div className="bg-neutral-50 rounded-lg p-5 mb-8">
@@ -807,7 +884,7 @@ export default function SMIHomePricing() {
                           )}
                           {paymentMethod === 'qris' && (
                             <div className="bg-white p-5 rounded-lg border border-neutral-300 flex justify-center">
-                              <img src="/qris.jpg" alt="QRIS" className="w-48 h-48 object-contain" />
+                              <img src="/qris.jpg" alt="QRIS Sekolah Mentor Indonesia" className="w-48 h-48 object-contain" />
                             </div>
                           )}
                           {!paymentMethod && errors.paymentMethod && (
@@ -832,7 +909,7 @@ export default function SMIHomePricing() {
                     </div>
                   </div>
                 )}
-                {currentStep === 4 && (
+                {((isCommunityFlow && currentStep === 4) || (!isCommunityFlow && currentStep === 5)) && (
                   <div className="max-w-2xl mx-auto">
                     <h4 className="text-lg font-bold text-neutral-900 mb-6 text-center">Upload Bukti Transfer</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -876,7 +953,7 @@ export default function SMIHomePricing() {
                               )}
                               {paymentMethod === 'qris' && (
                                 <div className="bg-white p-5 rounded-lg border border-neutral-300 flex justify-center">
-                                  <img src="/qris.jpg" alt="QRIS" className="w-48 h-48 object-contain" />
+                                  <img src="/qris.jpg" alt="QRIS Sekolah Mentor Indonesia" className="w-48 h-48 object-contain" />
                                 </div>
                               )}
                             </div>
@@ -903,7 +980,7 @@ export default function SMIHomePricing() {
                               <div className="mt-3">
                                 <img 
                                   src={URL.createObjectURL(proofImage)} 
-                                  alt="Bukti Transfer" 
+                                  alt="Logo Sekolah Mentor Indonesia - Bukti Transfer" 
                                   className="max-w-full h-40 object-contain mx-auto rounded-lg"
                                 />
                                 <p className="mt-2.5 text-sm text-neutral-600">{proofImage.name}</p>
@@ -941,7 +1018,18 @@ export default function SMIHomePricing() {
                         Kembali
                       </button>
                       <button 
-                        onClick={submitPayment}
+                        onClick={() => {
+                          console.log('🔘 Submit button clicked');
+                          console.log('📊 Current state:', {
+                            selectedPackage,
+                            currentStep,
+                            paymentMethod,
+                            proofImage,
+                            isSubmitting,
+                            submissionStatus
+                          });
+                          submitPayment();
+                        }}
                         disabled={isSubmitting}
                         className="bg-brand-600 text-white py-3 px-6 rounded-lg font-medium text-sm hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2 w-full sm:w-auto"
                       >

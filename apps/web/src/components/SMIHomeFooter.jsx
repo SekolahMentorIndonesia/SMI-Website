@@ -30,7 +30,7 @@ export default function SMIHomeFooter() {
             <a href="/app" className="flex items-center mb-6 group">
               <img 
                 src="/logo.jpeg" 
-                alt="SMI Logo" 
+                alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" 
                 className="h-14 sm:h-16 w-auto object-contain rounded-lg transition-transform group-hover:scale-105"
               />
             </a>
@@ -81,13 +81,13 @@ export default function SMIHomeFooter() {
                 </li>
                 <li className="flex gap-3 items-center">
                   <Phone className="text-brand-500 flex-shrink-0 w-4 h-4 sm:w-4.5 sm:h-4.5" />
-                  <a href="https://wa.me/6287744556696" className="hover:text-brand-400 transition-colors text-sm">+62 877-4455-6696</a>
+                  <a href="https://wa.me/6281915020498" className="hover:text-brand-400 transition-colors text-sm">+62 819-1502-0498</a>
                 </li>
               </ul>
               <ul className="space-y-3 sm:space-y-4 text-sm font-sans">
                 <li className="flex gap-3 items-start">
                   <Mail className="text-brand-500 flex-shrink-0 w-4 h-4 sm:w-4.5 sm:h-4.5" />
-                  <span className="text-sm break-all">sekolahmentorindonesia@gmail.com</span>
+                  <span className="text-sm break-all">admin@sekolahmentorindonesia.id</span>
                 </li>
               </ul>
             </div>

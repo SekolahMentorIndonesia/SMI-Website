@@ -18,8 +18,14 @@
       "community": "Building Community"
     }
   },
+  "products": {
+    "title": "OUR PROGRAMS",
+    "subtitle": "Featured Programs for Content Creators",
+    "description": "Choose the program that suits your needs and level in the world of content creation."
+  },
   "pricing": {
     "title": "Mentoring Packages",
+    "subtitle": "Choose the package that suits your needs and goals in becoming a professional content creator.",
     "popular_badge": "Most Popular",
     "cta_select": "Select Package",
     "info": {

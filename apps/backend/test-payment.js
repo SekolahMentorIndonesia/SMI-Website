@@ -30,8 +30,10 @@ async function testPaymentFlow() {
         const enrollment = await Enrollment.create({
             user_id: user.id,
             package_id: pkg.id,
-            status: 'WAITING_APPROVAL',
-            motivation: 'Test motivation'
+            product_type: pkg.product_type,
+            status: 'pending',
+            motivation: 'Test motivation',
+            request_id: `INV-TEST-${Date.now()}` // Manual override untuk test
         });
         console.log('✅ Enrollment created:', enrollment.id);
         
@@ -58,7 +60,7 @@ async function testPaymentFlow() {
             `📝 Motivasi: Test motivation\n\n` +
             `Status: PENDING - Menunggu Verifikasi\n\n` +
             `Untuk verifikasi:\n` +
-            `/terima ${payment.id} atau /tolak ${payment.id} [ALASAN]`;
+            `/terima ${enrollment.request_id} atau /tolak ${enrollment.request_id} [ALASAN]`;
         
         try {
             // Just test the message part, not the photo since we don't have a real file

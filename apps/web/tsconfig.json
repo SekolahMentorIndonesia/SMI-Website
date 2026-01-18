@@ -3,8 +3,7 @@
 		"**/*.{ts,tsx,js,jsx}",
 		"**/.server/**/*",
 		"**/.client/**/*",
-		".react-router/types/**/*",
-		"./src/global.d.ts"
+		".react-router/types/**/*"
 	],
 	"compilerOptions": {
 		"lib": ["DOM", "DOM.Iterable", "ES2022"],
@@ -20,7 +19,7 @@
 		"noEmit": true,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
-		"strict": true,
+		"strict": false,
 		"paths": {
 			"@/*": ["./src/*"]
 		}

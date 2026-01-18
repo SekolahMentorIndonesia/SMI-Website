@@ -92,12 +92,92 @@
   },
   "header": {
     "nav": {
+      "home": "Beranda",
+      "products": "Produk",
+      "features": "Fitur",
+      "benefits": "Manfaat",
       "about": "Tentang",
-      "program": "Program",
-      "advantages": "Keunggulan",
-      "testimoni": "Testimoni"
+      "blog": "Blog",
+      "faq": "FAQ",
+      "contact": "Kontak"
     },
+    "menu": "Menu",
+    "language": "Bahasa",
     "cta": "Mulai Konsultasi"
+  },
+  "features": {
+    "badge": "Fitur Unggulan",
+    "title": "Fitur Lengkap untuk Pengalaman Terbaik",
+    "description": "Nikmati berbagai fitur premium yang dirancang khusus untuk mendukung perjalanan Anda sebagai content creator.",
+    "list": {
+      "interactive": {
+        "title": "Kelas Interaktif",
+        "description": "Video pembelajaran berkualitas tinggi dengan materi yang mudah dipahami"
+      },
+      "community": {
+        "title": "Komunitas Aktif", 
+        "description": "Bergabung dengan ribuan creator lain dalam komunitas yang supportif"
+      },
+      "certificate": {
+        "title": "Sertifikat Resmi",
+        "description": "Dapatkan sertifikat yang dapat meningkatkan kredibilitas profesional Anda"
+      }
+    }
+  },
+  "benefits": {
+    "badge": "Keunggulan",
+    "title": "Keuntungan Bergabung dengan SMI",
+    "description": "Dapatkan berbagai keuntungan eksklusif yang tidak akan Anda temukan di platform lain.",
+    "list": {
+      "mentor": {
+        "title": "Mentor Berpengalaman",
+        "description": "Belajar langsung dari para ahli yang telah sukses di bidangnya"
+      },
+      "flexible": {
+        "title": "Waktu Fleksibel",
+        "description": "Akses materi kapan saja dan dimana saja sesuai dengan jadwal Anda"
+      },
+      "portfolio": {
+        "title": "Portfolio Development",
+        "description": "Bantu bangun portfolio yang kuat untuk karir Anda"
+      },
+      "network": {
+        "title": "Networking Luas",
+        "description": "Perluas jaringan koneksi dengan industri kreatif"
+      }
+    }
+  },
+  "products": {
+    "badge": "Program Unggulan",
+    "title": "Program Unggulan untuk Content Creator",
+    "description": "Pilih program yang sesuai dengan kebutuhan dan level Anda untuk mengembangkan karir di dunia content creation.",
+    "basic": {
+      "title": "Basic Course",
+      "description": "Materi dasar content creation untuk pemula yang ingin memulai karir di dunia digital.",
+      "features": [
+        "Fundamental Content Creation",
+        "Basic Editing Skills", 
+        "Platform Strategy"
+      ]
+    },
+    "advanced": {
+      "title": "Advanced Program",
+      "description": "Program intensif untuk creator yang ingin meningkatkan skill ke level profesional.",
+      "features": [
+        "Advanced Analytics",
+        "Monetization Strategy",
+        "Personal Branding"
+      ]
+    },
+    "mentorship": {
+      "title": "Mentorship",
+      "description": "Bimbingan personal dari mentor berpengalaman untuk percepatan karir Anda.",
+      "features": [
+        "1-on-1 Session",
+        "Portfolio Review",
+        "Career Guidance"
+      ]
+    }
   },
   "footer": {
     "description": "Lembaga pelatihan bisnis terdepan untuk mencetak wirausahawan kompeten.",

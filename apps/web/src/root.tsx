@@ -37,6 +37,12 @@ import type { Route } from './+types/root';
 import { useDevServerHeartbeat } from './__create/useDevServerHeartbeat';
 import './i18n/config';
 import { useTranslation } from 'react-i18next';
+// @ts-ignore
+import { useNotification, NotificationProvider } from './contexts/NotificationContext';
+// @ts-ignore
+import NotificationContainer from './components/NotificationContainer';
+// @ts-ignore
+import AuthInitializer from './components/AuthInitializer';
 
 export const links = () => [
   {
@@ -479,17 +485,78 @@ export function Layout({ children }: { children: ReactNode }) {
         
         {/* SEO Meta Tags */}
         <meta name="description" content="Sekolah Mentor Indonesia - Platform mentoring terbaik untuk content creator Indonesia. Belajar dari mentor profesional, bergabung dengan komunitas kreator, dan kembangkan karir digital Anda." />
-        <meta name="keywords" content="sekolah mentor indonesia, mentoring content creator, kursus digital, belajar content creation, komunitas creator, platform mentoring indonesia" />
+        <meta name="keywords" content="sekolah mentor indonesia, mentoring content creator, kursus digital, belajar content creation, komunitas creator, platform mentoring indonesia, kursus online indonesia, mentor profesional, belajar digital marketing" />
         <meta name="author" content="Mohammad Iqbal Alhafizh" />
         <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://smi.id" />
+        
+        {/* Open Graph Tags */}
         <meta property="og:title" content="Sekolah Mentor Indonesia - Mentoring untuk Content Creator" />
         <meta property="og:description" content="Platform mentoring terbaik untuk content creator Indonesia. Belajar dari mentor profesional dan bergabung dengan komunitas kreator." />
         <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://smi.id" />
         <meta property="og:image" content="/logo.jpeg" />
+        <meta property="og:image:alt" content="Logo Sekolah Mentor Indonesia" />
+        <meta property="og:site_name" content="Sekolah Mentor Indonesia" />
+        <meta property="og:locale" content="id_ID" />
+        
+        {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Sekolah Mentor Indonesia" />
         <meta name="twitter:description" content="Platform mentoring untuk content creator Indonesia" />
         <meta name="twitter:image" content="/logo.jpeg" />
+        <meta name="twitter:image:alt" content="Logo Sekolah Mentor Indonesia" />
+        <meta name="twitter:site" content="@sekolahmentorid" />
+        
+        {/* Additional SEO Tags */}
+        <meta name="theme-color" content="#2563eb" />
+        <meta name="msapplication-TileColor" content="#2563eb" />
+        <meta name="application-name" content="Sekolah Mentor Indonesia" />
+        <meta name="apple-mobile-web-app-title" content="SMI" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        
+        {/* Course Schema */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Course",
+              "name": "Mentoring Content Creator",
+              "description": "Program mentoring komprehensif untuk content creator Indonesia dengan mentor profesional dan komunitas suportif.",
+              "provider": {
+                "@type": "Organization",
+                "name": "Sekolah Mentor Indonesia",
+                "url": "https://smi.id"
+              },
+              "educationalLevel": "Beginner to Advanced",
+              "inLanguage": ["id"],
+              "offers": {
+                "@type": "Offer",
+                "category": "Educational Course",
+                "priceCurrency": "IDR",
+                "availability": "https://schema.org/InStock"
+              },
+              "hasCourseInstance": {
+                "@type": "CourseInstance",
+                "courseMode": "online",
+                "instructor": {
+                  "@type": "Person",
+                  "name": "Mohammad Iqbal Alhafizh"
+                }
+              },
+              "teaches": [
+                "Content Creation",
+                "Digital Marketing",
+                "Social Media Strategy",
+                "Video Production",
+                "Business Mentoring"
+              ],
+              "url": "https://smi.id/app"
+            }),
+          }}
+        />
         
         {/* Organization Schema */}
         <script
@@ -500,8 +567,8 @@ export function Layout({ children }: { children: ReactNode }) {
               "@type": "Organization",
               "name": "Sekolah Mentor Indonesia",
               "alternateName": "SMI",
-              "url": "https://sekolahmentorindonesia.com",
-              "logo": "https://sekolahmentorindonesia.com/logo.jpeg",
+              "url": "https://smi.id",
+              "logo": "https://smi.id/logo.jpeg",
               "description": "Platform mentoring terbaik untuk content creator Indonesia dengan program komprehensif dan komunitas profesional.",
               "foundingDate": "2023",
               "founder": {
@@ -512,7 +579,7 @@ export function Layout({ children }: { children: ReactNode }) {
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-                "email": "info@sekolahmentorindonesia.com"
+                "email": "info@smi.id"
               },
               "sameAs": [
                 "https://www.instagram.com/sekolahmentorindonesia",
@@ -537,10 +604,10 @@ export function Layout({ children }: { children: ReactNode }) {
               "worksFor": {
                 "@type": "Organization",
                 "name": "Sekolah Mentor Indonesia",
-                "url": "https://sekolahmentorindonesia.com"
+                "url": "https://smi.id",
               },
               "description": "Founder & praktisi content creator dengan pengalaman 10+ tahun di digital marketing dan mentoring. Mentor utama di Sekolah Mentor Indonesia.",
-              "url": "https://sekolahmentorindonesia.com/founder",
+              "url": "https://smi.id/founder",
               "sameAs": [
                 "https://www.instagram.com/iqbalalhafizh",
                 "https://www.youtube.com/@iqbalalhafizh",
@@ -553,7 +620,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 "Business Strategy",
                 "Social Media Management"
               ],
-              "image": "https://sekolahmentorindonesia.com/founder-photo.jpg"
+              "image": "https://smi.id/mohamad-iqbal-alhafizh-founder-smi.jpeg"
             }),
           }}
         />
@@ -565,7 +632,12 @@ export function Layout({ children }: { children: ReactNode }) {
         {LoadFontsSSR ? <LoadFontsSSR /> : null}
       </head>
       <body>
-        <ClientOnly loader={() => children} />
+        <NotificationProvider>
+          <AuthInitializer>
+            <ClientOnly loader={() => children} />
+            <NotificationContainer />
+          </AuthInitializer>
+        </NotificationProvider>
         <HotReloadIndicator />
         <Toaster position="bottom-right" />
         <ScrollRestoration />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
-import SMINavbar from "../../components/SMINavbar";
+import NavbarMain from "../../components/NavbarMain";
 import SMIHomeHero from "../../components/SMIHomeHero";
 import SMIHomeLibrary from "../../components/SMIHomeLibrary";
 import SMIHomeCommunity from "../../components/SMIHomeCommunity";
@@ -26,7 +26,7 @@ export default function AppPage() {
         {isLoading && <SMILoadingScreen key="loading" />}
       </AnimatePresence>
 
-      <SMINavbar />
+      <NavbarMain />
       <main>
         <SMIHomeHero />
         <SMIHomeLibrary />

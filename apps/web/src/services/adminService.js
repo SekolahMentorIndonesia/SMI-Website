@@ -4,7 +4,7 @@ import { useAuthStore } from '../store/useAuthStore';
 // Service untuk menangani semua request API terkait Admin.
 // Termasuk stats dashboard, management enrollment, dan payments.
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const getAuthHeader = () => {
   const token = useAuthStore.getState().token;
@@ -65,6 +65,22 @@ export const adminService = {
   // Login
   login: async (email, password) => {
     const response = await axios.post(`${API_URL}/api/auth/login`, { email, password });
+    return response.data;
+  },
+
+  // Get all users
+  getUsers: async () => {
+    const response = await axios.get(`${API_URL}/api/admin/users`, {
+      headers: getAuthHeader()
+    });
+    return response.data;
+  },
+
+  // Update user status
+  updateUserStatus: async (userId, statusData) => {
+    const response = await axios.put(`${API_URL}/api/admin/users/${userId}/status`, statusData, {
+      headers: getAuthHeader()
+    });
     return response.data;
   }
 };

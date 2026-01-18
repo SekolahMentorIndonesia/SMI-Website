@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://smi.id/</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Authentication Pages -->
+  <url>
+    <loc>https://smi.id/login</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://smi.id/register</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Main App Pages -->
+  <url>
+    <loc>https://smi.id/app</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Content Pages -->
+  <url>
+    <loc>https://smi.id/konten-gratis</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Dashboard Pages (lower priority) -->
+  <url>
+    <loc>https://smi.id/dashboard</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Profile Pages -->
+  <url>
+    <loc>https://smi.id/profile</loc>
+    <lastmod>2024-01-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

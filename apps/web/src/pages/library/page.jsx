@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { BookOpen, Sparkles, MessageSquare, ArrowLeft } from "lucide-react";
-import SMINavbar from "../../components/SMINavbar";
+import NavbarMain from "../../components/NavbarMain";
 import SMIHomeFooter from "../../components/SMIHomeFooter";
 import SMIAIAssistant from "../../components/SMIAIAssistant";
 
@@ -8,7 +8,7 @@ export default function LibraryPage() {
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <SMINavbar />
+      <NavbarMain />
       
       <main className="flex-grow pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">

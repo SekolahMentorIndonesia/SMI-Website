@@ -76,7 +76,7 @@ export default function SMIHero() {
               <div className="relative w-full h-full aspect-[4/5] sm:aspect-[3/4]">
                 <img
                   src="/mohamad-iqbal-alhafizh-founder-smi.jpeg"
-                  alt="Mohamad Iqbal Alhafizh — Founder & Business Mentor"
+                  alt="Mohamad Iqbal Alhafizh - Founder Sekolah Mentor Indonesia"
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/25 to-transparent"></div>
