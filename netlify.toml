@@ -1,7 +1,7 @@
 [build]
-  command = "npm run build"
-  publish = "build/client"
-  functions = "netlify/functions"
+  command = "cd apps/web && npm run build"
+  publish = "apps/web/build/client"
+  functions = "apps/web/netlify/functions"
 
 [[redirects]]
   from = "/admin/*"
