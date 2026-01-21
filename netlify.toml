@@ -1,0 +1,38 @@
+[build]
+  command = "npm run build"
+  publish = "build/client"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/app/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/content/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/konten-gratis/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  port = 4000
+  framework = "vite"
