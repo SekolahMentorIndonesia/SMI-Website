@@ -1,0 +1,189 @@
+{
+  "hero": {
+    "badge": "Lembaga Pelatihan Terakreditasi",
+    "headline_main": "Cetak Wirausahawan",
+    "headline_sub": "Kompeten & Berkarakter",
+    "subheadline": "Lembaga pelatihan dan pendampingan bisnis terdepan untuk membekali Anda dengan strategi praktis dari para mentor berpengalaman.",
+    "cta": "Mulai Perjalanan Anda",
+    "trust_points": {
+      "mentor": "Mentor Praktisi",
+      "curriculum": "Kurikulum Teruji"
+    },
+    "video_profile": "Video Profil SMI",
+    "video_description": "Pelajari metode kami dalam 2 menit"
+  },
+  "about": {
+    "badge": "Tentang Kami",
+    "title": "Membangun Ekosistem Wirausaha yang Tangguh",
+    "description": "Sekolah Mentor Indonesia (SMI) adalah lembaga pelatihan yang berfokus pada pemberdayaan SDM melalui kurikulum praktis dan pendampingan intensif.",
+    "visi_title": "Visi Kami",
+    "visi_desc": "Menjadi pusat unggulan pelatihan bisnis yang mencetak mentor dan wirausahawan kompeten.",
+    "misi_title": "Misi Kami",
+    "misi_desc": "Menyediakan strategi praktis dan mindset yang relevan untuk menghadapi tantangan bisnis modern.",
+    "history_badge": "Sejak 2023",
+    "history_title": "Sejarah Singkat",
+    "history_p1": "Didirikan pada 27 November 2023 sebagai bagian dari PT. Multiusaha Prioritas Bersama.",
+    "history_p2": "SMI hadir sebagai pilar pemberdayaan untuk membantu mitra bisnis mencapai pertumbuhan maksimal melalui pelatihan kerja yang terspesialisasi.",
+    "history_p3": "Kami percaya bahwa dengan mentor yang tepat, setiap potensi bisnis dapat diakselerasi secara efektif dan berkelanjutan.",
+    "parent_company": "PT. Multiusaha Prioritas Bersama",
+    "parent_desc": "Perusahaan Induk"
+  },
+  "programs": {
+    "badge": "Program Unggulan",
+    "title": "Kurikulum Praktis untuk Hasil Nyata",
+    "description": "Materi pelatihan yang dirancang khusus untuk memberikan dampak langsung pada perkembangan bisnis Anda.",
+    "list": {
+      "mindset": {
+        "title": "Business Mindset",
+        "desc": "Membangun pondasi mental wirausaha yang tangguh untuk menghadapi dinamika pasar."
+      },
+      "sales": {
+        "title": "Sales Excellence",
+        "desc": "Strategi penjualan praktis untuk meningkatkan konversi dan pertumbuhan omset."
+      },
+      "leadership": {
+        "title": "Leadership & Team",
+        "desc": "Seni mengelola manusia dan membangun tim yang solid untuk akselerasi bisnis."
+      },
+      "system": {
+        "title": "Business System",
+        "desc": "Membangun sistem operasional yang stabil agar bisnis dapat berjalan efektif."
+      }
+    },
+    "level": "Level"
+  },
+  "advantages": {
+    "badge": "Keunggulan Kami",
+    "title": "Partner Terpercaya Pertumbuhan Bisnis",
+    "description": "Kami hadir untuk memberikan solusi nyata bagi wirausahawan yang ingin naik kelas dengan standar kompetensi tinggi.",
+    "stats": {
+      "satisfaction": "Kepuasan",
+      "alumni": "Alumni"
+    },
+    "list": {
+      "mentor": {
+        "title": "Mentor Praktisi",
+        "desc": "Dibimbing langsung oleh para pelaku bisnis yang telah teruji di lapangan."
+      },
+      "curriculum": {
+        "title": "Kurikulum Aplikatif",
+        "desc": "Materi fokus pada implementasi nyata, bukan sekadar teori akademis."
+      },
+      "mentoring": {
+        "title": "Pendampingan Intensif",
+        "desc": "Kami mendampingi proses pertumbuhan bisnis Anda langkah demi langkah."
+      },
+      "ecosystem": {
+        "title": "Ekosistem Sinergi",
+        "desc": "Akses ke jaringan mitra bisnis luas untuk mempercepat kolaborasi."
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Testimoni",
+    "title": "Apa Kata Mereka?",
+    "description": "Cerita nyata dari para alumni yang telah bertransformasi bersama Sekolah Mentor Indonesia."
+  },
+  "cta": {
+    "title": "Akselerasi Pertumbuhan Bisnis Anda Sekarang",
+    "description": "Optimalkan potensi diri dan bisnis melalui pendampingan intensif serta kurikulum praktis yang dirancang khusus untuk wirausahawan unggul.",
+    "join": "Bergabung",
+    "consultation": "Konsultasi"
+  },
+  "header": {
+    "nav": {
+      "home": "Beranda",
+      "products": "Produk",
+      "features": "Fitur",
+      "benefits": "Manfaat",
+      "about": "Tentang",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "contact": "Kontak"
+    },
+    "menu": "Menu",
+    "language": "Bahasa",
+    "cta": "Mulai Konsultasi"
+  },
+  "features": {
+    "badge": "Fitur Unggulan",
+    "title": "Fitur Lengkap untuk Pengalaman Terbaik",
+    "description": "Nikmati berbagai fitur premium yang dirancang khusus untuk mendukung perjalanan Anda sebagai content creator.",
+    "list": {
+      "interactive": {
+        "title": "Kelas Interaktif",
+        "description": "Video pembelajaran berkualitas tinggi dengan materi yang mudah dipahami"
+      },
+      "community": {
+        "title": "Komunitas Aktif", 
+        "description": "Bergabung dengan ribuan creator lain dalam komunitas yang supportif"
+      },
+      "certificate": {
+        "title": "Sertifikat Resmi",
+        "description": "Dapatkan sertifikat yang dapat meningkatkan kredibilitas profesional Anda"
+      }
+    }
+  },
+  "benefits": {
+    "badge": "Keunggulan",
+    "title": "Keuntungan Bergabung dengan SMI",
+    "description": "Dapatkan berbagai keuntungan eksklusif yang tidak akan Anda temukan di platform lain.",
+    "list": {
+      "mentor": {
+        "title": "Mentor Berpengalaman",
+        "description": "Belajar langsung dari para ahli yang telah sukses di bidangnya"
+      },
+      "flexible": {
+        "title": "Waktu Fleksibel",
+        "description": "Akses materi kapan saja dan dimana saja sesuai dengan jadwal Anda"
+      },
+      "portfolio": {
+        "title": "Portfolio Development",
+        "description": "Bantu bangun portfolio yang kuat untuk karir Anda"
+      },
+      "network": {
+        "title": "Networking Luas",
+        "description": "Perluas jaringan koneksi dengan industri kreatif"
+      }
+    }
+  },
+  "products": {
+    "badge": "Program Unggulan",
+    "title": "Program Unggulan untuk Content Creator",
+    "description": "Pilih program yang sesuai dengan kebutuhan dan level Anda untuk mengembangkan karir di dunia content creation.",
+    "basic": {
+      "title": "Basic Course",
+      "description": "Materi dasar content creation untuk pemula yang ingin memulai karir di dunia digital.",
+      "features": [
+        "Fundamental Content Creation",
+        "Basic Editing Skills", 
+        "Platform Strategy"
+      ]
+    },
+    "advanced": {
+      "title": "Advanced Program",
+      "description": "Program intensif untuk creator yang ingin meningkatkan skill ke level profesional.",
+      "features": [
+        "Advanced Analytics",
+        "Monetization Strategy",
+        "Personal Branding"
+      ]
+    },
+    "mentorship": {
+      "title": "Mentorship",
+      "description": "Bimbingan personal dari mentor berpengalaman untuk percepatan karir Anda.",
+      "features": [
+        "1-on-1 Session",
+        "Portfolio Review",
+        "Career Guidance"
+      ]
+    }
+  },
+  "footer": {
+    "description": "Lembaga pelatihan bisnis terdepan untuk mencetak wirausahawan kompeten.",
+    "company": "Perusahaan",
+    "contact": "Kontak",
+    "copyright": "Sekolah Mentor Indonesia.",
+    "powered_by": "Powered By - PT Multiusaha Prioritas Bersama"
+  }
+}

@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-size-base: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --font-size-lg: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+    --font-size-xl: clamp(1.125rem, 1rem + 0.625vw, 1.5rem);
+    --font-size-2xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.875rem);
+    --font-size-3xl: clamp(1.5rem, 1.3rem + 1vw, 2.25rem);
+    --font-size-4xl: clamp(1.875rem, 1.6rem + 1.375vw, 3rem);
+    --font-size-5xl: clamp(2.25rem, 2rem + 2vw, 3.75rem);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    @apply antialiased text-neutral-900 bg-white overflow-x-hidden;
+    font-size: var(--font-size-base);
+    text-rendering: optimizeLegibility;
+  }
+
+  h1 { font-size: var(--font-size-5xl); @apply font-bold tracking-tight; }
+  h2 { font-size: var(--font-size-4xl); @apply font-bold tracking-tight; }
+  h3 { font-size: var(--font-size-3xl); @apply font-bold; }
+  h4 { font-size: var(--font-size-2xl); @apply font-bold; }
+  h5 { font-size: var(--font-size-xl); @apply font-bold; }
+  h6 { font-size: var(--font-size-lg); @apply font-bold; }
+}
+
+@layer utilities {
+  .text-adaptive-base { font-size: var(--font-size-base); }
+  .text-adaptive-lg { font-size: var(--font-size-lg); }
+  .text-adaptive-xl { font-size: var(--font-size-xl); }
+  .text-adaptive-2xl { font-size: var(--font-size-2xl); }
+  .text-adaptive-3xl { font-size: var(--font-size-3xl); }
+  .text-adaptive-4xl { font-size: var(--font-size-4xl); }
+  .text-adaptive-5xl { font-size: var(--font-size-5xl); }
+}

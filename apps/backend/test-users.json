@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Superadmin",
+    "email": "superadmin@smi.id",
+    "password": "passwordsuperadmin",
+    "role": "superadmin",
+    "status": "active",
+    "created_at": "2026-01-17T14:15:33.797Z",
+    "password_hash": "$2b$10$qvejEbhQNMWkrw2hxqeRfuE6vS0tLOcLe8p56pfVe1HvhYHuBOMaq"
+  },
+  {
+    "id": 2,
+    "name": "Admin Operasional",
+    "email": "admin@smi.id",
+    "password": "passwordadmin",
+    "role": "admin",
+    "status": "active",
+    "created_at": "2026-01-17T14:15:33.800Z",
+    "password_hash": "$2b$10$e/9bcHHFuXBMC6uk0bXTHuhJydiJiwybJhn0m3usp0NQXOtIYVupK"
+  },
+  {
+    "id": 3,
+    "name": "User Biasa",
+    "email": "dzarelalghifari123@gmail.com",
+    "password": "dzarel123",
+    "role": "user",
+    "status": "active",
+    "created_at": "2026-01-17T14:15:33.800Z",
+    "password_hash": "$2b$10$RMhvZJQSE5/naSiszRmeGOooL57LnDQxpCFyRhjTNGxvSNh4oKJDe"
+  }
+]

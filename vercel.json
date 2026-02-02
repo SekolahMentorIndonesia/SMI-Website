@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/web/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "apps/web/**/*",
+          "!apps/web/node_modules/**/*"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/admin/(.*)",
+      "dest": "/apps/web/build/client/index.html"
+    },
+    {
+      "src": "/app/(.*)",
+      "dest": "/apps/web/build/client/index.html"
+    },
+    {
+      "src": "/dashboard/(.*)",
+      "dest": "/apps/web/build/client/index.html"
+    },
+    {
+      "src": "/content/(.*)",
+      "dest": "/apps/web/build/client/index.html"
+    },
+    {
+      "src": "/konten-gratis/(.*)",
+      "dest": "/apps/web/build/client/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/apps/web/build/client/index.html"
+    }
+  ],
+  "buildCommand": "cd apps/web && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "apps/web/build/client"
+}
