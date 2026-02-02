@@ -1,0 +1,53 @@
+{
+  "navbar": {
+    "home": "Beranda",
+    "free_content": "Konten Gratis",
+    "community": "Komunitas",
+    "package": "Paket Belajar",
+    "testimonial": "Testimoni",
+    "dashboard_admin": "Dashboard Admin",
+    "login": "Login",
+    "register": "Daftar Sekarang",
+    "pending_payment": "Pembayaran Pending",
+    "my_profile": "Profil Saya",
+    "logout": "Keluar"
+  },
+  "footer": {
+    "secure_payment": "Pembayaran Aman & Terverifikasi",
+    "lifetime_access": "Akses Materi Selamanya",
+    "copyright": "© 2026 Sekolah Mentor Indonesia. Hak Cipta Dilindungi."
+  },
+  "ai": {
+    "name": "MentorAI SMI",
+    "status": "ONLINE",
+    "opening_message": "Halo, saya MentorAI SMI. Saya siap membantu pertanyaan seputar pembelajaran, konten gratis, dan pendaftaran Sekolah Mentor Indonesia.",
+    "input_placeholder": "Tulis pertanyaanmu tentang belajar konten atau pendaftaran…",
+    "system_prompt": "Kamu adalah MentorAI SMI, asisten resmi Sekolah Mentor Indonesia. Peran kamu: - Memberikan informasi umum tentang Sekolah Mentor Indonesia - Menjelaskan konten gratis, paket mentor, dan alur pendaftaran - Membantu pengguna memahami dasar-dasar belajar menjadi content creator Batasan ketat: - Jawaban kamu HARUS relevan dengan Sekolah Mentor Indonesia - Jangan menjawab pertanyaan di luar konteks platform ini - Jangan memberi saran hukum, medis, atau keuangan pribadi - Jangan menjanjikan hasil seperti viral, followers, atau penghasilan - Jangan mengarang harga, jadwal, atau kebijakan yang tidak disebutkan - Jangan mengaku sebagai manusia atau mentor pribadi Jika pengguna bertanya hal di luar kemampuan atau detail lanjutan: Jawab dengan sopan dan arahkan ke admin Sekolah Mentor Indonesia. Gaya bahasa: - Ramah - Profesional - Jelas - Tidak bercanda berlebihan - Tidak menggunakan bahasa gaul ekstrem - Tidak menggunakan emoji berlebihan Identitas: - Kamu adalah sistem AI - Kamu bukan customer service manusia - Kamu bukan mentor personal Tujuan utama: membantu calon content creator memahami ekosistem belajar di Sekolah Mentor Indonesia secara ringkas dan benar.",
+    "mock_responses": {
+      "fallback": "Maaf, saya tidak memiliki informasi mengenai hal tersebut. Silakan hubungi admin Sekolah Mentor Indonesia untuk informasi lebih lanjut.",
+      "greeting": "Halo! Saya MentorAI SMI. Ada yang bisa saya bantu seputar pembelajaran atau pendaftaran di Sekolah Mentor Indonesia?",
+      "register": "Untuk mendaftar di Sekolah Mentor Indonesia, kamu bisa membuat akun terlebih dahulu melalui tombol Daftar di halaman utama. Setelah itu, kamu dapat mengakses konten gratis atau memilih paket mentor sesuai kebutuhan.",
+      "viral": "Saya bisa memberikan panduan umum tentang pembuatan konten, namun tidak bisa menjamin hasil seperti viral, jumlah followers, atau penghasilan tertentu. Untuk pendampingan lebih lanjut, kamu bisa mempertimbangkan paket mentor yang tersedia.",
+      "pricing": "Sekolah Mentor Indonesia menyediakan 3 paket mentoring: PERAK (199rb), PREMI (499rb), dan PROFESIONAL (1.2jt). Kamu bisa melihat detail lengkap fiturnya di bagian 'Paket Mentoring' pada halaman utama.",
+      "free": "Kami menyediakan berbagai konten gratis seperti artikel, video dasar, dan e-book panduan untuk membantu kamu memulai perjalanan sebagai content creator. Silakan daftar akun untuk mengakses library konten gratis kami.",
+      "identity": "Saya adalah MentorAI SMI, sistem AI asisten resmi Sekolah Mentor Indonesia. Saya bukan mentor pribadi atau customer service manusia, namun saya siap membantu memberikan informasi umum seputar platform ini.",
+      "forbidden": "Maaf, sebagai MentorAI SMI, saya tidak berwenang memberikan saran hukum, medis, atau keuangan pribadi. Fokus saya adalah membantu kamu memahami ekosistem belajar di Sekolah Mentor Indonesia."
+    },
+    "keywords": {
+      "greeting": ["halo", "pagi", "siang", "malam", "hai"],
+      "register": ["daftar", "cara gabung", "buat akun"],
+      "viral": ["viral", "followers", "kaya", "duit"],
+      "pricing": ["paket", "harga", "biaya", "bayar"],
+      "free": ["gratis", "free", "cuma-cuma"],
+      "identity": ["siapa kamu", "manusia", "orang"],
+      "forbidden": ["investasi", "keuangan", "hukum", "obat", "sakit"]
+    }
+  },
+  "loading": {
+    "tagline": "Medianya para content creator Indonesia"
+  },
+  "languages": {
+    "id": "Bahasa Indonesia",
+    "en": "English"
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "hero": {
+    "badge": "Accredited Training Institution",
+    "headline_main": "Empowering Entrepreneurs",
+    "headline_sub": "Competent & Characterful",
+    "subheadline": "Leading business training and mentoring institution to equip you with practical strategies from experienced mentors.",
+    "cta": "Start Your Journey",
+    "trust_points": {
+      "mentor": "Practitioner Mentor",
+      "curriculum": "Proven Curriculum"
+    },
+    "video_profile": "SMI Profile Video",
+    "video_description": "Learn our methods in 2 minutes"
+  },
+  "about": {
+    "badge": "Vision & Mission",
+    "title": "Building a Resilient Entrepreneurial Ecosystem",
+    "description": "Sekolah Mentor Indonesia (SMI) is a training institution focused on empowering human resources through practical curriculum and intensive mentoring.",
+    "visi_title": "Our Vision",
+    "visi_desc": "To be a center of excellence in business training that produces competent mentors and entrepreneurs.",
+    "misi_title": "Our Mission",
+    "misi_desc": "To provide practical strategies and a relevant mindset to face modern business challenges.",
+    "history_badge": "Since 2023",
+    "history_title": "Short History",
+    "history_p1": "Founded on November 27, 2023, as part of PT. Multiusaha Prioritas Bersama.",
+    "history_p2": "SMI exists as an empowerment pillar to help business partners achieve maximum growth through specialized work training.",
+    "history_p3": "We believe that with the right mentor, every business potential can be accelerated effectively and sustainably.",
+    "parent_company": "PT. Multiusaha Prioritas Bersama",
+    "parent_desc": "Parent Company"
+  },
+  "programs": {
+    "badge": "Featured Programs",
+    "title": "Practical Curriculum for Real Results",
+    "description": "Training materials specifically designed to have a direct impact on your business development.",
+    "list": {
+      "mindset": {
+        "title": "Business Mindset",
+        "desc": "Building a resilient entrepreneurial mental foundation to face market dynamics."
+      },
+      "sales": {
+        "title": "Sales Excellence",
+        "desc": "Practical sales strategies to increase conversion and revenue growth."
+      },
+      "leadership": {
+        "title": "Leadership & Team",
+        "desc": "The art of managing people and building solid teams for business acceleration."
+      },
+      "system": {
+        "title": "Business System",
+        "desc": "Building stable operational systems so the business can run effectively."
+      }
+    },
+    "level": "Level"
+  },
+  "advantages": {
+    "badge": "Our Advantages",
+    "title": "Trusted Partner for Business Growth",
+    "description": "We are here to provide real solutions for entrepreneurs who want to scale up with high competency standards.",
+    "stats": {
+      "satisfaction": "Satisfaction",
+      "alumni": "Alumni"
+    },
+    "list": {
+      "mentor": {
+        "title": "Practitioner Mentor",
+        "desc": "Guided directly by business players who have been proven in the field."
+      },
+      "curriculum": {
+        "title": "Applicable Curriculum",
+        "desc": "Materials focus on real implementation, not just academic theory."
+      },
+      "mentoring": {
+        "title": "Intensive Mentoring",
+        "desc": "We mentor your business growth process step by step."
+      },
+      "ecosystem": {
+        "title": "Synergy Ecosystem",
+        "desc": "Access to a wide network of business partners to accelerate collaboration."
+      }
+    }
+  },
+  "testimonials": {
+    "badge": "Testimonials",
+    "title": "What They Say?",
+    "description": "Real stories from alumni who have transformed with Sekolah Mentor Indonesia."
+  },
+  "cta": {
+    "title": "Accelerate Your Business Growth Now",
+    "description": "Optimize your potential and business through intensive mentoring and a practical curriculum specially designed for superior entrepreneurs.",
+    "join": "Join Now",
+    "consultation": "Consultation"
+  },
+  "header": {
+    "nav": {
+      "home": "Home",
+      "products": "Products",
+      "features": "Features",
+      "benefits": "Benefits",
+      "about": "About",
+      "blog": "Blog",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "menu": "Menu",
+    "language": "Language",
+    "cta": "Start Consultation"
+  },
+  "features": {
+    "badge": "Featured Features",
+    "title": "Complete Features for Best Experience",
+    "description": "Enjoy various premium features specifically designed to support your journey as a content creator.",
+    "list": {
+      "interactive": {
+        "title": "Interactive Classes",
+        "description": "High-quality learning videos with easy-to-understand materials"
+      },
+      "community": {
+        "title": "Active Community", 
+        "description": "Join thousands of other creators in a supportive community"
+      },
+      "certificate": {
+        "title": "Official Certificate",
+        "description": "Get certificates that can enhance your professional credibility"
+      }
+    }
+  },
+  "benefits": {
+    "badge": "Advantages",
+    "title": "Benefits of Joining SMI",
+    "description": "Get various exclusive benefits that you won't find on other platforms.",
+    "list": {
+      "mentor": {
+        "title": "Experienced Mentors",
+        "description": "Learn directly from experts who have been successful in their field"
+      },
+      "flexible": {
+        "title": "Flexible Time",
+        "description": "Access materials anytime and anywhere according to your schedule"
+      },
+      "portfolio": {
+        "title": "Portfolio Development",
+        "description": "Help build a strong portfolio for your career"
+      },
+      "network": {
+        "title": "Wide Networking",
+        "description": "Expand your network connections with the creative industry"
+      }
+    }
+  },
+  "products": {
+    "badge": "Featured Programs",
+    "title": "Featured Programs for Content Creators",
+    "description": "Choose the program that suits your needs and level to develop your career in content creation.",
+    "basic": {
+      "title": "Basic Course",
+      "description": "Basic content creation materials for beginners who want to start a career in the digital world.",
+      "features": [
+        "Fundamental Content Creation",
+        "Basic Editing Skills",
+        "Platform Strategy"
+      ]
+    },
+    "advanced": {
+      "title": "Advanced Program",
+      "description": "Intensive program for creators who want to improve their skills to a professional level.",
+      "features": [
+        "Advanced Analytics",
+        "Monetization Strategy",
+        "Personal Branding"
+      ]
+    },
+    "mentorship": {
+      "title": "Mentorship",
+      "description": "Personal guidance from experienced mentors to accelerate your career.",
+      "features": [
+        "1-on-1 Session",
+        "Portfolio Review",
+        "Career Guidance"
+      ]
+    }
+  },
+  "footer": {
+    "description": "A holding company building a sustainable and innovative business ecosystem through the synergy of various strategic business units.",
+    "company": "Company",
+    "contact": "Contact",
+    "copyright": "Sekolah Mentor Indonesia.",
+    "powered_by": "Powered By - PT Multiusaha Prioritas Bersama"
+  }
+}

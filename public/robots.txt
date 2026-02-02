@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Prioritize important pages
+Crawl-delay: 1
+
+# Block admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /_create/
+
+# Sitemap location
+Sitemap: https://multipriority.com/sitemap.xml
+
+# Block common bot paths
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /.env
