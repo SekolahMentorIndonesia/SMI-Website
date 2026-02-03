@@ -75,7 +75,7 @@ export default function SMIHomeFooter() {
               <ul className="space-y-3 sm:space-y-4 text-sm font-sans">
                 <li className="flex gap-3 items-start">
                   <MapPin className="text-brand-500 flex-shrink-0 w-4 h-4 sm:w-4.5 sm:h-4.5" />
-                  <span className="text-sm">Bekasi, Indonesia</span>
+                  <span className="text-sm">Kabupaten Bekasi, Indonesia</span>
                 </li>
                 <li className="flex gap-3 items-center">
                   <Phone className="text-brand-500 flex-shrink-0 w-4 h-4 sm:w-4.5 sm:h-4.5" />

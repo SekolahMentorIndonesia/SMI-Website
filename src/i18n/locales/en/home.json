@@ -252,5 +252,21 @@
     },
     "copyright": "© {{year}} Sekolah Mentor Indonesia.",
     "powered_by": "Powered By - PT Multiusaha Prioritas Bersama"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Have questions or need assistance? Our team is ready to help.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message"
+    },
+    "info": {
+      "email": "Our Email",
+      "whatsapp": "WhatsApp",
+      "address": "Address"
+    }
   }
 }

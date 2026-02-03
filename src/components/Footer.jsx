@@ -103,7 +103,7 @@ export default function Footer({
             <div className="flex flex-col gap-5">
               <div className="flex gap-3 items-start">
                 <MapPin className="text-brand-500 flex-shrink-0 mt-1 w-5 h-5" />
-                <span className="text-sm leading-relaxed">Bekasi, Jawa Barat<br/>Indonesia</span>
+                <span className="text-sm leading-relaxed">Kabupaten Bekasi, Indonesia</span>
               </div>
               <div className="flex gap-3 items-center">
                 <Phone className="text-brand-500 flex-shrink-0 w-5 h-5" />

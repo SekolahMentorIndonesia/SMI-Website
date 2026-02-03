@@ -345,7 +345,7 @@ export default function EnterprisePage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />
-                    <span>Jakarta, Indonesia</span>
+                    <span>Kabupaten Bekasi, Indonesia</span>
                   </div>
                 </div>
               </div>

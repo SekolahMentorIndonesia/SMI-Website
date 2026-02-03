@@ -12,6 +12,7 @@ import SMIProducts from "../projects/sekolah-mentor-indonesia/sections/SMIProduc
 import SMIAdvantages from "../projects/sekolah-mentor-indonesia/sections/SMIAdvantages";
 import SMIHomeSuccessStories from "../projects/sekolah-mentor-indonesia/sections/SMIHomeSuccessStories";
 import SMIChatAI from "../components/SMIChatAI";
+import SMIContact from "../projects/sekolah-mentor-indonesia/sections/SMIContact";
 import SMIFAQ from "../projects/sekolah-mentor-indonesia/sections/SMIFAQ";
 import SMIBlog from "../projects/sekolah-mentor-indonesia/sections/SMIBlog";
 import { faqs } from "../projects/sekolah-mentor-indonesia/data";
@@ -108,12 +109,12 @@ export default function AppPage() {
       },
       {
         "@type": "FAQPage",
-        "mainEntity": faqs.map(faq => ({
+        "mainEntity": (Array.isArray(faqs) ? faqs : []).map(faq => ({
           "@type": "Question",
-          "name": faq.question,
+          "name": faq?.question || "",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": faq.answer
+            "text": faq?.answer || ""
           }
         }))
       }
@@ -135,6 +136,7 @@ export default function AppPage() {
         <SMIBlog articles={articles} />
         <SMIHomeSuccessStories />
         <SMIFAQ />
+        <SMIContact />
       </main>
       <SMIChatAI />
     </div>
