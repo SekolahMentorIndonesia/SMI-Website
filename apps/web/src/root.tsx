@@ -22,20 +22,15 @@ import {
 import './styles/global.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { toPng } from 'html-to-image';
-import fetch from '@/__create/fetch';
 // @ts-ignore
-
-import { useNavigate } from 'react-router';
+ 
 import { serializeError } from 'serialize-error';
 import { Toaster } from 'sonner';
 // @ts-ignore
 import { LoadFonts } from 'virtual:load-fonts.jsx';
-import { HotReloadIndicator } from './__create/HotReload';
-import { useSandboxStore } from './__create/hmr-sandbox-store';
 import type { Route } from './+types/root';
-import { useDevServerHeartbeat } from './__create/useDevServerHeartbeat';
 import './i18n/config';
+// @ts-ignore
 import { useTranslation } from 'react-i18next';
 // @ts-ignore
 import { useNotification, NotificationProvider } from './contexts/NotificationContext';
@@ -53,11 +48,25 @@ export const links = () => [
     rel: "preconnect", 
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
-  }
+  },
+  { rel: "icon", href: "/logo.jpeg" }
 ];
 
-if (globalThis.window && globalThis.window !== undefined) {
-  globalThis.window.fetch = fetch;
+export function meta() {
+  return [
+    { title: "Sekolah Mentor Indonesia" },
+    { name: "description", content: "Platform mentoring content creator Indonesia. Belajar dari mentor profesional, gabung komunitas, dan kembangkan karir digital Anda." },
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    { name: "theme-color", content: "#2563eb" },
+    { name: "msapplication-TileColor", content: "#2563eb" },
+    { name: "application-name", content: "Sekolah Mentor Indonesia" },
+    { name: "apple-mobile-web-app-title", content: "SMI" },
+    { name: "apple-mobile-web-app-capable", content: "yes" },
+    { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+    { name: "author", content: "Mohammad Iqbal Alhafizh" },
+    { name: "robots", content: "index, follow" },
+  ];
 }
 
 const LoadFontsSSR = import.meta.env.SSR ? LoadFonts : null;
@@ -263,260 +272,22 @@ export const ClientOnly: React.FC<ClientOnlyProps> = ({ loader }) => {
   );
 };
 
-/**
- * useHmrConnection()
- * ------------------
- * • `true`  → HMR socket is healthy
- * • `false` → socket lost (Vite is polling / may auto‑reload soon)
- *
- * Works only in dev; in prod it always returns `true`.
- */
-export function useHmrConnection(): boolean {
-  const [connected, setConnected] = useState(() => !!import.meta.hot);
-
-  useEffect(() => {
-    // No HMR object outside dev builds
-    if (!import.meta.hot) return;
-
-    /** Fired the moment the WS closes unexpectedly */
-    const onDisconnect = () => setConnected(false);
-    /** Fired every time the WS (re‑)opens */
-    const onConnect = () => setConnected(true);
-
-    import.meta.hot.on('vite:ws:disconnect', onDisconnect);
-    import.meta.hot.on('vite:ws:connect', onConnect);
-
-    // Optional: catch the “about to full‑reload” event as a last resort
-    const onFullReload = () => setConnected(false);
-    import.meta.hot.on('vite:beforeFullReload', onFullReload);
-
-    return () => {
-      import.meta.hot?.off('vite:ws:disconnect', onDisconnect);
-      import.meta.hot?.off('vite:ws:connect', onConnect);
-      import.meta.hot?.off('vite:beforeFullReload', onFullReload);
-    };
-  }, []);
-
-  return connected;
-}
-
-const healthyResponseType = 'sandbox:web:healthcheck:response';
-const useHandshakeParent = () => {
-  const isHmrConnected = useHmrConnection();
-  useEffect(() => {
-    const healthyResponse = {
-      type: healthyResponseType,
-      healthy: isHmrConnected,
-    };
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data.type === 'sandbox:web:healthcheck') {
-        window.parent.postMessage(healthyResponse, '*');
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    // Immediately respond to the parent window with a healthy response in
-    // case we missed the healthcheck message
-    window.parent.postMessage(healthyResponse, '*');
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, [isHmrConnected]);
-};
-
-const useCodeGen = () => {
-  const { startCodeGen, setCodeGenGenerating, completeCodeGen, errorCodeGen, stopCodeGen } =
-    useSandboxStore();
-
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      const { type } = event.data;
-
-      switch (type) {
-        case 'sandbox:web:codegen:started':
-          startCodeGen();
-          break;
-        case 'sandbox:web:codegen:generating':
-          setCodeGenGenerating();
-          break;
-        case 'sandbox:web:codegen:complete':
-          completeCodeGen();
-          break;
-        case 'sandbox:web:codegen:error':
-          errorCodeGen();
-          break;
-        case 'sandbox:web:codegen:stopped':
-          stopCodeGen();
-          break;
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, [startCodeGen, setCodeGenGenerating, completeCodeGen, errorCodeGen, stopCodeGen]);
-};
-
-const useRefresh = () => {
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data.type === 'sandbox:web:refresh:request') {
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-        window.parent.postMessage({ type: 'sandbox:web:refresh:complete' }, '*');
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, []);
-};
-
-const waitForScreenshotReady = async () => {
-  const images = Array.from(document.images);
-
-  await Promise.all([
-    // make sure custom fonts are loaded
-    'fonts' in document ? document.fonts.ready : Promise.resolve(),
-    ...images.map(
-      (img) =>
-        new Promise((resolve) => {
-          img.crossOrigin = 'anonymous';
-          if (img.complete) {
-            resolve(true);
-            return;
-          }
-          img.onload = () => resolve(true);
-          img.onerror = () => resolve(true);
-        })
-    ),
-  ]);
-
-  // small buffer to ensure rendering is stable
-  await new Promise((resolve) => setTimeout(resolve, 250));
-};
-
-export const useHandleScreenshotRequest = () => {
-  useEffect(() => {
-    const handleMessage = async (event: MessageEvent) => {
-      if (event.data.type === 'sandbox:web:screenshot:request') {
-        try {
-          await waitForScreenshotReady();
-
-          const width = window.innerWidth;
-          const aspectRatio = 16 / 9;
-          const height = Math.floor(width / aspectRatio);
-
-          // html-to-image already handles CORS, fonts, and CSS inlining
-          const dataUrl = await toPng(document.body, {
-            cacheBust: true,
-            skipFonts: false,
-            width,
-            height,
-            style: {
-              // force snapshot sizing
-              width: `${width}px`,
-              height: `${height}px`,
-              margin: '0',
-            },
-          });
-
-          window.parent.postMessage({ type: 'sandbox:web:screenshot:response', dataUrl }, '*');
-        } catch (error) {
-          window.parent.postMessage(
-            {
-              type: 'sandbox:web:screenshot:error',
-              error: error instanceof Error ? error.message : String(error),
-            },
-            '*'
-          );
-        }
-      }
-    };
-
-    window.addEventListener('message', handleMessage);
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, []);
-};
 // Komponen root utama aplikasi.
 // Bertanggung jawab untuk setup routing dasar, meta tags, dan error handling global.
 export function Layout({ children }: { children: ReactNode }) {
   const { i18n } = useTranslation();
-  useHandshakeParent();
-  useCodeGen();
-  useRefresh();
-  useHandleScreenshotRequest();
-  useDevServerHeartbeat();
-  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location?.pathname;
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data.type === 'sandbox:navigation') {
-        navigate(event.data.pathname);
-      }
-    };
-    window.addEventListener('message', handleMessage);
-    window.parent.postMessage({ type: 'sandbox:web:ready' }, '*');
-    return () => {
-      window.removeEventListener('message', handleMessage);
-    };
-  }, [navigate]);
-
-  useEffect(() => {
-    if (pathname) {
-      window.parent.postMessage(
-        {
-          type: 'sandbox:web:navigation',
-          pathname,
-        },
-        '*'
-      );
-    }
-  }, [pathname]);
   return (
-    <html lang={i18n.language}>
+    <html lang={i18n.language || 'id'}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        {/* SEO Meta Tags */}
-        <meta name="description" content="Sekolah Mentor Indonesia - Platform mentoring terbaik untuk content creator Indonesia. Belajar dari mentor profesional, bergabung dengan komunitas kreator, dan kembangkan karir digital Anda." />
-        <meta name="keywords" content="sekolah mentor indonesia, mentoring content creator, kursus digital, belajar content creation, komunitas creator, platform mentoring indonesia, kursus online indonesia, mentor profesional, belajar digital marketing" />
-        <meta name="author" content="Mohammad Iqbal Alhafizh" />
-        <meta name="robots" content="index, follow" />
-        <link rel="canonical" href="https://smi.id" />
-        
-        {/* Open Graph Tags */}
-        <meta property="og:title" content="Sekolah Mentor Indonesia - Mentoring untuk Content Creator" />
-        <meta property="og:description" content="Platform mentoring terbaik untuk content creator Indonesia. Belajar dari mentor profesional dan bergabung dengan komunitas kreator." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://smi.id" />
-        <meta property="og:image" content="/logo.jpeg" />
-        <meta property="og:image:alt" content="Logo Sekolah Mentor Indonesia" />
-        <meta property="og:site_name" content="Sekolah Mentor Indonesia" />
-        <meta property="og:locale" content="id_ID" />
-        
-        {/* Twitter Card Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Sekolah Mentor Indonesia" />
-        <meta name="twitter:description" content="Platform mentoring untuk content creator Indonesia" />
-        <meta name="twitter:image" content="/logo.jpeg" />
-        <meta name="twitter:image:alt" content="Logo Sekolah Mentor Indonesia" />
-        <meta name="twitter:site" content="@sekolahmentorid" />
-        
-        {/* Additional SEO Tags */}
-        <meta name="theme-color" content="#2563eb" />
-        <meta name="msapplication-TileColor" content="#2563eb" />
-        <meta name="application-name" content="Sekolah Mentor Indonesia" />
-        <meta name="apple-mobile-web-app-title" content="SMI" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        
-        {/* Course Schema */}
+        <title>Sekolah Mentor Indonesia</title>
+        <meta name="description" content="Platform mentoring content creator Indonesia. Belajar dari mentor profesional, gabung komunitas, dan kembangkan karir digital Anda." />
+        <link rel="canonical" href={`https://smi.multipriority.com${pathname || ''}`} />
+
+        {/* Schema Markup */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -528,7 +299,7 @@ export function Layout({ children }: { children: ReactNode }) {
               "provider": {
                 "@type": "Organization",
                 "name": "Sekolah Mentor Indonesia",
-                "url": "https://smi.id"
+                "url": "https://smi.multipriority.com"
               },
               "educationalLevel": "Beginner to Advanced",
               "inLanguage": ["id"],
@@ -553,7 +324,7 @@ export function Layout({ children }: { children: ReactNode }) {
                 "Video Production",
                 "Business Mentoring"
               ],
-              "url": "https://smi.id/app"
+              "url": "https://smi.multipriority.com/app"
             }),
           }}
         />
@@ -567,8 +338,8 @@ export function Layout({ children }: { children: ReactNode }) {
               "@type": "Organization",
               "name": "Sekolah Mentor Indonesia",
               "alternateName": "SMI",
-              "url": "https://smi.id",
-              "logo": "https://smi.id/logo.jpeg",
+              "url": "https://smi.multipriority.com",
+              "logo": "https://smi.multipriority.com/logo.jpeg",
               "description": "Platform mentoring terbaik untuk content creator Indonesia dengan program komprehensif dan komunitas profesional.",
               "foundingDate": "2023",
               "founder": {
@@ -579,7 +350,7 @@ export function Layout({ children }: { children: ReactNode }) {
               "contactPoint": {
                 "@type": "ContactPoint",
                 "contactType": "customer service",
-                "email": "info@smi.id"
+                "email": "info@smi.multipriority.com"
               },
               "sameAs": [
                 "https://www.instagram.com/sekolahmentorindonesia",
@@ -598,16 +369,17 @@ export function Layout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
+
               "name": "Mohammad Iqbal Alhafizh",
               "alternateName": "Iqbal Alhafizh",
               "jobTitle": "Founder & Mentor Utama",
               "worksFor": {
                 "@type": "Organization",
                 "name": "Sekolah Mentor Indonesia",
-                "url": "https://smi.id",
+                "url": "https://smi.multipriority.com",
               },
               "description": "Founder & praktisi content creator dengan pengalaman 10+ tahun di digital marketing dan mentoring. Mentor utama di Sekolah Mentor Indonesia.",
-              "url": "https://smi.id/founder",
+              "url": "https://smi.multipriority.com/founder",
               "sameAs": [
                 "https://www.instagram.com/iqbalalhafizh",
                 "https://www.youtube.com/@iqbalalhafizh",
@@ -620,15 +392,13 @@ export function Layout({ children }: { children: ReactNode }) {
                 "Business Strategy",
                 "Social Media Management"
               ],
-              "image": "https://smi.id/mohamad-iqbal-alhafizh-founder-smi.jpeg"
+              "image": "https://smi.multipriority.com/mohamad-iqbal-alhafizh-founder-smi.jpeg"
             }),
           }}
         />
         
         <Meta />
         <Links />
-        <script type="module" src="/src/__create/dev-error-overlay.js"></script>
-        <link rel="icon" href="/logo.jpeg" />
         {LoadFontsSSR ? <LoadFontsSSR /> : null}
       </head>
       <body>
@@ -638,11 +408,9 @@ export function Layout({ children }: { children: ReactNode }) {
             <NotificationContainer />
           </AuthInitializer>
         </NotificationProvider>
-        <HotReloadIndicator />
         <Toaster position="bottom-right" />
         <ScrollRestoration />
         <Scripts />
-        <script src="https://kit.fontawesome.com/2c15cc0cc7.js" crossOrigin="anonymous" async />
       </body>
     </html>
   );

@@ -4,12 +4,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useAsyncError,
   useLocation,
-  useRouteError,
 } from 'react-router';
 
-import { useButton } from '@react-aria/button';
 import {
   useCallback,
   useEffect,
@@ -21,7 +18,6 @@ import {
 } from 'react';
 import './styles/global.css';
 
-import { toPng } from 'html-to-image';
 import fetch from '@/__create/fetch.ts';
 // @ts-ignore
 
@@ -56,6 +52,15 @@ export const links = () => [
   }
 ];
 
+export function meta() {
+  return [
+    { title: "Sekolah Mentor Indonesia" },
+    { name: "description", content: "Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses kolaborasi untuk generasi muda siap berkarya." },
+    { charset: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    { name: "robots", content: "index, follow" }
+  ];
+}
 if (globalThis.window && globalThis.window !== undefined) {
   globalThis.window.fetch = fetch;
 }
@@ -269,6 +274,9 @@ export const useHandleScreenshotRequest = () => {
           const aspectRatio = 16 / 9;
           const height = Math.floor(width / aspectRatio);
 
+          // Lazy load html-to-image
+          const { toPng } = await import('html-to-image');
+
           // html-to-image already handles CORS, fonts, and CSS inlining
           const dataUrl = await toPng(document.body, {
             cacheBust: true,
@@ -338,18 +346,67 @@ export function Layout({ children }: { children: ReactNode }) {
       );
     }
   }, [pathname]);
+
+  useEffect(() => {
+    let loaded = false;
+    const loadGtag = () => {
+      if (loaded) return;
+      loaded = true;
+      if (typeof window === 'undefined') return;
+      if ((window as any).gtag) return;
+      const script = document.createElement('script');
+      script.src = "https://www.googletagmanager.com/gtag/js?id=G-4QKTE25P65";
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      // @ts-ignore
+      (window as any).gtag = function(){(window as any).dataLayer.push(arguments);}
+      // @ts-ignore
+      (window as any).gtag('js', new Date());
+      // @ts-ignore
+      (window as any).gtag('config', 'G-4QKTE25P65', { send_page_view: false });
+    };
+    const onFirstInteraction = () => {
+      loadGtag();
+      window.removeEventListener('pointerdown', onFirstInteraction);
+      window.removeEventListener('keydown', onFirstInteraction);
+      window.removeEventListener('scroll', onFirstInteraction);
+    };
+    window.addEventListener('pointerdown', onFirstInteraction, { once: true });
+    window.addEventListener('keydown', onFirstInteraction, { once: true });
+    window.addEventListener('scroll', onFirstInteraction, { once: true, passive: true });
+    const idle = (cb: () => void, timeout = 15000) => {
+      // @ts-ignore
+      if (window.requestIdleCallback) {
+        // @ts-ignore
+        window.requestIdleCallback(cb, { timeout });
+      } else {
+        setTimeout(cb, timeout);
+      }
+    };
+    idle(loadGtag, 15000);
+    return () => {
+      window.removeEventListener('pointerdown', onFirstInteraction);
+      window.removeEventListener('keydown', onFirstInteraction);
+      window.removeEventListener('scroll', onFirstInteraction);
+    };
+  }, []);
+
   return (
-    <html lang="id">
+    <html lang={i18n.language} dir={typeof i18n.dir === 'function' ? i18n.dir() : 'ltr'}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        {/* SEO Meta Tags are handled by React Router's <Meta /> */}
+        <title>Sekolah Mentor Indonesia</title>
+        <meta name="description" content="Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses kolaborasi untuk generasi muda siap berkarya." />
+        <link rel="canonical" href={`https://smi.multipriority.com${pathname || ''}`} />
         <meta name="robots" content="index, follow" />
+        <link rel="preload" as="image" href="/logo.jpeg" />
         
         <Meta />
         <Links />
-        <script type="module" src="/src/__create/dev-error-overlay.js"></script>
+        
         {/* Umami Analytics */}
         <script 
           defer 
@@ -357,18 +414,6 @@ export function Layout({ children }: { children: ReactNode }) {
           data-website-id="e080d060-1f57-4d3c-a156-e58648442b43"
         />
         
-        {/* Google Analytics (GA4) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4QKTE25P65"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-4QKTE25P65');
-            `,
-          }}
-        />
         <link rel="icon" href="/logo.jpeg" type="image/jpeg" />
         {LoadFontsSSR ? <LoadFontsSSR /> : null}
       </head>
@@ -379,11 +424,10 @@ export function Layout({ children }: { children: ReactNode }) {
               <NotificationContainer />
           </NotificationProvider>
         </AuthProvider>
-        <HotReloadIndicator />
+        
         <Toaster position="bottom-right" />
         <ScrollRestoration />
         <Scripts />
-        <script src="https://kit.fontawesome.com/2c15cc0cc7.js" crossOrigin="anonymous" async />
       </body>
     </html>
   );

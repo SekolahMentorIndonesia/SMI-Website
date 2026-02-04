@@ -81,7 +81,9 @@ export default function Navbar({ variant = 'smi' }) {
             <img 
               src={currentConfig.logo}
               alt={`Logo ${currentConfig.title}`}
-              className="h-10 sm:h-12 w-auto object-contain" 
+              className="h-10 sm:h-12 w-auto object-contain"
+              width="48"
+              height="48"
             />
             <div className="ml-3 flex flex-col items-start">
                 <span className="text-sm font-bold text-neutral-900 leading-tight">{currentConfig.title}</span>
@@ -139,6 +141,8 @@ export default function Navbar({ variant = 'smi' }) {
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-2 p-2 hover:bg-neutral-50 rounded-lg transition-colors duration-200 text-neutral-600"
+              aria-label="Change language"
+              aria-expanded={isLangOpen}
             >
               <Globe className="w-4 h-4" />
               <span className="text-xs font-bold uppercase">{i18n.language}</span>
@@ -208,6 +212,7 @@ export default function Navbar({ variant = 'smi' }) {
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 text-neutral-500 hover:bg-neutral-50 rounded-lg"
+                  aria-label="Close menu"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -222,6 +227,8 @@ export default function Navbar({ variant = 'smi' }) {
                           <button
                             onClick={() => setActiveDropdown(activeDropdown === item.name ? null : item.name)}
                             className="flex items-center justify-between py-3 text-base font-medium text-neutral-700 hover:text-brand-600"
+                            aria-label={`Toggle ${item.name} submenu`}
+                            aria-expanded={activeDropdown === item.name}
                           >
                             {item.name}
                             <ChevronDown className={`w-5 h-5 transition-transform ${activeDropdown === item.name ? 'rotate-180' : ''}`} />
