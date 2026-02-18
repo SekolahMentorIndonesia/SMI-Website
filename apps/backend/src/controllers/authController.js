@@ -44,7 +44,7 @@ const register = async (req, res) => {
 
     // Auto-verify for local development
     const isLocalDev = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV;
-    const isLocalAccount = email.includes('@smi.id') || email.includes('localhost') || email.includes('test');
+    const isLocalAccount = email.includes('@smi.multipriority.com') || email.includes('localhost') || email.includes('test');
 
     const user = await User.create({ 
       name, 

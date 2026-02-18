@@ -3,6 +3,14 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { CreditCard, Search, Filter, Eye, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { adminService } from '../../../services/adminService';
 
+export function meta() {
+  return [
+    { title: "Payment Management - Admin SMI" },
+    { name: "description", content: "Manajemen pembayaran dan transaksi Sekolah Mentor Indonesia." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function AdminPaymentsPage() {
   const [payments, setPayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

@@ -1,4 +1,4 @@
-import { Target, Compass, History } from "lucide-react";
+import { Target, Compass } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
@@ -34,7 +34,7 @@ export default function SMIAbout() {
                 </div>
                 <div>
                   <h4 className="text-neutral-900 font-bold mb-1 font-display text-sm sm:text-base">{t('about.visi_title')}</h4>
-                  <p className="text-neutral-500 text-xs sm:text-sm font-sans leading-relaxed">
+                  <p className="text-neutral-600 text-xs sm:text-sm font-sans leading-relaxed">
                     {t('about.visi_desc')}
                   </p>
                 </div>
@@ -46,7 +46,7 @@ export default function SMIAbout() {
                 </div>
                 <div>
                   <h4 className="text-neutral-900 font-bold mb-1 font-display text-sm sm:text-base">{t('about.misi_title')}</h4>
-                  <p className="text-neutral-500 text-xs sm:text-sm font-sans leading-relaxed">
+                  <p className="text-neutral-600 text-xs sm:text-sm font-sans leading-relaxed">
                     {t('about.misi_desc')}
                   </p>
                 </div>
@@ -82,11 +82,13 @@ export default function SMIAbout() {
               <img 
                 src="/pt-logo.jpeg" 
                 alt="Logo PT Sekolah Mentor Indonesia" 
+                width="160"
+                height="40"
                 className="h-8 sm:h-10 w-auto object-contain rounded"
               />
               <div>
                 <p className="text-neutral-900 font-bold text-xs sm:text-sm font-display leading-none">{t('about.parent_company')}</p>
-                <p className="text-neutral-400 text-[9px] sm:text-[10px] font-sans mt-1">{t('about.parent_desc')}</p>
+                <p className="text-neutral-500 text-[9px] sm:text-[10px] font-sans mt-1">{t('about.parent_desc')}</p>
               </div>
             </div>
           </motion.div>

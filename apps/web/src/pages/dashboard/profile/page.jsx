@@ -6,6 +6,14 @@ import { User, Mail, Shield, Calendar, Edit2, LogOut, Loader2 } from "lucide-rea
 import { useNavigate } from "react-router";
 import { userService } from "../../../services/userService";
 
+export function meta() {
+  return [
+    { title: "My Profile - Dashboard SMI" },
+    { name: "description", content: "Kelola profil, informasi kontak, dan preferensi akun Anda." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function ProfilePage() {
   const { user, logout, updateUser } = useAuthStore();
   const navigate = useNavigate();

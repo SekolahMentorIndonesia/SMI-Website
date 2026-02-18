@@ -12,7 +12,7 @@ async function testSimpleEnrollment() {
         console.log('\n🔐 Login dengan existing user...');
         
         const loginResponse = await axios.post(`${baseURL}/auth/login`, {
-            email: 'superadmin@smi.id',
+            email: 'superadmin@smi.multipriority.com',
             password: 'password123' // asumsi password
         });
         

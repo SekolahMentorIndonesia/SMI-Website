@@ -2,6 +2,14 @@ import UserLayout from "../../../layouts/UserLayout";
 import UserGuard from "../../../components/dashboard/UserGuard";
 import { Calendar, Video, Clock, MapPin, ArrowRight } from "lucide-react";
 
+export function meta() {
+  return [
+    { title: "Events - Dashboard SMI" },
+    { name: "description", content: "Jadwal event, webinar, dan sesi mentoring live mendatang." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function EventsPage() {
   const events = [
     {

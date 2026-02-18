@@ -69,7 +69,9 @@ function getHonoPath(routeFile: string): { name: string; pattern: string }[] {
 async function registerRoutes() {
   const routeFiles = (
     await findRouteFiles(__dirname).catch((error) => {
-      console.error('Error finding route files:', error);
+      if (error.code !== 'ENOENT') {
+        console.error('Error finding route files:', error);
+      }
       return [];
     })
   )

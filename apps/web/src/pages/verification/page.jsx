@@ -4,6 +4,14 @@ import { useAuthStore } from '@/store/useAuthStore';
 import { Mail, Phone, Shield, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { authService } from '@/services/authService';
 
+export function meta() {
+  return [
+    { title: "Verifikasi Akun - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Verifikasi email dan nomor telepon untuk mengamankan akun Anda." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function VerificationPage() {
   const [emailOtp, setEmailOtp] = useState('');
   const [phoneOtp, setPhoneOtp] = useState('');

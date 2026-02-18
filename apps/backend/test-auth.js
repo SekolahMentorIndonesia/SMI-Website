@@ -15,14 +15,14 @@ async function testAuth() {
     console.log('');
 
     // 2. Test password verification for admin
-    const admin = await User.findOne({ where: { email: 'admin@smi.id' } });
+    const admin = await User.findOne({ where: { email: 'admin@smi.multipriority.com' } });
     if (admin) {
       const isAdminValid = await admin.comparePassword('passwordadmin');
       console.log(`Admin password (passwordadmin) valid: ${isAdminValid}`);
     }
 
     // 3. Test password verification for superadmin
-    const superadmin = await User.findOne({ where: { email: 'superadmin@smi.id' } });
+    const superadmin = await User.findOne({ where: { email: 'superadmin@smi.multipriority.com' } });
     if (superadmin) {
       const isSuperadminValid = await superadmin.comparePassword('passwordsuperadmin');
       console.log(`Superadmin password (passwordsuperadmin) valid: ${isSuperadminValid}`);

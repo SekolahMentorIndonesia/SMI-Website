@@ -8,7 +8,7 @@ const testUsers = [
   {
     id: 1,
     name: 'Superadmin',
-    email: 'superadmin@smi.id',
+    email: 'superadmin@smi.multipriority.com',
     password: 'passwordsuperadmin',
     role: 'superadmin',
     status: 'active',
@@ -17,7 +17,7 @@ const testUsers = [
   {
     id: 2,
     name: 'Admin Operasional',
-    email: 'admin@smi.id',
+    email: 'admin@smi.multipriority.com',
     password: 'passwordadmin',
     role: 'admin',
     status: 'active',

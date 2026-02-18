@@ -4,6 +4,14 @@ import { adminService } from '../../../services/adminService';
 import { Users, Clock, CheckCircle2, XCircle, Loader2, RefreshCcw, UsersRound, Wallet, BarChart3 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+export function meta() {
+  return [
+    { title: "Admin Dashboard - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Pusat kontrol dan statistik admin Sekolah Mentor Indonesia." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function AdminDashboardPage() {
   const [stats, setStats] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

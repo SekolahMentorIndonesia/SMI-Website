@@ -95,6 +95,7 @@ export default function SMIAIAssistant() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
+        aria-label={t('ai.chat_button_label')}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] bg-brand-600 text-white p-3.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl shadow-brand-200 flex items-center gap-3 group"
       >
         <div className="relative">

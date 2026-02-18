@@ -4,6 +4,13 @@ import NavbarMain from "../../components/NavbarMain";
 import SMIHomeFooter from "../../components/SMIHomeFooter";
 import SMIAIAssistant from "../../components/SMIAIAssistant";
 
+export function meta() {
+  return [
+    { title: "Library Konten - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Koleksi materi pembelajaran content creator yang lengkap dan terstruktur." }
+  ];
+}
+
 export default function LibraryPage() {
 
   return (

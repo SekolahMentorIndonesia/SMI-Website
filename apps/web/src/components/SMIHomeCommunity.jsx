@@ -72,7 +72,7 @@ export default function SMIHomeCommunity() {
                   </div>
                   <div>
                     <h4 className="font-bold text-neutral-900 mb-1 text-sm sm:text-base">{benefit.title}</h4>
-                    <p className="text-xs sm:text-sm text-neutral-500 leading-snug">{benefit.description}</p>
+                    <p className="text-xs sm:text-sm text-neutral-600 leading-snug">{benefit.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -147,7 +147,7 @@ export default function SMIHomeCommunity() {
                     </div>
                     <div>
                       <div className="text-xl font-bold text-neutral-900">{t('community.stats.cities')}</div>
-                      <div className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider">{t('community.stats.cities_label')}</div>
+                      <div className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">{t('community.stats.cities_label')}</div>
                     </div>
                   </motion.div>
                 </div>

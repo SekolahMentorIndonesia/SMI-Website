@@ -8,7 +8,7 @@ async function testFullFlow() {
     
     try {
         // 1. Cari user yang valid
-        const user = await User.findOne({ where: { email: 'superadmin@smi.id' } });
+        const user = await User.findOne({ where: { email: 'superadmin@smi.multipriority.com' } });
         if (!user) {
             console.log('❌ User tidak ditemukan');
             return;

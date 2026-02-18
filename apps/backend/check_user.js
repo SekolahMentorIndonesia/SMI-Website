@@ -3,7 +3,7 @@ const sequelize = require('./src/config/database');
 
 async function check() {
   try {
-    const user = await User.findOne({ where: { email: 'admin@smi.id' } });
+    const user = await User.findOne({ where: { email: 'admin@smi.multipriority.com' } });
     if (user) {
       console.log('User found:', user.toJSON());
       const isMatch = await user.comparePassword('passwordadmin');

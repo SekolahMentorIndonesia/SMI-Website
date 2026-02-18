@@ -31,23 +31,26 @@ export default function SMIHomeFooter() {
               <img 
                 src="/logo.jpeg" 
                 alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" 
+                width="64"
+                height="64"
                 className="h-14 sm:h-16 w-auto object-contain rounded-lg transition-transform group-hover:scale-105"
               />
             </a>
-            <p className="text-sm leading-relaxed mb-6 sm:mb-8 font-sans max-w-xs text-neutral-400">
+            <p className="text-sm leading-relaxed mb-6 sm:mb-8 font-sans max-w-xs text-neutral-300">
               {t('footer.description')}
             </p>
             <div className="flex gap-4">
               {[
-                { Icon: Instagram, url: 'https://www.instagram.com/sekolahmentor.id' },
-                { Icon: TikTok, url: 'https://www.tiktok.com/@growwithsmi' },
-                { Icon: Facebook, url: 'https://www.facebook.com/share/16kGyY5br5/' }
-              ].map(({ Icon, url }, i) => (
+                { Icon: Instagram, url: 'https://www.instagram.com/sekolahmentor.id', label: 'Instagram' },
+                { Icon: TikTok, url: 'https://www.tiktok.com/@growwithsmi', label: 'TikTok' },
+                { Icon: Facebook, url: 'https://www.facebook.com/share/16kGyY5br5/', label: 'Facebook' }
+              ].map(({ Icon, url, label }, i) => (
                 <a
                   key={i}
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Visit our ${label} page`}
                   className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-neutral-400"
                 >
                   <Icon className="w-4 h-4 sm:w-4 sm:h-4" />
@@ -96,10 +99,10 @@ export default function SMIHomeFooter() {
 
         {/* Bottom Bar */}
         <div className="pt-8 sm:pt-10 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6 text-center md:text-left">
-          <p className="text-[10px] sm:text-xs text-neutral-500 font-sans">
+          <p className="text-[10px] sm:text-xs text-neutral-400 font-sans">
             {t('footer.copyright', { year: currentYear })}
           </p>
-          <p className="text-[10px] sm:text-xs text-neutral-600 font-sans">
+          <p className="text-[10px] sm:text-xs text-neutral-400 font-sans">
             {t('footer.powered_by')}
           </p>
         </div>

@@ -6,7 +6,7 @@ async function registerAdmin() {
     // Create a new admin user
     const newAdmin = await User.create({
       name: 'Admin SMI',
-      email: 'admin@smi.id',
+      email: 'admin@smi.multipriority.com',
       password: 'admin123',
       role: 'admin',
       status: 'approved' // Admin status is approved by default

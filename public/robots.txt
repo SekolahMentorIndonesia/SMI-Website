@@ -8,9 +8,12 @@ Crawl-delay: 1
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_create/
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /settings/
 
 # Sitemap location
-Sitemap: https://multipriority.com/sitemap.xml
+Sitemap: https://smi.multipriority.com/sitemap.xml
 
 # Block common bot paths
 Disallow: /tmp/

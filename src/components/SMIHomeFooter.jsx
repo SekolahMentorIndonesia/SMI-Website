@@ -3,14 +3,14 @@ import { useTranslation } from "react-i18next";
 
 // Custom TikTok Icon
 const TikTok = ({ size = 16 }) => (
-  <svg 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
     strokeLinejoin="round"
   >
     <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
@@ -29,22 +29,23 @@ export default function SMIHomeFooter() {
           <div className="lg:col-span-1">
             <a href="/sekolah-mentor-indonesia" className="flex flex-col items-start mb-6 group">
               <span className="text-xl font-bold text-white leading-tight tracking-tight">Sekolah Mentor Indonesia</span>
-              <span className="text-xs text-neutral-500 font-medium tracking-wide uppercase mt-0.5">Platform Mentoring & Edukasi</span>
+              <span className="text-xs text-neutral-400 font-medium tracking-wide uppercase mt-0.5">Platform Mentoring & Edukasi</span>
             </a>
             <p className="text-sm leading-relaxed mb-6 sm:mb-8 font-sans max-w-xs text-neutral-400">
               {t('footer.description')}
             </p>
             <div className="flex gap-4">
               {[
-                { Icon: Instagram, url: 'https://www.instagram.com/sekolahmentor.id' },
-                { Icon: TikTok, url: 'https://www.tiktok.com/@growwithsmi' },
-                { Icon: Facebook, url: 'https://www.facebook.com/share/16kGyY5br5/' }
-              ].map(({ Icon, url }, i) => (
+                { Icon: Instagram, url: 'https://www.instagram.com/sekolahmentor.id', label: 'Instagram' },
+                { Icon: TikTok, url: 'https://www.tiktok.com/@growwithsmi', label: 'TikTok' },
+                { Icon: Facebook, url: 'https://www.facebook.com/share/16kGyY5br5/', label: 'Facebook' }
+              ].map(({ Icon, url, label }, i) => (
                 <a
                   key={i}
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={`Visit our ${label} page`}
                   className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:bg-brand-600 hover:text-white transition-all text-neutral-400"
                 >
                   <Icon className="w-4 h-4 sm:w-4 sm:h-4" />
@@ -79,11 +80,11 @@ export default function SMIHomeFooter() {
                 </li>
                 <li className="flex gap-3 items-center">
                   <Phone className="text-brand-500 flex-shrink-0 w-4 h-4 sm:w-4.5 sm:h-4.5" />
-                  <a href="tel:+6281915020498" className="hover:text-brand-400 transition-colors text-sm">+62 819-1502-0498</a>
+                  <a href="tel:+6287744556696" className="hover:text-brand-400 transition-colors text-sm">+62 877-4455-6696</a>
                 </li>
                 <li className="flex gap-3 items-center">
                   <MessageCircle className="text-brand-500 flex-shrink-0 w-4 h-4 sm:w-4.5 sm:h-4.5" />
-                  <a href="https://wa.me/6281915020498" className="hover:text-brand-400 transition-colors text-sm">+62 819-1502-0498</a>
+                  <a href="https://wa.me/6287744556696" className="hover:text-brand-400 transition-colors text-sm">+62 877-4455-6696</a>
                 </li>
               </ul>
               <ul className="space-y-3 sm:space-y-4 text-sm font-sans">
@@ -101,7 +102,7 @@ export default function SMIHomeFooter() {
           <p className="text-[10px] sm:text-xs text-neutral-500 font-sans">
             {t('footer.copyright', { year: currentYear })}
           </p>
-          <p className="text-[10px] sm:text-xs text-neutral-600 font-sans">
+          <p className="text-[10px] sm:text-xs text-neutral-400 font-sans">
             {t('footer.powered_by')}
           </p>
         </div>

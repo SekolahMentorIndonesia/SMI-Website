@@ -390,7 +390,7 @@ export default function BookingPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Video className="w-4 h-4" />
-                    <span>booking@smi.id</span>
+                    <span>booking@smi.multipriority.com</span>
                   </div>
                 </div>
               </div>

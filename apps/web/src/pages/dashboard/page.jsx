@@ -19,6 +19,14 @@ import {
 } from "lucide-react";
 import { useNotification } from '../../contexts/NotificationContext';
 
+export function meta() {
+  return [
+    { title: "Dashboard - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Dashboard siswa Sekolah Mentor Indonesia. Akses materi dan progres belajar Anda." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function UserDashboardPage() {
   const { user, token, updateUser } = useAuthStore();
   const { success, error: showError } = useNotification();

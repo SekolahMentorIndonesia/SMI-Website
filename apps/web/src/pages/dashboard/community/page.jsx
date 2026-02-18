@@ -2,6 +2,14 @@ import UserLayout from "../../../layouts/UserLayout";
 import UserGuard from "../../../components/dashboard/UserGuard";
 import { MessageSquare, Users, ExternalLink } from "lucide-react";
 
+export function meta() {
+  return [
+    { title: "Community - Dashboard SMI" },
+    { name: "description", content: "Bergabung dengan komunitas mentor dan diskusi grup eksklusif." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function CommunityPage() {
   return (
     <UserGuard requireApproved={true}>

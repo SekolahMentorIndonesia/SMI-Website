@@ -9,8 +9,8 @@ async function seedTestUsers() {
     
     // Test users to create
     const testUsers = [
-      { email: 'superadmin@smi.id', password: 'passwordsuperadmin', name: 'Superadmin', role: 'superadmin' },
-      { email: 'admin@smi.id', password: 'passwordadmin', name: 'Admin Operasional', role: 'admin' },
+      { email: 'superadmin@smi.multipriority.com', password: 'passwordsuperadmin', name: 'Superadmin', role: 'superadmin' },
+      { email: 'admin@smi.multipriority.com', password: 'passwordadmin', name: 'Admin Operasional', role: 'admin' },
       { email: 'dzarelalghifari123@gmail.com', password: 'dzarel123', name: 'User Biasa', role: 'user' }
     ];
     

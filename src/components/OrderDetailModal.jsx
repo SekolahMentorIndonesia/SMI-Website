@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CreditCard, QrCode, Check, ChevronRight, Copy, MessageCircle } from 'lucide-react';
+import { X, CreditCard, QrCode, Check, ChevronRight, Copy, MessageCircle, Loader2 } from 'lucide-react';
 
 export default function OrderDetailModal({ isOpen, onClose, product }) {
   const [step, setStep] = useState(1);
@@ -10,6 +10,8 @@ export default function OrderDetailModal({ isOpen, onClose, product }) {
     whatsapp: '',
     notes: ''
   });
+  // Kept for UI compatibility, always false since backend is skipped
+  const [isSubmitting] = useState(false);
 
   const [isCopied, setIsCopied] = useState(false);
 
@@ -27,6 +29,7 @@ export default function OrderDetailModal({ isOpen, onClose, product }) {
     e.preventDefault();
     if (formData.name && formData.email && formData.whatsapp) {
       if (product?.id === 'corporate' || product?.action === 'consultation') {
+        // ... existing consultation logic ...
         const consultMessage = [
           'Halo Tim SMI, saya tertarik dengan Private Exclusive Coaching.',
           '',
@@ -40,10 +43,11 @@ export default function OrderDetailModal({ isOpen, onClose, product }) {
           '',
           'Mohon informasikan harga dan proses selanjutnya. Terima kasih!'
         ].join('\n');
-        const whatsappUrl = `https://wa.me/6281915020498?text=${encodeURIComponent(consultMessage)}`;
+        const whatsappUrl = `https://wa.me/6287744556696?text=${encodeURIComponent(consultMessage)}`;
         window.open(whatsappUrl, '_blank');
         onClose();
       } else {
+        // Skip backend submission, go directly to payment step
         setStep(2);
       }
     }
@@ -66,9 +70,11 @@ Nominal: ${product.price}
 
 Mohon dicek kembali. Berikut saya lampirkan FOTO BUKTI PEMBAYARAN. Terima kasih.`;
 
-    const whatsappUrl = `https://wa.me/6281915020498?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/6287744556696?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
     onClose();
+    setStep(1);
+    setFormData({ name: '', email: '', whatsapp: '', notes: '' });
   };
 
   return (
@@ -173,18 +179,26 @@ Mohon dicek kembali. Berikut saya lampirkan FOTO BUKTI PEMBAYARAN. Terima kasih.
 
                 <button
                   type="submit"
-                  className="w-full mt-4 bg-brand-600 text-white py-3.5 rounded-xl font-semibold hover:bg-brand-700 transition-colors flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full mt-4 bg-brand-600 text-white py-3.5 rounded-xl font-semibold hover:bg-brand-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {product?.id === 'corporate' || product?.action === 'consultation' ? (
+                  {isSubmitting ? (
                     <>
-                      <MessageCircle className="w-5 h-5" />
-                      Kirim ke WhatsApp
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Memproses...
                     </>
                   ) : (
-                    <>
-                      <CreditCard className="w-5 h-5" />
-                      Lanjut ke Pembayaran
-                    </>
+                    product?.id === 'corporate' || product?.action === 'consultation' ? (
+                      <>
+                        <MessageCircle className="w-5 h-5" />
+                        Kirim ke WhatsApp
+                      </>
+                    ) : (
+                      <>
+                        <CreditCard className="w-5 h-5" />
+                        Lanjut ke Pembayaran
+                      </>
+                    )
                   )}
                 </button>
               </form>
@@ -250,10 +264,20 @@ Mohon dicek kembali. Berikut saya lampirkan FOTO BUKTI PEMBAYARAN. Terima kasih.
 
                 <button
                   onClick={handleWhatsAppRedirect}
-                  className="w-full bg-brand-600 text-white py-3.5 rounded-xl font-semibold hover:bg-brand-700 transition-colors flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full bg-brand-600 text-white py-3.5 rounded-xl font-semibold hover:bg-brand-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <Check className="w-5 h-5" />
-                  Saya Sudah Bayar
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Memproses...
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-5 h-5" />
+                      Saya Sudah Bayar
+                    </>
+                  )}
                 </button>
               </div>
             )}

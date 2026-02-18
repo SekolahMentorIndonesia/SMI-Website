@@ -2,6 +2,14 @@ import AdminLayout from '../../../layouts/AdminLayout';
 import { Settings, Save, RefreshCw } from 'lucide-react';
 import { useState } from 'react';
 
+export function meta() {
+  return [
+    { title: "Settings - Admin SMI" },
+    { name: "description", content: "Pengaturan sistem dan konfigurasi aplikasi Sekolah Mentor Indonesia." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function AdminSettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');

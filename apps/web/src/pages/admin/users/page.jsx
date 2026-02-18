@@ -4,6 +4,14 @@ import { Users, Search, Filter, Edit2, Trash2, Shield, UserCheck, UserX, Loader2
 import { adminService } from '../../../services/adminService';
 import { useNotification } from '../../../contexts/NotificationContext';
 
+export function meta() {
+  return [
+    { title: "User Management - Admin SMI" },
+    { name: "description", content: "Kelola data pengguna, peran, dan status akun." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function AdminUsersPage() {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

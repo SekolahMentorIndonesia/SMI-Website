@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Users, Clock, CheckCircle, Building } from "lucide-react";
 import { useState } from "react";
 
+export function meta() {
+  return [
+    { title: "Enterprise - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Solusi pelatihan content creator untuk perusahaan dan tim Anda." }
+  ];
+}
+
 export default function EnterprisePage() {
   const [formData, setFormData] = useState({
     companyName: '',
@@ -341,7 +348,7 @@ export default function EnterprisePage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    <span>enterprise@smi.id</span>
+                    <span>enterprise@smi.multipriority.com</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />

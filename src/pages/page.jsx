@@ -15,6 +15,7 @@ import SMIChatAI from "../components/SMIChatAI";
 import SMIContact from "../projects/sekolah-mentor-indonesia/sections/SMIContact";
 import SMIFAQ from "../projects/sekolah-mentor-indonesia/sections/SMIFAQ";
 import SMIBlog from "../projects/sekolah-mentor-indonesia/sections/SMIBlog";
+import StructuredData from "../components/StructuredData";
 import { faqs } from "../projects/sekolah-mentor-indonesia/data";
 
 // Load Midtrans Snap Script sekali di head
@@ -55,90 +56,59 @@ export function meta() {
     { property: "og:description", content: "Bergabung dengan Sekolah Mentor Indonesia. Platform edukasi terdepan untuk content creator. Mulai perjalanan karir digitalmu di sini." },
     { property: "og:image", content: "/logo.jpeg" },
     { property: "og:image:alt", content: "Logo Sekolah Mentor Indonesia" },
+    { property: "og:image:width", content: "400" },
+    { property: "og:image:height", content: "400" },
     { property: "og:url", content: "https://smi.multipriority.com/" },
     { property: "og:type", content: "website" },
+    { property: "og:locale", content: "id_ID" },
+    { property: "og:site_name", content: "Sekolah Mentor Indonesia" },
     { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:site", content: "@sekolahmentor_id" },
+    { name: "twitter:creator", content: "@sekolahmentor_id" },
     { name: "twitter:title", content: "Sekolah Mentor Indonesia" },
     { name: "twitter:description", content: "Platform edukasi terdepan untuk content creator." },
     { name: "twitter:image", content: "/logo.jpeg" },
     { name: "twitter:image:alt", content: "Logo Sekolah Mentor Indonesia" },
-    { name: "robots", content: "index, follow" },
-    { rel: "canonical", href: "https://smi.multipriority.com/" }
+    { name: "robots", content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" },
+    { rel: "canonical", href: "https://smi.multipriority.com/" },
+    { rel: "alternate", hrefLang: "id", href: "https://smi.multipriority.com/" },
+    { rel: "alternate", hrefLang: "en", href: "https://smi.multipriority.com/en/" },
+    { rel: "alternate", hrefLang: "x-default", href: "https://smi.multipriority.com/" }
   ];
 }
 
 export default function AppPage() {
   const { articles } = useLoaderData() || { articles: [] };
 
-  const schema = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "EducationalOrganization",
-        "name": "Sekolah Mentor Indonesia",
-        "alternateName": "SMI",
-        "url": "https://smi.multipriority.com/",
-        "logo": "https://smi.multipriority.com/logo.jpeg",
-        "description": "Platform edukasi terdepan untuk content creator. Pelajari strategi branding, produksi konten, dan monetisasi.",
-        "sameAs": [
-            "https://www.instagram.com/sekolahmentor_id"
-        ],
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Blk. G, Sriamur",
-            "addressLocality": "Kec. Tambun Utara",
-            "addressRegion": "Jawa Barat",
-            "postalCode": "17510",
-            "addressCountry": "ID"
-        },
-        "parentOrganization": {
-          "@type": "Corporation",
-          "name": "PT Multiusaha Prioritas Bersama",
-          "url": "https://multipriority.com"
-        }
-      },
-      {
-        "@type": "Course",
-        "name": "Mentoring Content Creator Profesional",
-        "description": "Program mentoring intensif untuk menjadi content creator profesional.",
-        "provider": {
-          "@type": "EducationalOrganization",
-          "name": "Sekolah Mentor Indonesia",
-          "url": "https://smi.multipriority.com/"
-        }
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": (Array.isArray(faqs) ? faqs : []).map(faq => ({
-          "@type": "Question",
-          "name": faq?.question || "",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": faq?.answer || ""
-          }
-        }))
-      }
-    ]
-  };
+  const faqData = faqs.map(faq => ({
+    question: faq.question,
+    answer: faq.answer
+  }));
 
   return (
-    <div className="min-h-screen bg-white">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-
-      <main>
-        <SMIHomeHero />
-        <SMIAbout />
-        <SMIVisiMisi />
-        {/* <WebsiteContent /> */} {/* Sembunyikan sementara Pusat Edukasi Gratis */}
-        <SMIHomeCommunity />
-        <SMIProducts />
-        <SMIAdvantages />
-        <SMIBlog articles={articles} />
-        <SMIHomeSuccessStories />
-        <SMIFAQ />
-        <SMIContact />
-      </main>
-      <SMIChatAI />
-    </div>
+    <>
+      <StructuredData type="organization" />
+      <StructuredData type="website" />
+      <StructuredData type="faq" data={faqData} />
+      
+      <div className="min-h-screen bg-white">
+        <Navbar />
+        
+        <main>
+          <SMIHomeHero />
+          <SMIAbout />
+          <SMIVisiMisi />
+          {/* <WebsiteContent /> */} {/* Sembunyikan sementara Pusat Edukasi Gratis */}
+          <SMIHomeCommunity />
+          <SMIProducts />
+          <SMIAdvantages />
+          <SMIBlog articles={articles} />
+          <SMIHomeSuccessStories />
+          <SMIFAQ />
+          <SMIContact />
+          <SMIChatAI />
+        </main>
+      </div>
+    </>
   );
 }

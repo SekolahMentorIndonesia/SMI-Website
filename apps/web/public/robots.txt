@@ -16,7 +16,7 @@ Allow: /dashboard/community
 Allow: /dashboard/profile
 
 # Sitemap location
-Sitemap: https://smi.id/sitemap.xml
+Sitemap: https://smi.multipriority.com/sitemap.xml
 
 # Block common bot paths
 Disallow: /tmp/

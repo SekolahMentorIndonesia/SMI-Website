@@ -11,7 +11,7 @@ async function testDecoupledFlow() {
         // 1. Login
         console.log('\n🔐 Login...');
         const loginResponse = await axios.post(`${baseURL}/auth/login`, {
-            email: 'superadmin@smi.id',
+            email: 'superadmin@smi.multipriority.com',
             password: 'password123'
         });
         
@@ -31,7 +31,7 @@ async function testDecoupledFlow() {
         const enrollmentData = {
             package_id: pkg.id,
             name: 'Test Decoupled',
-            email: 'superadmin@smi.id',
+            email: 'superadmin@smi.multipriority.com',
             phone_number: '08111111111',
             motivation: 'Test DECOUPLED flow - Worker handles Telegram',
             payment_method: 'rekening',

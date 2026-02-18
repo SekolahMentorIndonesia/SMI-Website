@@ -11,7 +11,7 @@ async function testFinalWebsite() {
         // 1. Login superadmin
         console.log('\n🔐 Login superadmin...');
         const loginResponse = await axios.post(`${baseURL}/auth/login`, {
-            email: 'superadmin@smi.id',
+            email: 'superadmin@smi.multipriority.com',
             password: 'password123'
         });
         
@@ -37,7 +37,7 @@ async function testFinalWebsite() {
         const enrollmentData = {
             package_id: pkg.id,
             name: 'Superadmin Test',
-            email: 'superadmin@smi.id',
+            email: 'superadmin@smi.multipriority.com',
             phone_number: '08123456789', // Pastikan ada nomor
             motivation: 'Final test website → backend → Telegram',
             payment_method: 'rekening',

@@ -341,7 +341,7 @@ export default function EnterprisePage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    <span>enterprise@smi.id</span>
+                    <span>enterprise@smi.multipriority.com</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <MapPin className="w-4 h-4" />

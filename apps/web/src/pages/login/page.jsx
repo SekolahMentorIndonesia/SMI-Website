@@ -4,6 +4,14 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { ShieldCheck, Lock, Mail, Loader2, ArrowRight, Eye, EyeOff } from 'lucide-react';
 import { authService } from '../../services/authService';
 
+export function meta() {
+  return [
+    { title: "Login - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Masuk ke akun Sekolah Mentor Indonesia Anda untuk mengakses materi dan mentoring." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,7 +62,7 @@ export default function LoginPage() {
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-10 sm:py-12 px-4 sm:px-6 lg:px-8 font-sans overflow-y-auto">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/app" className="flex justify-center mb-6 group">
-          <img src="/logo.jpeg" alt="SMI Logo" className="h-10 sm:h-12 w-auto transition-transform group-hover:scale-110" />
+          <img src="/logo.jpeg" alt="SMI Logo" width="48" height="48" className="h-10 sm:h-12 w-auto transition-transform group-hover:scale-110" />
         </Link>
         <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 px-4">
           Masuk ke Dashboard

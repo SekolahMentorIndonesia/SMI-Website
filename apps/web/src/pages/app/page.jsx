@@ -10,6 +10,13 @@ import SMIAIAssistant from "../../components/SMIAIAssistant";
 import SMIHomeFooter from "../../components/SMIHomeFooter";
 import SMILoadingScreen from "../../components/SMILoadingScreen";
 
+export function meta() {
+  return [
+    { title: "Platform Belajar - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Akses materi, komunitas, dan mentoring eksklusif di Sekolah Mentor Indonesia." }
+  ];
+}
+
 export default function AppPage() {
   const [isLoading, setIsLoading] = useState(true);
 

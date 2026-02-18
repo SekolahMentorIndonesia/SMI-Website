@@ -4,6 +4,14 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { User, Mail, Lock, Phone, Loader2, ArrowRight, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 import { authService } from '../../services/authService';
 
+export function meta() {
+  return [
+    { title: "Daftar - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Buat akun baru di Sekolah Mentor Indonesia dan mulai belajar menjadi content creator profesional." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -41,7 +49,7 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-neutral-50 flex flex-col justify-center py-10 sm:py-12 px-4 sm:px-6 lg:px-8 font-sans overflow-y-auto">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/app" className="flex justify-center mb-6 group">
-          <img src="/logo.jpeg" alt="SMI Logo" className="h-10 sm:h-12 w-auto transition-transform group-hover:scale-110" />
+          <img src="/logo.jpeg" alt="SMI Logo" width="48" height="48" className="h-10 sm:h-12 w-auto transition-transform group-hover:scale-110" />
         </Link>
         <h2 className="text-center text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 px-4">
           Buat Akun Baru

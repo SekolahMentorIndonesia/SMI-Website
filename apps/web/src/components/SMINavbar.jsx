@@ -37,6 +37,8 @@ export default function SMINavbar() {
           <img 
             src="/logo.jpeg" 
             alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" 
+            width="80"
+            height="80"
             className="h-16 sm:h-[4.5rem] md:h-20 w-auto object-contain transition-transform group-hover:scale-105" 
           />
         </a>
@@ -60,6 +62,7 @@ export default function SMINavbar() {
           <div className="hidden sm:relative sm:block">
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
+              aria-label={t('navbar.language_selector', 'Select Language')}
               className="flex items-center gap-2 p-2 hover:bg-neutral-50 rounded-xl transition-colors text-neutral-600"
             >
               <Globe className="w-[18px] h-[18px]" />
@@ -128,6 +131,7 @@ export default function SMINavbar() {
                 <div className="relative">
                   <button 
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
+                    aria-label={t('navbar.user_menu', 'User Menu')}
                     className="flex items-center gap-2 p-1 pr-3 bg-neutral-50 rounded-full hover:bg-neutral-100 transition-all border border-neutral-200"
                   >
                     <div className="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-xs">

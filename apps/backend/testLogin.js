@@ -2,8 +2,8 @@ const axios = require('axios');
 
 // Test login with the newly created users
 const testUsers = [
-  { email: 'superadmin@smi.id', password: 'passwordsuperadmin', expectedRole: 'superadmin' },
-  { email: 'admin@smi.id', password: 'passwordadmin', expectedRole: 'admin' },
+  { email: 'superadmin@smi.multipriority.com', password: 'passwordsuperadmin', expectedRole: 'superadmin' },
+  { email: 'admin@smi.multipriority.com', password: 'passwordadmin', expectedRole: 'admin' },
   { email: 'dzarelalghifari123@gmail.com', password: 'dzarel123', expectedRole: 'user' }
 ];
 

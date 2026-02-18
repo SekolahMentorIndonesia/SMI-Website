@@ -3,6 +3,13 @@ import { useParams, useNavigate } from "react-router";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import axios from "axios";
 
+export function meta() {
+  return [
+    { title: "Materi Belajar - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Pelajari materi eksklusif dari Sekolah Mentor Indonesia." }
+  ];
+}
+
 export default function ContentDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();

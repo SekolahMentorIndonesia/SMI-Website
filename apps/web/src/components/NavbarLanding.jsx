@@ -52,6 +52,8 @@ export default function NavbarLanding() {
           <img 
             src="/logo.jpeg" 
             alt="Logo Sekolah Mentor Indonesia" 
+            width="80"
+            height="80"
             className="h-20 w-auto object-contain transition-transform hover:scale-105 duration-200" 
           />
         </div>
@@ -73,6 +75,7 @@ export default function NavbarLanding() {
           <div className="relative hidden lg:block">
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
+              aria-label={t('header.language_selector', 'Select Language')}
               className="flex items-center gap-2 p-2 hover:bg-neutral-50 rounded-lg transition-colors duration-200 text-neutral-600"
             >
               <Globe className="w-4 h-4" />

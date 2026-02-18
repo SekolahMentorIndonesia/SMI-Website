@@ -6,10 +6,10 @@ import { findAnswer } from "../utils/aiMatcher";
 export default function SMIChatAI() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { 
-      role: 'bot', 
-      content: 'Halo! Saya MentorAI, asisten virtual Sekolah Mentor Indonesia. Ada yang bisa saya bantu?', 
-      isFallback: false 
+    {
+      role: 'bot',
+      content: 'Halo! Saya MentorAI, asisten virtual Sekolah Mentor Indonesia. Ada yang bisa saya bantu?',
+      isFallback: false
     }
   ]);
   const [input, setInput] = useState('');
@@ -35,15 +35,15 @@ export default function SMIChatAI() {
     // Simulate thinking delay
     setTimeout(() => {
       const response = findAnswer(userMessage.content);
-      
-      const botMessage = { 
-        role: 'bot', 
+
+      const botMessage = {
+        role: 'bot',
         content: response.text,
         isFallback: response.isFallback,
         showContactButton: response.showContactButton,
         showTelegramButton: response.showTelegramButton
       };
-      
+
       setMessages(prev => [...prev, botMessage]);
       setIsTyping(false);
     }, 1000);
@@ -57,7 +57,7 @@ export default function SMIChatAI() {
   };
 
   const handleWhatsappClick = () => {
-    window.open('https://wa.me/6281915020498?text=Halo%20Admin%20SMI,%20saya%20ingin%20bertanya%20lebih%20lanjut', '_blank');
+    window.open('https://wa.me/6287744556696?text=Halo%20Admin%20SMI,%20saya%20ingin%20bertanya%20lebih%20lanjut', '_blank');
   };
 
   const handleTelegramClick = () => {
@@ -80,7 +80,7 @@ export default function SMIChatAI() {
               <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-brand-600"></span>
             )}
           </div>
-          
+
           {isOpen && (
             <div className="absolute inset-0 flex items-center justify-center transition-all duration-300 opacity-0 scale-50 group-hover:opacity-100 group-hover:scale-100">
               <X className="w-7 h-7" />
@@ -112,7 +112,7 @@ export default function SMIChatAI() {
                   </div>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="p-2 hover:bg-white/10 rounded-full transition-colors text-white"
               >
@@ -128,14 +128,13 @@ export default function SMIChatAI() {
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`max-w-[85%] p-3 sm:p-4 rounded-2xl text-sm sm:text-base leading-relaxed shadow-sm whitespace-pre-wrap ${
-                      msg.role === 'user'
+                    className={`max-w-[85%] p-3 sm:p-4 rounded-2xl text-sm sm:text-base leading-relaxed shadow-sm whitespace-pre-wrap ${msg.role === 'user'
                         ? 'bg-brand-600 text-white rounded-br-none'
                         : 'bg-white text-neutral-800 border border-neutral-100 rounded-bl-none'
-                    }`}
+                      }`}
                   >
                     {msg.content}
-                    
+
                     {/* Fallback Button */}
                     {(msg.isFallback || msg.showContactButton) && (
                       <div className="mt-3 pt-3 border-t border-neutral-100">
@@ -164,7 +163,7 @@ export default function SMIChatAI() {
                   </div>
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="flex justify-start">
                   <div className="bg-white p-3 sm:p-4 rounded-2xl rounded-bl-none border border-neutral-100 shadow-sm flex gap-1.5 items-center">

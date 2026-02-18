@@ -58,7 +58,15 @@ export function meta() {
     { name: "description", content: "Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses kolaborasi untuk generasi muda siap berkarya." },
     { charset: "utf-8" },
     { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { name: "robots", content: "index, follow" }
+    { name: "robots", content: "index, follow" },
+    { property: "og:title", content: "Sekolah Mentor Indonesia" },
+    { property: "og:description", content: "Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses kolaborasi untuk generasi muda siap berkarya." },
+    { property: "og:image", content: "/logo.jpeg" },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: "Sekolah Mentor Indonesia" },
+    { name: "twitter:description", content: "Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses kolaborasi untuk generasi muda siap berkarya." },
+    { name: "twitter:image", content: "/logo.jpeg" }
   ];
 }
 if (globalThis.window && globalThis.window !== undefined) {
@@ -396,12 +404,7 @@ export function Layout({ children }: { children: ReactNode }) {
   return (
     <html lang={i18n.language} dir={typeof i18n.dir === 'function' ? i18n.dir() : 'ltr'}>
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Sekolah Mentor Indonesia</title>
-        <meta name="description" content="Belajar langsung dari mentor praktisi. Kurikulum terukur, komunitas suportif, dan akses kolaborasi untuk generasi muda siap berkarya." />
         <link rel="canonical" href={`https://smi.multipriority.com${pathname || ''}`} />
-        <meta name="robots" content="index, follow" />
         <link rel="preload" as="image" href="/logo.jpeg" />
         
         <Meta />

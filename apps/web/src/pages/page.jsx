@@ -18,11 +18,11 @@ export function meta() {
     { title: "Sekolah Mentor Indonesia - Platform Mentoring untuk Content Creator Indonesia" },
     { 
       name: "description", 
-      content: "Platform mentoring terbaik untuk content creator Indonesia. Belajar dari mentor profesional, bergabung dengan komunitas kreator, dan kembangkan karir digital Anda dengan program komprehensif." 
+      content: "Platform mentoring content creator Indonesia. Belajar dari mentor profesional, gabung komunitas, dan kembangkan karir digital Anda." 
     },
     { 
       name: "keywords", 
-      content: "sekolah mentor indonesia, mentoring content creator, kursus digital, belajar content creation, komunitas creator, platform mentoring indonesia, kursus online indonesia, mentor profesional, belajar digital marketing" 
+      content: "sekolah mentor indonesia, mentoring content creator, kursus digital, belajar content creation, komunitas creator, platform mentoring indonesia" 
     },
     { property: "og:title", content: "Sekolah Mentor Indonesia - Platform Mentoring untuk Content Creator" },
     { 
@@ -30,15 +30,17 @@ export function meta() {
       content: "Platform mentoring terbaik untuk content creator Indonesia. Belajar dari mentor profesional dan bergabung dengan komunitas kreator." 
     },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://smi.id" },
-    { property: "og:image", content: "https://smi.id/logo.jpeg" },
-    { property: "og:image:alt", content: "Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" },
+    { property: "og:url", content: "https://smi.multipriority.com" },
+    { property: "og:image", content: "https://smi.multipriority.com/logo.jpeg" },
+    { property: "og:image:width", content: "800" },
+    { property: "og:image:height", content: "800" },
+    { property: "og:image:alt", content: "Logo Sekolah Mentor Indonesia" },
     { property: "og:site_name", content: "Sekolah Mentor Indonesia" },
     { property: "og:locale", content: "id_ID" },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: "Sekolah Mentor Indonesia - Platform Mentoring untuk Content Creator" },
     { name: "twitter:description", content: "Platform mentoring untuk content creator Indonesia" },
-    { name: "twitter:image", content: "https://smi.id/logo.jpeg" },
+    { name: "twitter:image", content: "https://smi.multipriority.com/logo.jpeg" },
     { name: "twitter:image:alt", content: "Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" },
     { name: "twitter:site", content: "@sekolahmentorid" },
     { name: "robots", content: "index, follow" },
@@ -48,7 +50,7 @@ export function meta() {
     { name: "apple-mobile-web-app-title", content: "SMI" },
     { name: "apple-mobile-web-app-capable", content: "yes" },
     { name: "apple-mobile-web-app-status-bar-style", content: "default" },
-    { rel: "canonical", href: "https://smi.id" }
+    { rel: "canonical", href: "https://smi.multipriority.com" }
   ];
 }
 

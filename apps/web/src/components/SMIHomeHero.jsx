@@ -74,7 +74,7 @@ export default function SMIHomeHero() {
                 </div>
               ))}
             </div>
-            <p className="text-xs sm:text-sm text-neutral-500 font-medium">
+            <p className="text-xs sm:text-sm text-neutral-600 font-medium">
               <span className="text-neutral-900 font-bold">1,200+</span> {t('hero.social_proof')}
             </p>
           </div>
@@ -93,8 +93,8 @@ export default function SMIHomeHero() {
                 <BookOpen className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-neutral-900 text-sm">{t('hero.curriculum_title')}</h3>
-                <p className="text-[10px] text-neutral-400">{t('hero.curriculum_subtitle')}</p>
+                <div className="font-bold text-neutral-900 text-sm">{t('hero.curriculum_title')}</div>
+                <p className="text-[10px] text-neutral-500">{t('hero.curriculum_subtitle')}</p>
               </div>
             </div>
 

@@ -2,6 +2,13 @@ import { motion } from "framer-motion";
 import { Calendar, Clock, User, Star, Check, Video, Phone } from "lucide-react";
 import { useState } from "react";
 
+export function meta() {
+  return [
+    { title: "Booking Mentor - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Jadwalkan sesi mentoring dengan mentor profesional di Sekolah Mentor Indonesia." }
+  ];
+}
+
 export default function BookingPage() {
   const [selectedMentor, setSelectedMentor] = useState(null);
   const [selectedDate, setSelectedDate] = useState('');
@@ -389,7 +396,7 @@ export default function BookingPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <Video className="w-4 h-4" />
-                    <span>booking@smi.id</span>
+                    <span>booking@smi.multipriority.com</span>
                   </div>
                 </div>
               </div>

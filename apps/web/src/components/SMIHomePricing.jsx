@@ -407,7 +407,7 @@ export default function SMIHomePricing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-sm sm:text-base text-neutral-500 max-w-2xl mx-auto"
+            className="text-sm sm:text-base text-neutral-600 max-w-2xl mx-auto"
           >
             {t('pricing.subtitle')}
           </motion.p>
@@ -884,7 +884,7 @@ export default function SMIHomePricing() {
                           )}
                           {paymentMethod === 'qris' && (
                             <div className="bg-white p-5 rounded-lg border border-neutral-300 flex justify-center">
-                              <img src="/qris.jpg" alt="QRIS Sekolah Mentor Indonesia" className="w-48 h-48 object-contain" />
+                              <img src="/qris.jpg" alt="QRIS Sekolah Mentor Indonesia" width="192" height="192" className="w-48 h-48 object-contain" />
                             </div>
                           )}
                           {!paymentMethod && errors.paymentMethod && (
@@ -953,7 +953,7 @@ export default function SMIHomePricing() {
                               )}
                               {paymentMethod === 'qris' && (
                                 <div className="bg-white p-5 rounded-lg border border-neutral-300 flex justify-center">
-                                  <img src="/qris.jpg" alt="QRIS Sekolah Mentor Indonesia" className="w-48 h-48 object-contain" />
+                                  <img src="/qris.jpg" alt="QRIS Sekolah Mentor Indonesia" width="192" height="192" className="w-48 h-48 object-contain" />
                                 </div>
                               )}
                             </div>

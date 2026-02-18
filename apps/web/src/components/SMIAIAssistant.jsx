@@ -95,13 +95,14 @@ export default function SMIAIAssistant() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
+        aria-label={t('ai.chat_button_label', 'Chat with AI Assistant')}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] bg-brand-600 text-white p-3.5 sm:p-4 rounded-xl sm:rounded-2xl shadow-2xl shadow-brand-200 flex items-center gap-3 group"
       >
         <div className="relative">
           <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 border-2 border-brand-600 rounded-full animate-pulse" />
         </div>
-        <span className="font-bold text-sm hidden sm:block">{t('ai.name')}</span>
+        <span className="font-bold text-sm">{t('ai.button_text')}</span>
       </motion.button>
 
       {/* Chat Modal */}
@@ -118,7 +119,7 @@ export default function SMIAIAssistant() {
               <div className="bg-brand-600 p-4 sm:p-6 text-white flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white rounded-lg sm:rounded-xl flex items-center justify-center overflow-hidden">
-                    <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="w-full h-full object-cover" />
+                    <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" width="40" height="40" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 className="font-bold text-xs sm:text-sm">{t('ai.name')}</h4>
@@ -148,7 +149,7 @@ export default function SMIAIAssistant() {
                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'bot' ? '' : 'flex-row-reverse'}`}>
                       <div className={`w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden ${msg.role === 'bot' ? 'bg-white border border-neutral-100' : 'bg-brand-600'}`}>
                         {msg.role === 'bot' ? (
-                          <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="w-5 h-5 object-contain" />
+                          <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" width="20" height="20" className="w-5 h-5 object-contain" />
                         ) : (
                           <User className="w-4 h-4 text-white" />
                         )}
@@ -184,7 +185,7 @@ export default function SMIAIAssistant() {
                   >
                     <div className="flex gap-3 max-w-[85%]">
                       <div className="w-8 h-8 rounded-lg flex-shrink-0 flex items-center justify-center overflow-hidden bg-white border border-neutral-100">
-                        <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="w-5 h-5 object-contain" />
+                        <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" width="20" height="20" className="w-5 h-5 object-contain" />
                       </div>
                       <div className="p-4 rounded-2xl text-sm leading-relaxed shadow-sm bg-white text-neutral-700 border border-neutral-100">
                         <div className="flex gap-1">

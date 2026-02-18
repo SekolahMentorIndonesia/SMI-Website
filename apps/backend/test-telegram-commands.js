@@ -24,7 +24,7 @@ async function testTelegramCommands() {
             
             // Buat test enrollment baru
             console.log('\n📝 Membuat test enrollment...');
-            const user = await User.findOne({ where: { email: 'superadmin@smi.id' } });
+            const user = await User.findOne({ where: { email: 'superadmin@smi.multipriority.com' } });
             const pkg = await MentorPackage.findOne();
             
             const newEnrollment = await Enrollment.create({
@@ -84,7 +84,7 @@ async function testTelegramCommands() {
         console.log('\n❌ Testing /tolak command...');
         
         // Buat enrollment baru untuk test reject
-        const user = await User.findOne({ where: { email: 'superadmin@smi.id' } });
+        const user = await User.findOne({ where: { email: 'superadmin@smi.multipriority.com' } });
         const pkg = await MentorPackage.findOne();
         
         const rejectEnrollment = await Enrollment.create({

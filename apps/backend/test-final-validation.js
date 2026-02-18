@@ -10,7 +10,7 @@ async function finalValidation() {
         // 1. Test real scenario: buat invoice lalu approve dengan 4 digit
         console.log('\n📋 SCENARIO 1: Buat invoice → approve dengan 4 digit');
         
-        const user = await User.findOne({ where: { email: 'superadmin@smi.id' } });
+        const user = await User.findOne({ where: { email: 'superadmin@smi.multipriority.com' } });
         const pkg = await MentorPackage.findOne();
         
         const enrollment1 = await Enrollment.create({

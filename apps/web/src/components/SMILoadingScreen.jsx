@@ -63,7 +63,7 @@ export default function SMILoadingScreen() {
               className="absolute inset-0 bg-brand-600 w-1/2 rounded-full"
             />
           </div>
-          <span className="mt-4 text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-400">
+          <span className="mt-4 text-[10px] uppercase tracking-[0.2em] font-bold text-neutral-500">
             Please Wait
           </span>
         </div>

@@ -12,7 +12,7 @@ async function createSuperAdmin() {
     // Buat superadmin baru
     const superadmin = await User.create({
       name: 'Superadmin SMI',
-      email: 'superadmin@smi.id',
+      email: 'superadmin@smi.multipriority.com',
       password: 'passwordsuperadmin',
       role: 'superadmin',
       status: 'approved'

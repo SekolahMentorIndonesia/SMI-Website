@@ -11,12 +11,12 @@ async function seed() {
     // Create Admin
     await User.create({
       name: 'Admin SMI',
-      email: 'admin@smi.id',
+      email: 'admin@smi.multipriority.com',
       password: 'passwordadmin',
       role: 'admin',
       status: 'approved'
     });
-    console.log('Admin user created: admin@smi.id / passwordadmin (Role: admin)');
+    console.log('Admin user created: admin@smi.multipriority.com / passwordadmin (Role: admin)');
 
     // Create Packages
     await MentorPackage.bulkCreate([

@@ -5,6 +5,14 @@ import { adminService } from '../../../../services/adminService';
 import { ArrowLeft, User, Package, CreditCard, Calendar, CheckCircle, XCircle, Loader2, ExternalLink } from 'lucide-react';
 import { useNotification } from '../../../../contexts/NotificationContext';
 
+export function meta() {
+  return [
+    { title: "Enrollment Detail - Admin SMI" },
+    { name: "description", content: "Detail pendaftaran siswa dan verifikasi pembayaran." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function AdminEnrollmentDetailPage() {
   const { id } = useParams();
   const navigate = useNavigate();

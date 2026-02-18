@@ -7,6 +7,14 @@ import { userService } from "../../services/userService";
 import { uploadFile } from "../../utils/upload";
 
 // Halaman profil lengkap untuk user dengan edit & readonly fields
+export function meta() {
+  return [
+    { title: "Profil Saya - Sekolah Mentor Indonesia" },
+    { name: "description", content: "Halaman profil pengguna Sekolah Mentor Indonesia." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function ProfilePage() {
   const { user, logout, updateUser } = useAuthStore();
   const navigate = useNavigate();

@@ -50,7 +50,7 @@ export default function UserSidebar({ status }) {
   return (
     <div className="w-64 bg-white border-r border-neutral-100 min-h-screen flex flex-col sticky top-0">
       <div className="p-8 flex items-center gap-3">
-        <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" className="h-8 w-auto" />
+        <img src="/logo.jpeg" alt="Logo Sekolah Mentor Indonesia - Platform Mentoring Content Creator" width="32" height="32" className="h-8 w-auto" />
         <span className="font-bold text-neutral-900">SMI Dashboard</span>
       </div>
 
@@ -94,7 +94,7 @@ export default function UserSidebar({ status }) {
           </div>
           <div className="flex-1 overflow-hidden">
             <p className="text-sm font-bold text-neutral-900 truncate">{user?.name}</p>
-            <p className="text-[10px] text-neutral-500 uppercase font-bold tracking-wider">{user?.role}</p>
+            <p className="text-[10px] text-neutral-600 uppercase font-bold tracking-wider">{user?.role}</p>
           </div>
         </div>
         <button

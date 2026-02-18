@@ -2,6 +2,14 @@ import UserLayout from "../../../layouts/UserLayout";
 import UserGuard from "../../../components/dashboard/UserGuard";
 import { BookOpen, Play, Lock } from "lucide-react";
 
+export function meta() {
+  return [
+    { title: "My Content - Dashboard SMI" },
+    { name: "description", content: "Akses materi pembelajaran video dan modul eksklusif Anda." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function ContentPage() {
   const materials = [
     { id: 1, title: "Mindset Dasar Mentor Profesional", duration: "15:20", type: "video" },

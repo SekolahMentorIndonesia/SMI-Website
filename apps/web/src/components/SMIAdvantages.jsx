@@ -46,12 +46,12 @@ export default function SMIAdvantages() {
             <div className="flex items-center justify-center lg:justify-start gap-8 pt-4">
               <div>
                 <p className="text-xl sm:text-2xl font-bold text-neutral-900 font-display">100%</p>
-                <p className="text-neutral-500 text-[10px] sm:text-xs font-sans uppercase tracking-wider">{t('advantages.stats.satisfaction')}</p>
+                <p className="text-neutral-600 text-[10px] sm:text-xs font-sans uppercase tracking-wider">{t('advantages.stats.satisfaction')}</p>
               </div>
               <div className="w-px h-8 bg-neutral-200"></div>
               <div>
                 <p className="text-xl sm:text-2xl font-bold text-neutral-900 font-display">500+</p>
-                <p className="text-neutral-500 text-[10px] sm:text-xs font-sans uppercase tracking-wider">{t('advantages.stats.alumni')}</p>
+                <p className="text-neutral-600 text-[10px] sm:text-xs font-sans uppercase tracking-wider">{t('advantages.stats.alumni')}</p>
               </div>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function SMIAdvantages() {
                   {item.icon}
                 </div>
                 <h3 className="text-base sm:text-lg font-bold text-neutral-900 mb-3 font-display">{item.title}</h3>
-                <p className="text-xs sm:text-sm text-neutral-500 leading-relaxed font-sans">
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans">
                   {item.description}
                 </p>
               </motion.div>

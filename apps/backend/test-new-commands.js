@@ -9,7 +9,7 @@ async function testNewCommands() {
     try {
         // 1. Buat test enrollment untuk /terimaXXXX
         console.log('\n📝 Membuat test enrollment untuk /terimaXXXX...');
-        const user = await User.findOne({ where: { email: 'superadmin@smi.id' } });
+        const user = await User.findOne({ where: { email: 'superadmin@smi.multipriority.com' } });
         const pkg = await MentorPackage.findOne();
         
         const acceptEnrollment = await Enrollment.create({

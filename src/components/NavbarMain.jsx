@@ -1,20 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { User, LogOut, ChevronDown, Globe, Menu, X } from "lucide-react";
+import { ChevronDown, Globe, Menu, X, CreditCard } from "lucide-react";
 import { useState } from "react";
-import { useUser } from "../hooks/useUser";
 import { useTranslation } from "react-i18next";
 import { useNavigate, Link } from "react-router";
 
 export default function NavbarMain() {
   const { t, i18n } = useTranslation('common');
-  const { isAuthenticated, user, logout } = useUser();
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  const role = user?.role?.toLowerCase();
-  const isAdminRole = role === 'admin' || role === 'superadmin' || role === 'owner';
 
   const scrollToSection = (e, href) => {
     e.preventDefault();
@@ -27,7 +21,7 @@ export default function NavbarMain() {
       const [page, hash] = href.split('#');
       // If we're not on the correct page, navigate first
       if (window.location.pathname !== page) {
-        window.location.href = href;
+        navigate(href);
         return;
       }
       // If we're on the correct page, scroll to the section
@@ -37,6 +31,7 @@ export default function NavbarMain() {
         const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - navbarHeight;
         
+        element.focus();
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
@@ -53,6 +48,7 @@ export default function NavbarMain() {
         const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
         const offsetPosition = elementPosition - navbarHeight;
         
+        element.focus();
         window.scrollTo({
           top: offsetPosition,
           behavior: 'smooth'
@@ -66,6 +62,9 @@ export default function NavbarMain() {
 
   const leftMenuItems = [
     { name: t('navbar.home'), href: '/' },
+    { name: 'Tentang', href: '/about' },
+    { name: 'Program', href: '/program' },
+    { name: 'Kelas', href: '/kelas' },
     { name: t('navbar.free_content'), href: '/sekolah-mentor-indonesia' },
     { name: t('navbar.community'), href: '/#komunitas' },
   ];
@@ -109,6 +108,8 @@ export default function NavbarMain() {
             src="/mbp.jpeg" 
             alt="Logo Sekolah Mentor Indonesia" 
             className="h-16 sm:h-20 w-auto object-contain transition-transform hover:scale-105 duration-200" 
+            width="80"
+            height="80"
           />
         </Link>
 
@@ -126,11 +127,25 @@ export default function NavbarMain() {
             </a>
           ))}
 
+          {/* Payment Button - Desktop Only */}
+          <div className="relative hidden lg:block">
+            <button
+              onClick={() => navigate('/pembayaran')}
+              className="flex items-center gap-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors duration-200 font-medium text-sm"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span>Bayar</span>
+            </button>
+          </div>
+
           {/* Language Switcher - Desktop Only */}
           <div className="relative hidden lg:block">
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-2 p-2 hover:bg-neutral-50 rounded-lg transition-colors duration-200 text-neutral-600"
+              aria-label="Pilih bahasa"
+              aria-expanded={isLangOpen}
+              aria-haspopup="true"
             >
               <Globe className="w-4 h-4" />
               <span className="text-xs font-bold uppercase">{i18n.language}</span>
@@ -208,6 +223,8 @@ export default function NavbarMain() {
                 src="/logo.jpeg" 
                 alt="Logo Sekolah Mentor Indonesia" 
                 className="h-12 w-auto object-contain" 
+                width="48"
+                height="48"
               />
             </Link>
             <button
@@ -239,30 +256,18 @@ export default function NavbarMain() {
             </div>
           </div>
 
-          {/* Auth Section */}
+          {/* Payment Section */}
           <div className="p-5 border-t border-neutral-100 bg-neutral-50">
-            <h4 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">Akun</h4>
-            <div className="space-y-2">
-                <button 
-                  onClick={() => {
-                    navigate('/profile');
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-neutral-700 rounded-lg font-medium text-sm hover:bg-neutral-100 border border-neutral-200 transition-all duration-200"
-                >
-                  <User className="w-4 h-4" /> Profil
-                </button>
-                
-                <button 
-                  onClick={() => {
-                    logout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-red-50 text-red-600 rounded-lg font-medium text-sm hover:bg-red-100 transition-all duration-200"
-                >
-                  <LogOut className="w-4 h-4" /> Keluar
-                </button>
-              </div>
+            <h4 className="text-sm font-semibold text-neutral-500 uppercase tracking-wider mb-3">Pembayaran</h4>
+            <button 
+              onClick={() => {
+                navigate('/pembayaran');
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-brand-600 text-white rounded-lg font-medium text-sm hover:bg-brand-700 transition-all duration-200"
+            >
+              <CreditCard className="w-4 h-4" /> Form Pembayaran
+            </button>
           </div>
 
           {/* Language Section */}

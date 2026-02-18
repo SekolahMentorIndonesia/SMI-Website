@@ -5,6 +5,14 @@ import { adminService } from '../../../services/adminService';
 import { Search, Filter, Eye, Loader2, ChevronLeft, ChevronRight, CheckCircle, XCircle, Clock } from 'lucide-react';
 import { useNotification } from '../../../contexts/NotificationContext';
 
+export function meta() {
+  return [
+    { title: "Enrollment Management - Admin SMI" },
+    { name: "description", content: "Kelola pendaftaran siswa dan permintaan enrollment baru." },
+    { name: "robots", content: "noindex, nofollow" }
+  ];
+}
+
 export default function AdminEnrollmentListPage() {
   const [enrollments, setEnrollments] = useState([]);
   const [status, setStatus] = useState('pending');
